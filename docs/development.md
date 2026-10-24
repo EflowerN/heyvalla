@@ -116,12 +116,12 @@ Use the [README rehearsal](../README.md#repeatable-local-demonstration) for the 
 
 ## Hosted demo deployment
 
-The Next.js frontend runs on Vercel and the Laravel API runs on Railway. Vercel's serverless runtime cannot keep SQLite writes, so it cannot host the backend.
+The frontend and the Laravel API run as two Vercel projects from this repo, with Supabase Postgres as the database. Supabase cannot run PHP itself. Vercel functions cannot keep SQLite writes, so the hosted backend uses `DB_CONNECTION=pgsql`. The suite passes against Postgres 17.
 
-Backend (Railway): create a service from this GitHub repo with root directory `backend`. `backend/railway.json` builds `backend/Dockerfile`. Attach a volume at `/data`, which holds `/data/database.sqlite`. On every boot, `docker/start.sh` migrates, starts the scheduler (`heyvalla:expire-requests`) and serves on `$PORT`. Set `APP_KEY` (from `php artisan key:generate --show`), `APP_URL` and a random `DEMO_OPERATOR_TOKEN` of at least 32 characters. Generate a public domain for the service.
+Backend (Vercel, root directory `backend`): `backend/vercel.json` routes every request through `api/index.php` on the community `vercel-php@0.8.0` runtime (PHP 8.4). It sets production defaults and writes the framework caches to `/tmp`. Cache and rate limits use the database store, so throttles hold across instances. Set `APP_KEY`, `DEMO_OPERATOR_TOKEN` (at least 32 characters) and the Supabase session pooler details: `DB_HOST`, `DB_PORT=5432`, `DB_DATABASE=postgres`, `DB_USERNAME` (`postgres.<project-ref>`) and `DB_PASSWORD`. Don't use the transaction pooler (port 6543), because PDO's prepared statements fail through it.
 
-`HEYVALLA_ALLOW_DEMO_SEED=true` runs the idempotent `heyvalla:demo` seeder on each boot, outside local/testing. It creates the two fictional providers with the published password `heyvalla-demo-2026`, so anyone can sign in as them. Use the flag only for the hosted datathon demo, never for real provider data.
+Migrations do not run on deploy. Run them from a workstation with the same `DB_*` values: `php artisan migrate --force`. Then run `php artisan heyvalla:demo` to load the fictional providers. Their password, `heyvalla-demo-2026`, is published, so anyone can sign in as them. Use that seed only for the datathon demo. `HEYVALLA_ALLOW_DEMO_SEED=true` permits the seed outside local/testing, and the Docker image (`backend/Dockerfile`, for container hosts with a `/data` volume) runs it on boot.
 
-Frontend (Vercel): import the repo with root directory `frontend`. Set `LARAVEL_API_URL` to the Railway URL without a trailing slash, the same `DEMO_OPERATOR_TOKEN`, and a new `DEMO_OPERATOR_PASSWORD` (not the local `heyvalla-demo`). Redeploy after changing environment variables.
+The serverless backend has no per-minute scheduler. Pending provider requests still expire whenever journeys are read (`ProviderLifecycle::expirePending`).
 
-The hosted service runs Laravel's single-process `artisan serve` with SQLite. That is enough for a demo, not for production load. The operator login rate limit is in-process on Vercel and does not hold across serverless instances.
+Frontend (Vercel, root directory `frontend`): set `LARAVEL_API_URL` to the backend's Vercel URL without a trailing slash, the same `DEMO_OPERATOR_TOKEN`, and a new `DEMO_OPERATOR_PASSWORD` (not the local `heyvalla-demo`). Redeploy after changing environment variables. The operator login attempt limit is in-process, so it does not hold across serverless instances.

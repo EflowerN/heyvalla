@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+/tests
+/database/database.sqlite
+/storage/logs
+/env example
+.env
