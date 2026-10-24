@@ -21,3 +21,17 @@ Airport names and IATA/ICAO identifiers come from https://caa.gov.mv/attachments
 Refresh the snapshot by retrieving the residential query, confirming it is not truncated, checking duplicate IDs and category changes, and reviewing CAA's current list for additions/renames. Update attribution and retrieval metadata alongside changes. Tests check directory counts and unique identifiers; revise reviewed counts when the official source changes.
 
 `GET /api/v1/islands` returns both island and airport options. Ferry search now requires `airport` in addition to the origin and flight inputs. Demo schedules cover only Thaa Vilufushi (LD0205), Veymandoo (LD0694), and Guraidhoo (LD1163) to Thimarafushi (VRNT). Other valid pairs return an empty result with `schedule_coverage=false` and no transfer allowance. They do not reuse Thimarafushi's travel times or fabricate ferry routes.
+
+## Interactive map
+
+The embedded Leaflet map displays all directory islands and airports, plus three fictional origin-to-Thimarafushi connections. Coordinates use the official OneMap longitude/latitude fields converted from DMS to decimal degrees, and airport reference coordinates from the CAA July 2025 list. Island markers represent reference locations, not verified harbour boarding points. Airport reference points are not terminal entrances. The route lines are straight illustrations between reference points, not navigation tracks or verified RTL routes.
+
+Layer toggles control islands, airports, and demo lines. Country and selected-journey controls fit the map bounds; the form's origin and airport drive the selected-journey view. Existing text search/results remain available outside the map. Popups use text nodes for source names. Map data comes from the Laravel directory endpoint; Leaflet loads only in the browser.
+
+OpenStreetMap background tiles load directly in the browser with visible attribution and normal browser caching. No offline tile prefetch is implemented. `NEXT_PUBLIC_MAP_TILE_URL` can select a compatible tile endpoint at build time; the current attribution is for OpenStreetMap, so update it if changing provider. Review tile-provider usage terms and capacity before public deployment. The map reports tile failures while retaining reference markers.
+
+## Resort islands and map selection
+
+The directory also includes all 342 records classified `Tourism Island` in the same OneMap layer, retrieved with the documented residential query parameters but `where=category='Tourism Island'`. The response was not truncated. They are stored with `category=resort`; the 189 residential records use `category=residential`. Tourism designation does not establish that a resort is currently operating, nor provide its commercial brand name. Geographic names and coordinates are retained, with source attribution unchanged.
+
+Purple map dots and a separate Resorts layer distinguish these entries. All 531 island records are valid departure options. A click on an island sets the form origin and clears the island text filter; an airport click sets the destination. Either change clears previous search results and errors. Dates and check-in settings stay intact. The map retains its current view when selecting a marker or toggling a layer. Resort destinations do not receive invented transport schedules.

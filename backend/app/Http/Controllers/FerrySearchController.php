@@ -13,6 +13,7 @@ class FerrySearchController extends Controller
         return response()->json([
             'islands' => config('locations.islands'),
             'airports' => config('locations.airports'),
+            'routes' => collect(config('demo_ferries.sailings'))->pluck('island')->unique()->values()->map(fn (string $id): array => ['origin_id' => $id, 'airport_id' => 'VRNT', 'demo' => true]),
             'retrieved_at' => config('locations.retrieved_at'),
         ]);
     }

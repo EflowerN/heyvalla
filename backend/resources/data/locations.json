@@ -7,1240 +7,4926 @@
   "airport_source_updated": "2025-07",
   "islands": [
     {
+      "id": "ld0225",
+      "source_id": "LD0225",
+      "name": "Alikoirah",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 3.9433778,
+      "longitude": 72.8799947
+    },
+    {
+      "id": "ld1080",
+      "source_id": "LD1080",
+      "name": "Bathalaa",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0703425,
+      "longitude": 72.9457942
+    },
+    {
       "id": "ld0474",
       "name": "Bodufolhudhoo",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0474"
+      "source_id": "LD0474",
+      "latitude": 4.1857408,
+      "longitude": 72.7734694,
+      "category": "residential"
+    },
+    {
+      "id": "ld0201",
+      "source_id": "LD0201",
+      "name": "Ellaidhoo",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0062075,
+      "longitude": 72.9491797
+    },
+    {
+      "id": "ld0405",
+      "source_id": "LD0405",
+      "name": "Etheremadivaru",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.1188442,
+      "longitude": 72.9375333
     },
     {
       "id": "ld0287",
       "name": "Feridhoo",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0287"
+      "source_id": "LD0287",
+      "latitude": 4.0510656,
+      "longitude": 72.7255686,
+      "category": "residential"
+    },
+    {
+      "id": "ld1002",
+      "source_id": "LD1002",
+      "name": "Fesdhoo",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0068769,
+      "longitude": 72.8110031
+    },
+    {
+      "id": "ld0997",
+      "source_id": "LD0997",
+      "name": "Gaathafushi",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0236994,
+      "longitude": 72.8107075
+    },
+    {
+      "id": "ld0343",
+      "source_id": "LD0343",
+      "name": "Gangehi",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.2199992,
+      "longitude": 72.7542033
+    },
+    {
+      "id": "ld0375",
+      "source_id": "LD0375",
+      "name": "Halaveli",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0384925,
+      "longitude": 72.9191997
     },
     {
       "id": "ld0874",
       "name": "Himandhoo",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0874"
+      "source_id": "LD0874",
+      "latitude": 3.9210689,
+      "longitude": 72.7442342,
+      "category": "residential"
+    },
+    {
+      "id": "ld0027",
+      "source_id": "LD0027",
+      "name": "Kan'dholhudhoo",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0026022,
+      "longitude": 72.8817853
+    },
+    {
+      "id": "ld0893",
+      "source_id": "LD0893",
+      "name": "Kudafolhudhoo",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.1813561,
+      "longitude": 72.7667503
+    },
+    {
+      "id": "ld1139",
+      "source_id": "LD1139",
+      "name": "Kuramathi",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.2598644,
+      "longitude": 72.9777775
+    },
+    {
+      "id": "ld0109",
+      "source_id": "LD0109",
+      "name": "Maagau",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 3.9891839,
+      "longitude": 72.9570314
     },
     {
       "id": "ld0004",
       "name": "Maalhos",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0004"
+      "source_id": "LD0004",
+      "latitude": 3.9864053,
+      "longitude": 72.7192267,
+      "category": "residential"
+    },
+    {
+      "id": "ld0300",
+      "source_id": "LD0300",
+      "name": "Maayafushi",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0736128,
+      "longitude": 72.8875747
+    },
+    {
+      "id": "ld0760",
+      "source_id": "LD0760",
+      "name": "Madoogali",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.0961372,
+      "longitude": 72.7528831
+    },
+    {
+      "id": "ld0356",
+      "source_id": "LD0356",
+      "name": "Mathivereefinolhu",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.1858919,
+      "longitude": 72.7500031
     },
     {
       "id": "ld0132",
       "name": "Mathiveri",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0132"
+      "source_id": "LD0132",
+      "latitude": 4.1919597,
+      "longitude": 72.7461075,
+      "category": "residential"
+    },
+    {
+      "id": "ld0865",
+      "source_id": "LD0865",
+      "name": "Mushimasmigili",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 3.9589531,
+      "longitude": 72.9127119
     },
     {
       "id": "ld0257",
       "name": "Rasdhoo",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0257"
+      "source_id": "LD0257",
+      "latitude": 4.2631253,
+      "longitude": 72.9916814,
+      "category": "residential"
     },
     {
       "id": "ld0501",
       "name": "Thoddoo",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0501"
+      "source_id": "LD0501",
+      "latitude": 4.4370639,
+      "longitude": 72.9593603,
+      "category": "residential"
     },
     {
       "id": "ld0916",
       "name": "Ukulhas",
       "atoll": "Alifu Alifu",
-      "source_id": "LD0916"
+      "source_id": "LD0916",
+      "latitude": 4.2149158,
+      "longitude": 72.8641406,
+      "category": "residential"
+    },
+    {
+      "id": "ld1786",
+      "source_id": "LD1786",
+      "name": "Unnamed tourism island LD1786",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.1222517,
+      "longitude": 72.93395
+    },
+    {
+      "id": "ld0411",
+      "source_id": "LD0411",
+      "name": "Velidhoo",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.1946236,
+      "longitude": 72.8190328
+    },
+    {
+      "id": "ld0807",
+      "source_id": "LD0807",
+      "name": "Veligan'du",
+      "atoll": "Alifu Alifu",
+      "category": "resort",
+      "latitude": 4.2986858,
+      "longitude": 73.0113564
+    },
+    {
+      "id": "ld0316",
+      "source_id": "LD0316",
+      "name": "Angaagau",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6521653,
+      "longitude": 72.8219792
+    },
+    {
+      "id": "ld1147",
+      "source_id": "LD1147",
+      "name": "Athurugau",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.8872025,
+      "longitude": 72.8161433
+    },
+    {
+      "id": "ld0220",
+      "source_id": "LD0220",
+      "name": "Bodufinolhu",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.4952311,
+      "longitude": 72.7605892
     },
     {
       "id": "ld0273",
       "name": "Dhan'gethi",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0273"
+      "source_id": "LD0273",
+      "latitude": 3.6076469,
+      "longitude": 72.9560375,
+      "category": "residential"
     },
     {
       "id": "ld0459",
       "name": "Dhidhdhoo",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0459"
+      "source_id": "LD0459",
+      "latitude": 3.4845714,
+      "longitude": 72.8786103,
+      "category": "residential"
+    },
+    {
+      "id": "ld0080",
+      "source_id": "LD0080",
+      "name": "Dhiffushi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.4753042,
+      "longitude": 72.8248611
     },
     {
       "id": "ld1047",
       "name": "Dhigurah",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD1047"
+      "source_id": "LD1047",
+      "latitude": 3.5278931,
+      "longitude": 72.9238603,
+      "category": "residential"
+    },
+    {
+      "id": "ld1007",
+      "source_id": "LD1007",
+      "name": "Dhihdhoofinolhu",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.4985894,
+      "longitude": 72.8966644
     },
     {
       "id": "ld0513",
       "name": "Fenfushi",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0513"
+      "source_id": "LD0513",
+      "latitude": 3.4891722,
+      "longitude": 72.7829861,
+      "category": "residential"
     },
     {
       "id": "ld1023",
       "name": "Hangnaameedhoo",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD1023"
+      "source_id": "LD1023",
+      "latitude": 3.8492858,
+      "longitude": 72.9553375,
+      "category": "residential"
+    },
+    {
+      "id": "ld0452",
+      "source_id": "LD0452",
+      "name": "Heenfaru",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.8192628,
+      "longitude": 72.8290606
+    },
+    {
+      "id": "ld0388",
+      "source_id": "LD0388",
+      "name": "Huruelhi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.5441906,
+      "longitude": 72.7195939
+    },
+    {
+      "id": "ld0419",
+      "source_id": "LD0419",
+      "name": "Huvahendhoo",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6537219,
+      "longitude": 72.9538344
+    },
+    {
+      "id": "ld0089",
+      "source_id": "LD0089",
+      "name": "Innafushi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.7977717,
+      "longitude": 72.732435
+    },
+    {
+      "id": "ld0581",
+      "source_id": "LD0581",
+      "name": "Kudarah",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.5739339,
+      "longitude": 72.9107622
     },
     {
       "id": "ld0771",
       "name": "Kun'burudhoo",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0771"
+      "source_id": "LD0771",
+      "latitude": 3.7754722,
+      "longitude": 72.9247206,
+      "category": "residential"
+    },
+    {
+      "id": "ld0966",
+      "source_id": "LD0966",
+      "name": "Lonuboi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6032417,
+      "longitude": 72.9009111
+    },
+    {
+      "id": "ld1176",
+      "source_id": "LD1176",
+      "name": "Maafushivaru",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6079211,
+      "longitude": 72.9002542
     },
     {
       "id": "ld0158",
       "name": "Maamigili",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0158"
+      "source_id": "LD0158",
+      "latitude": 3.4748456,
+      "longitude": 72.8330608,
+      "category": "residential"
+    },
+    {
+      "id": "ld1062",
+      "source_id": "LD1062",
+      "name": "Mahchafushi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.5938494,
+      "longitude": 72.8835292
     },
     {
       "id": "ld0545",
       "name": "Mahibadhoo",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0545"
+      "source_id": "LD0545",
+      "latitude": 3.7571581,
+      "longitude": 72.9689183,
+      "category": "residential"
     },
     {
       "id": "ld0168",
       "name": "Mandhoo",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0168"
+      "source_id": "LD0168",
+      "latitude": 3.69786,
+      "longitude": 72.7097861,
+      "category": "residential"
+    },
+    {
+      "id": "ld0461",
+      "source_id": "LD0461",
+      "name": "Mirihi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6195969,
+      "longitude": 72.7805608
+    },
+    {
+      "id": "ld0900",
+      "source_id": "LD0900",
+      "name": "Moofushi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.8850728,
+      "longitude": 72.7264403
+    },
+    {
+      "id": "ld0725",
+      "source_id": "LD0725",
+      "name": "Nalaguraidhoo",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.4832597,
+      "longitude": 72.8021653
     },
     {
       "id": "ld0009",
       "name": "Omadhoo",
       "atoll": "Alifu Dhaalu",
-      "source_id": "LD0009"
+      "source_id": "LD0009",
+      "latitude": 3.7916181,
+      "longitude": 72.962065,
+      "category": "residential"
+    },
+    {
+      "id": "ld0170",
+      "source_id": "LD0170",
+      "name": "Rangaleefinolhu",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6164394,
+      "longitude": 72.7157289
+    },
+    {
+      "id": "ld0214",
+      "source_id": "LD0214",
+      "name": "Rangali",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6182289,
+      "longitude": 72.7233628
+    },
+    {
+      "id": "ld0175",
+      "source_id": "LD0175",
+      "name": "Theluveligaa",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6698392,
+      "longitude": 72.9026117
+    },
+    {
+      "id": "ld0529",
+      "source_id": "LD0529",
+      "name": "Tholhifushi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.4850403,
+      "longitude": 72.7899194
+    },
+    {
+      "id": "ld1198",
+      "source_id": "LD1198",
+      "name": "Thun'dufushi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.7862353,
+      "longitude": 72.7306683
+    },
+    {
+      "id": "ld0610",
+      "source_id": "LD0610",
+      "name": "Vakarufalhi",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.5787181,
+      "longitude": 72.9021853
+    },
+    {
+      "id": "ld0263",
+      "source_id": "LD0263",
+      "name": "Vilamendhoo",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6337672,
+      "longitude": 72.9586414
+    },
+    {
+      "id": "ld1010",
+      "source_id": "LD1010",
+      "name": "Vilin'gilivaru",
+      "atoll": "Alifu Dhaalu",
+      "category": "resort",
+      "latitude": 3.6190308,
+      "longitude": 72.9551342
+    },
+    {
+      "id": "ld0418",
+      "source_id": "LD0418",
+      "name": "Bodufinolhu",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0088964,
+      "longitude": 72.8577431
+    },
+    {
+      "id": "ld0937",
+      "source_id": "LD0937",
+      "name": "Boifushi",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2978303,
+      "longitude": 72.9938375
+    },
+    {
+      "id": "ld0910",
+      "source_id": "LD0910",
+      "name": "Dhandhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2359131,
+      "longitude": 73.1683947
     },
     {
       "id": "ld0844",
       "name": "Dharavandhoo",
       "atoll": "Baa",
-      "source_id": "LD0844"
+      "source_id": "LD0844",
+      "latitude": 5.1570333,
+      "longitude": 73.1307094,
+      "category": "residential"
+    },
+    {
+      "id": "ld0076",
+      "source_id": "LD0076",
+      "name": "Dhigudhefaru",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2351117,
+      "longitude": 73.1391408
+    },
+    {
+      "id": "ld0440",
+      "source_id": "LD0440",
+      "name": "Dhigufaruvinagan'du",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.3523331,
+      "longitude": 72.98975
     },
     {
       "id": "ld0348",
       "name": "Dhonfan",
       "atoll": "Baa",
-      "source_id": "LD0348"
+      "source_id": "LD0348",
+      "latitude": 5.1879794,
+      "longitude": 73.1229306,
+      "category": "residential"
+    },
+    {
+      "id": "ld1146",
+      "source_id": "LD1146",
+      "name": "Dhunikolhu",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0396467,
+      "longitude": 72.8814786
+    },
+    {
+      "id": "ld1200",
+      "source_id": "LD1200",
+      "name": "En'boodhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0638786,
+      "longitude": 72.8561661
     },
     {
       "id": "ld0204",
       "name": "Eydhafushi",
       "atoll": "Baa",
-      "source_id": "LD0204"
+      "source_id": "LD0204",
+      "latitude": 5.1026564,
+      "longitude": 73.0707736,
+      "category": "residential"
+    },
+    {
+      "id": "ld0252",
+      "source_id": "LD0252",
+      "name": "Fares",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2321386,
+      "longitude": 72.8772706
     },
     {
       "id": "ld0520",
       "name": "Fehendhoo",
       "atoll": "Baa",
-      "source_id": "LD0520"
+      "source_id": "LD0520",
+      "latitude": 4.8817739,
+      "longitude": 72.9687542,
+      "category": "residential"
+    },
+    {
+      "id": "ld1041",
+      "source_id": "LD1041",
+      "name": "Finolhas",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2338781,
+      "longitude": 73.1136428
+    },
+    {
+      "id": "ld0451",
+      "source_id": "LD0451",
+      "name": "Fonimagoodhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2551628,
+      "longitude": 73.1635281
     },
     {
       "id": "ld0044",
       "name": "Fulhadhoo",
       "atoll": "Baa",
-      "source_id": "LD0044"
+      "source_id": "LD0044",
+      "latitude": 4.8847133,
+      "longitude": 72.9324647,
+      "category": "residential"
+    },
+    {
+      "id": "ld0776",
+      "source_id": "LD0776",
+      "name": "Funadhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2746306,
+      "longitude": 73.0331319
     },
     {
       "id": "ld0931",
       "name": "Goidhoo",
       "atoll": "Baa",
-      "source_id": "LD0931"
+      "source_id": "LD0931",
+      "latitude": 4.8720794,
+      "longitude": 72.9995564,
+      "category": "residential"
+    },
+    {
+      "id": "ld0438",
+      "source_id": "LD0438",
+      "name": "Hibalhidhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.1413669,
+      "longitude": 73.1147458
+    },
+    {
+      "id": "ld0732",
+      "source_id": "LD0732",
+      "name": "Hirundhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2171042,
+      "longitude": 73.1535858
     },
     {
       "id": "ld1000",
       "name": "Hithaadhoo",
       "atoll": "Baa",
-      "source_id": "LD1000"
+      "source_id": "LD1000",
+      "latitude": 5.0074056,
+      "longitude": 72.9228586,
+      "category": "residential"
+    },
+    {
+      "id": "ld0185",
+      "source_id": "LD0185",
+      "name": "Horubadhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.1626825,
+      "longitude": 73.0527406
+    },
+    {
+      "id": "ld1215",
+      "source_id": "LD1215",
+      "name": "Huraafaru",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2069228,
+      "longitude": 73.1539375
+    },
+    {
+      "id": "ld0999",
+      "source_id": "LD0999",
+      "name": "Innafushi",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 4.8775125,
+      "longitude": 72.8793625
     },
     {
       "id": "ld0518",
       "name": "Kamadhoo",
       "atoll": "Baa",
-      "source_id": "LD0518"
+      "source_id": "LD0518",
+      "latitude": 5.2820342,
+      "longitude": 73.1369808,
+      "category": "residential"
+    },
+    {
+      "id": "ld0197",
+      "source_id": "LD0197",
+      "name": "Kanufusheegaathufinolhu",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0136533,
+      "longitude": 72.9619814
+    },
+    {
+      "id": "ld0022",
+      "source_id": "LD0022",
+      "name": "Kanufushi",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0117042,
+      "longitude": 72.9533042
     },
     {
       "id": "ld0668",
       "name": "Kendhoo",
       "atoll": "Baa",
-      "source_id": "LD0668"
+      "source_id": "LD0668",
+      "latitude": 5.2753942,
+      "longitude": 73.0099786,
+      "category": "residential"
     },
     {
       "id": "ld0363",
       "name": "Kihaadhoo",
       "atoll": "Baa",
-      "source_id": "LD0363"
+      "source_id": "LD0363",
+      "latitude": 5.2151881,
+      "longitude": 73.1250994,
+      "category": "residential"
+    },
+    {
+      "id": "ld1197",
+      "source_id": "LD1197",
+      "name": "Kihaadhuffaru",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.1909731,
+      "longitude": 73.1323806
+    },
+    {
+      "id": "ld1061",
+      "source_id": "LD1061",
+      "name": "Kihavahhuravalhi",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2961931,
+      "longitude": 73.0571047
     },
     {
       "id": "ld0059",
       "name": "Kudarikilu",
       "atoll": "Baa",
-      "source_id": "LD0059"
+      "source_id": "LD0059",
+      "latitude": 5.3004194,
+      "longitude": 73.0708325,
+      "category": "residential"
+    },
+    {
+      "id": "ld0217",
+      "source_id": "LD0217",
+      "name": "Kunfunadhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.1124675,
+      "longitude": 73.0776767
+    },
+    {
+      "id": "ld0256",
+      "source_id": "LD0256",
+      "name": "Lan'daagiraavaru",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2860589,
+      "longitude": 73.1118822
     },
     {
       "id": "ld0637",
       "name": "Maalhos",
       "atoll": "Baa",
-      "source_id": "LD0637"
+      "source_id": "LD0637",
+      "latitude": 5.1346881,
+      "longitude": 73.1081558,
+      "category": "residential"
+    },
+    {
+      "id": "ld0617",
+      "source_id": "LD0617",
+      "name": "Maamaduvvari",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0094217,
+      "longitude": 72.942115
+    },
+    {
+      "id": "ld0833",
+      "source_id": "LD0833",
+      "name": "Mendhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.1749658,
+      "longitude": 72.9955292
+    },
+    {
+      "id": "ld1075",
+      "source_id": "LD1075",
+      "name": "Milaidhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2671128,
+      "longitude": 73.1284758
+    },
+    {
+      "id": "ld0147",
+      "source_id": "LD0147",
+      "name": "Miriandhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0632139,
+      "longitude": 73.0312728
+    },
+    {
+      "id": "ld1015",
+      "source_id": "LD1015",
+      "name": "Mudhdhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2066725,
+      "longitude": 73.0847272
+    },
+    {
+      "id": "ld1066",
+      "source_id": "LD1066",
+      "name": "Muthaafushi",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0784264,
+      "longitude": 72.8778281
+    },
+    {
+      "id": "ld0608",
+      "source_id": "LD0608",
+      "name": "Thiladhoo",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.2622036,
+      "longitude": 73.1552547
     },
     {
       "id": "ld0677",
       "name": "Thulhaadhoo",
       "atoll": "Baa",
-      "source_id": "LD0677"
+      "source_id": "LD0677",
+      "latitude": 5.0219172,
+      "longitude": 72.8411203,
+      "category": "residential"
+    },
+    {
+      "id": "ld0589",
+      "source_id": "LD0589",
+      "name": "Ufuligiri",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.0170028,
+      "longitude": 72.9700931
+    },
+    {
+      "id": "ld0660",
+      "source_id": "LD0660",
+      "name": "Vakkaru",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.1336019,
+      "longitude": 72.9100494
+    },
+    {
+      "id": "ld0654",
+      "source_id": "LD0654",
+      "name": "Voavah",
+      "atoll": "Baa",
+      "category": "resort",
+      "latitude": 5.3163481,
+      "longitude": 73.0776244
+    },
+    {
+      "id": "ld0623",
+      "source_id": "LD0623",
+      "name": "Aluvifushi",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.9329675,
+      "longitude": 72.9598378
     },
     {
       "id": "ld0066",
       "name": "Ban'didhoo",
       "atoll": "Dhaalu",
-      "source_id": "LD0066"
+      "source_id": "LD0066",
+      "latitude": 2.9367267,
+      "longitude": 72.9902406,
+      "category": "residential"
+    },
+    {
+      "id": "ld1396",
+      "source_id": "LD1396",
+      "name": "Boarikifinolhu",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.9232861,
+      "longitude": 72.9703508
+    },
+    {
+      "id": "ld0448",
+      "source_id": "LD0448",
+      "name": "Dhoores",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.9177025,
+      "longitude": 72.88415
+    },
+    {
+      "id": "ld0649",
+      "source_id": "LD0649",
+      "name": "En'boodhoofushi",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.6774222,
+      "longitude": 72.9282839
+    },
+    {
+      "id": "ld0747",
+      "source_id": "LD0747",
+      "name": "Faandhoo",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.9627964,
+      "longitude": 72.9468408
+    },
+    {
+      "id": "ld0772",
+      "source_id": "LD0772",
+      "name": "Hiriyafushi",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.7118322,
+      "longitude": 72.9878022
     },
     {
       "id": "ld0662",
       "name": "Hulhudheli",
       "atoll": "Dhaalu",
-      "source_id": "LD0662"
+      "source_id": "LD0662",
+      "latitude": 2.8584406,
+      "longitude": 72.8465036,
+      "category": "residential"
+    },
+    {
+      "id": "ld0400",
+      "source_id": "LD0400",
+      "name": "Kan'dinmaa",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.7403781,
+      "longitude": 73.0154061
+    },
+    {
+      "id": "ld0104",
+      "source_id": "LD0104",
+      "name": "Kedhigan'du",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.6963969,
+      "longitude": 72.8511303
     },
     {
       "id": "ld0499",
       "name": "Kudahuvadhoo",
       "atoll": "Dhaalu",
-      "source_id": "LD0499"
+      "source_id": "LD0499",
+      "latitude": 2.6701369,
+      "longitude": 72.8888561,
+      "category": "residential"
     },
     {
       "id": "ld0209",
       "name": "Maaen'boodhoo",
       "atoll": "Dhaalu",
-      "source_id": "LD0209"
+      "source_id": "LD0209",
+      "latitude": 2.6957625,
+      "longitude": 72.9634178,
+      "category": "residential"
+    },
+    {
+      "id": "ld0338",
+      "source_id": "LD0338",
+      "name": "Maafushi",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.6881494,
+      "longitude": 72.8591672
+    },
+    {
+      "id": "ld1188",
+      "source_id": "LD1188",
+      "name": "Maagau",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.9476533,
+      "longitude": 72.9145953
     },
     {
       "id": "ld1050",
       "name": "Meedhoo",
       "atoll": "Dhaalu",
-      "source_id": "LD1050"
+      "source_id": "LD1050",
+      "latitude": 2.9980358,
+      "longitude": 73.0072789,
+      "category": "residential"
+    },
+    {
+      "id": "ld0337",
+      "source_id": "LD0337",
+      "name": "Meedhuffushi",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 3.0032144,
+      "longitude": 73.0003858
+    },
+    {
+      "id": "ld0932",
+      "source_id": "LD0932",
+      "name": "Olhuveli",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.6822453,
+      "longitude": 72.9344592
     },
     {
       "id": "ld0334",
       "name": "Rin'budhoo",
       "atoll": "Dhaalu",
-      "source_id": "LD0334"
+      "source_id": "LD0334",
+      "latitude": 2.9245167,
+      "longitude": 72.8954092,
+      "category": "residential"
+    },
+    {
+      "id": "ld1185",
+      "source_id": "LD1185",
+      "name": "Velavaru",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.9797017,
+      "longitude": 73.0156842
+    },
+    {
+      "id": "ld0012",
+      "source_id": "LD0012",
+      "name": "Vommuli",
+      "atoll": "Dhaalu",
+      "category": "resort",
+      "latitude": 2.9113306,
+      "longitude": 72.8660736
     },
     {
       "id": "ld0606",
       "name": "Bileiydhoo",
       "atoll": "Faafu",
-      "source_id": "LD0606"
+      "source_id": "LD0606",
+      "latitude": 3.1183719,
+      "longitude": 72.9839989,
+      "category": "residential"
     },
     {
       "id": "ld0970",
       "name": "Dharan'boodhoo",
       "atoll": "Faafu",
-      "source_id": "LD0970"
+      "source_id": "LD0970",
+      "latitude": 3.0629586,
+      "longitude": 72.9257242,
+      "category": "residential"
+    },
+    {
+      "id": "ld0826",
+      "source_id": "LD0826",
+      "name": "En'bulufushi",
+      "atoll": "Faafu",
+      "category": "resort",
+      "latitude": 3.1336881,
+      "longitude": 73.0181111
     },
     {
       "id": "ld0008",
       "name": "Feeali",
       "atoll": "Faafu",
-      "source_id": "LD0008"
+      "source_id": "LD0008",
+      "latitude": 3.2699686,
+      "longitude": 73.001745,
+      "category": "residential"
+    },
+    {
+      "id": "ld0819",
+      "source_id": "LD0819",
+      "name": "Filitheyo",
+      "atoll": "Faafu",
+      "category": "resort",
+      "latitude": 3.2131678,
+      "longitude": 73.0369397
+    },
+    {
+      "id": "ld1141",
+      "source_id": "LD1141",
+      "name": "Himithi",
+      "atoll": "Faafu",
+      "category": "resort",
+      "latitude": 3.2553761,
+      "longitude": 72.8185656
+    },
+    {
+      "id": "ld0845",
+      "source_id": "LD0845",
+      "name": "Jinnathugau",
+      "atoll": "Faafu",
+      "category": "resort",
+      "latitude": 3.2007222,
+      "longitude": 72.9979747
+    },
+    {
+      "id": "ld0925",
+      "source_id": "LD0925",
+      "name": "Maafushi",
+      "atoll": "Faafu",
+      "category": "resort",
+      "latitude": 3.24312,
+      "longitude": 72.9785472
     },
     {
       "id": "ld0085",
       "name": "Magoodhoo",
       "atoll": "Faafu",
-      "source_id": "LD0085"
+      "source_id": "LD0085",
+      "latitude": 3.0791794,
+      "longitude": 72.9636525,
+      "category": "residential"
+    },
+    {
+      "id": "ld0417",
+      "source_id": "LD0417",
+      "name": "Minimasgali",
+      "atoll": "Faafu",
+      "category": "resort",
+      "latitude": 3.2426883,
+      "longitude": 72.8356178
     },
     {
       "id": "ld1158",
       "name": "Nilandhoo",
       "atoll": "Faafu",
-      "source_id": "LD1158"
+      "source_id": "LD1158",
+      "latitude": 3.0571225,
+      "longitude": 72.8888136,
+      "category": "residential"
+    },
+    {
+      "id": "ld0457",
+      "source_id": "LD0457",
+      "name": "Bakehthaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.3811375,
+      "longitude": 73.4976108
     },
     {
       "id": "ld0766",
       "name": "Dhaandhoo",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD0766"
+      "source_id": "LD0766",
+      "latitude": 0.6208242,
+      "longitude": 73.4611267,
+      "category": "residential"
     },
     {
       "id": "ld0412",
       "name": "Dhevvadhoo",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD0412"
+      "source_id": "LD0412",
+      "latitude": 0.5569478,
+      "longitude": 73.2421319,
+      "category": "residential"
+    },
+    {
+      "id": "ld0380",
+      "source_id": "LD0380",
+      "name": "Dhevvalaabadhoo",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.6047178,
+      "longitude": 73.3094056
+    },
+    {
+      "id": "ld0811",
+      "source_id": "LD0811",
+      "name": "Dhigurah",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.6905169,
+      "longitude": 73.4410464
+    },
+    {
+      "id": "ld0802",
+      "source_id": "LD0802",
+      "name": "Falhumaafushi",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.6718092,
+      "longitude": 73.4384414
+    },
+    {
+      "id": "ld0373",
+      "source_id": "LD0373",
+      "name": "Funadhooviligillaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.5697867,
+      "longitude": 73.5198422
+    },
+    {
+      "id": "ld0926",
+      "source_id": "LD0926",
+      "name": "Funamauddaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.5337819,
+      "longitude": 73.1902847
     },
     {
       "id": "ld1182",
       "name": "Gemanafushi",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD1182"
+      "source_id": "LD1182",
+      "latitude": 0.4424447,
+      "longitude": 73.5682653,
+      "category": "residential"
+    },
+    {
+      "id": "ld0618",
+      "source_id": "LD0618",
+      "name": "Han'dahaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.5057,
+      "longitude": 73.4539236
+    },
+    {
+      "id": "ld0540",
+      "source_id": "LD0540",
+      "name": "Hinaamaagalaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.6301358,
+      "longitude": 73.3441881
+    },
+    {
+      "id": "ld0151",
+      "source_id": "LD0151",
+      "name": "Hirihuttaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.5405875,
+      "longitude": 73.3462514
     },
     {
       "id": "ld0856",
       "name": "Kan'duhulhudhoo",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD0856"
+      "source_id": "LD0856",
+      "latitude": 0.3513183,
+      "longitude": 73.5397222,
+      "category": "residential"
+    },
+    {
+      "id": "ld0028",
+      "source_id": "LD0028",
+      "name": "Keredhdhoo",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.6593428,
+      "longitude": 73.4382592
     },
     {
       "id": "ld0743",
       "name": "Kolamaafushi",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD0743"
+      "source_id": "LD0743",
+      "latitude": 0.8375211,
+      "longitude": 73.1847286,
+      "category": "residential"
     },
     {
       "id": "ld0435",
       "name": "Kon'dey",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD0435"
+      "source_id": "LD0435",
+      "latitude": 0.4992547,
+      "longitude": 73.5487769,
+      "category": "residential"
+    },
+    {
+      "id": "ld1171",
+      "source_id": "LD1171",
+      "name": "Kon'deymatheelaabadhoo",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.5057606,
+      "longitude": 73.49801
     },
     {
       "id": "ld1085",
       "name": "Maamendhoo",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD1085"
+      "source_id": "LD1085",
+      "latitude": 0.7138244,
+      "longitude": 73.43893,
+      "category": "residential"
+    },
+    {
+      "id": "ld0024",
+      "source_id": "LD0024",
+      "name": "Maamutaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.8464283,
+      "longitude": 73.4075053
+    },
+    {
+      "id": "ld0156",
+      "source_id": "LD0156",
+      "name": "Maarandhoo",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.8537269,
+      "longitude": 73.2091708
+    },
+    {
+      "id": "ld0911",
+      "source_id": "LD0911",
+      "name": "Maarehaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.4614517,
+      "longitude": 73.5638825
+    },
+    {
+      "id": "ld0153",
+      "source_id": "LD0153",
+      "name": "Mahahdhoo",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.5841406,
+      "longitude": 73.5130647
+    },
+    {
+      "id": "ld0462",
+      "source_id": "LD0462",
+      "name": "Meradhoo",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.5867786,
+      "longitude": 73.0935003
     },
     {
       "id": "ld1091",
       "name": "Nilandhoo",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD1091"
+      "source_id": "LD1091",
+      "latitude": 0.6363947,
+      "longitude": 73.4462733,
+      "category": "residential"
+    },
+    {
+      "id": "ld1449",
+      "source_id": "LD1449",
+      "name": "Unnamed tourism island LD1449",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.6627514,
+      "longitude": 73.4183553
     },
     {
       "id": "ld0247",
       "name": "Vilin'gili",
       "atoll": "Gaafu Alifu",
-      "source_id": "LD0247"
+      "source_id": "LD0247",
+      "latitude": 0.7563442,
+      "longitude": 73.4348519,
+      "category": "residential"
+    },
+    {
+      "id": "ld0212",
+      "source_id": "LD0212",
+      "name": "Vodamulaa",
+      "atoll": "Gaafu Alifu",
+      "category": "resort",
+      "latitude": 0.6041856,
+      "longitude": 73.4858847
+    },
+    {
+      "id": "ld1168",
+      "source_id": "LD1168",
+      "name": "Bolimathaidhoo",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.2330181,
+      "longitude": 73.1262914
+    },
+    {
+      "id": "ld0481",
+      "source_id": "LD0481",
+      "name": "Dhigurehaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.4214142,
+      "longitude": 73.0047831
+    },
+    {
+      "id": "ld0814",
+      "source_id": "LD0814",
+      "name": "Dhoonirehaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.3247739,
+      "longitude": 73.4941653
     },
     {
       "id": "ld0572",
       "name": "Faresmaathodaa",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0572"
+      "source_id": "LD0572",
+      "latitude": 0.1995081,
+      "longitude": 73.1871908,
+      "category": "residential"
+    },
+    {
+      "id": "ld0395",
+      "source_id": "LD0395",
+      "name": "Farukolhuhuttaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.1958261,
+      "longitude": 73.2262908
+    },
+    {
+      "id": "ld0774",
+      "source_id": "LD0774",
+      "name": "Fereythavilin'gili",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.3719972,
+      "longitude": 73.0239906
     },
     {
       "id": "ld0470",
       "name": "Fiyoaree",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0470"
+      "source_id": "LD0470",
+      "latitude": 0.2213939,
+      "longitude": 73.1365581,
+      "category": "residential"
     },
     {
       "id": "ld0887",
       "name": "Gadhdhoo",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0887"
+      "source_id": "LD0887",
+      "latitude": 0.2901775,
+      "longitude": 73.4579575,
+      "category": "residential"
+    },
+    {
+      "id": "ld0430",
+      "source_id": "LD0430",
+      "name": "Gazeeraa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.2669075,
+      "longitude": 73.3768272
+    },
+    {
+      "id": "ld0255",
+      "source_id": "LD0255",
+      "name": "Havoddaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.5403356,
+      "longitude": 73.0952258
     },
     {
       "id": "ld0851",
       "name": "Hoan'dehdhoo",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0851"
+      "source_id": "LD0851",
+      "latitude": 0.4445403,
+      "longitude": 73.0043139,
+      "category": "residential"
+    },
+    {
+      "id": "ld0607",
+      "source_id": "LD0607",
+      "name": "Kaashidhoo",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.3352925,
+      "longitude": 73.4365842
+    },
+    {
+      "id": "ld0575",
+      "source_id": "LD0575",
+      "name": "Kadevaarehaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.4282411,
+      "longitude": 73.0037808
+    },
+    {
+      "id": "ld0815",
+      "source_id": "LD0815",
+      "name": "Kadhefala",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.3679472,
+      "longitude": 73.0253264
+    },
+    {
+      "id": "ld0198",
+      "source_id": "LD0198",
+      "name": "Kan'dahalagalaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.2252558,
+      "longitude": 73.2165694
+    },
+    {
+      "id": "ld0537",
+      "source_id": "LD0537",
+      "name": "Kodurataa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.3737572,
+      "longitude": 73.0228072
+    },
+    {
+      "id": "ld0940",
+      "source_id": "LD0940",
+      "name": "Konottaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.4627686,
+      "longitude": 73.1547733
+    },
+    {
+      "id": "ld0751",
+      "source_id": "LD0751",
+      "name": "Lonudhoohuttaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.3019169,
+      "longitude": 73.4167281
     },
     {
       "id": "ld0557",
       "name": "Madaveli",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0557"
+      "source_id": "LD0557",
+      "latitude": 0.4588183,
+      "longitude": 72.9989267,
+      "category": "residential"
+    },
+    {
+      "id": "ld0635",
+      "source_id": "LD0635",
+      "name": "Maguhdhuvaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.2776906,
+      "longitude": 73.3567364
     },
     {
       "id": "ld0181",
       "name": "Nadellaa",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0181"
+      "source_id": "LD0181",
+      "latitude": 0.2935444,
+      "longitude": 73.0407967,
+      "category": "residential"
+    },
+    {
+      "id": "ld0693",
+      "source_id": "LD0693",
+      "name": "Olhimuntaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.3599628,
+      "longitude": 73.0259475
     },
     {
       "id": "ld0630",
       "name": "Rathafandhoo",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0630"
+      "source_id": "LD0630",
+      "latitude": 0.2527439,
+      "longitude": 73.1047361,
+      "category": "residential"
     },
     {
       "id": "ld0717",
       "name": "Thinadhoo",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0717"
+      "source_id": "LD0717",
+      "latitude": 0.5324353,
+      "longitude": 72.9984306,
+      "category": "residential"
     },
     {
       "id": "ld0195",
       "name": "Vaadhoo",
       "atoll": "Gaafu Dhaalu",
-      "source_id": "LD0195"
+      "source_id": "LD0195",
+      "latitude": 0.2273256,
+      "longitude": 73.2736975,
+      "category": "residential"
+    },
+    {
+      "id": "ld0586",
+      "source_id": "LD0586",
+      "name": "Vatavarrehaa",
+      "atoll": "Gaafu Dhaalu",
+      "category": "resort",
+      "latitude": 0.2560656,
+      "longitude": 73.2961736
     },
     {
       "id": "ld0726",
       "name": "Fuvahmulah",
       "atoll": "Gnaviyani",
-      "source_id": "LD0726"
+      "source_id": "LD0726",
+      "latitude": -0.2950889,
+      "longitude": 73.4251478,
+      "category": "residential"
+    },
+    {
+      "id": "ld1033",
+      "source_id": "LD1033",
+      "name": "Alidhoo",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 6.8490244,
+      "longitude": 73.1522958
+    },
+    {
+      "id": "ld0458",
+      "source_id": "LD0458",
+      "name": "Alidhuffarufinolhu",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 6.8613436,
+      "longitude": 73.1040106
     },
     {
       "id": "ld0987",
       "name": "Baarah",
       "atoll": "Haa Alifu",
-      "source_id": "LD0987"
+      "source_id": "LD0987",
+      "latitude": 6.8166614,
+      "longitude": 73.2083825,
+      "category": "residential"
+    },
+    {
+      "id": "ld0528",
+      "source_id": "LD0528",
+      "name": "Berinmadhoo",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 7.04726,
+      "longitude": 72.9714133
     },
     {
       "id": "ld0568",
       "name": "Dhidhdhoo",
       "atoll": "Haa Alifu",
-      "source_id": "LD0568"
+      "source_id": "LD0568",
+      "latitude": 6.8881094,
+      "longitude": 73.1109283,
+      "category": "residential"
     },
     {
       "id": "ld0993",
       "name": "Filladhoo",
       "atoll": "Haa Alifu",
-      "source_id": "LD0993"
+      "source_id": "LD0993",
+      "latitude": 6.8931256,
+      "longitude": 73.2290719,
+      "category": "residential"
+    },
+    {
+      "id": "ld0433",
+      "source_id": "LD0433",
+      "name": "Gaamathikulhudhoo",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 7.0389728,
+      "longitude": 72.9844711
     },
     {
       "id": "ld0246",
       "name": "Hoarafushi",
       "atoll": "Haa Alifu",
-      "source_id": "LD0246"
+      "source_id": "LD0246",
+      "latitude": 6.9826647,
+      "longitude": 72.8941389,
+      "category": "residential"
     },
     {
       "id": "ld0908",
       "name": "Ihavandhoo",
       "atoll": "Haa Alifu",
-      "source_id": "LD0908"
+      "source_id": "LD0908",
+      "latitude": 6.9529214,
+      "longitude": 72.9262231,
+      "category": "residential"
     },
     {
       "id": "ld0563",
       "name": "Kelaa",
       "atoll": "Haa Alifu",
-      "source_id": "LD0563"
+      "source_id": "LD0563",
+      "latitude": 6.9532911,
+      "longitude": 73.2158253,
+      "category": "residential"
+    },
+    {
+      "id": "ld0983",
+      "source_id": "LD0983",
+      "name": "Maafinolhu",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 7.00222,
+      "longitude": 72.862445
     },
     {
       "id": "ld0695",
       "name": "Maarandhoo",
       "atoll": "Haa Alifu",
-      "source_id": "LD0695"
+      "source_id": "LD0695",
+      "latitude": 6.8524436,
+      "longitude": 72.984325,
+      "category": "residential"
+    },
+    {
+      "id": "ld0548",
+      "source_id": "LD0548",
+      "name": "Manafaru",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 6.9970561,
+      "longitude": 72.9399436
+    },
+    {
+      "id": "ld0880",
+      "source_id": "LD0880",
+      "name": "Medhafushi",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 7.0108794,
+      "longitude": 72.9347786
     },
     {
       "id": "ld0901",
       "name": "Molhadhoo",
       "atoll": "Haa Alifu",
-      "source_id": "LD0901"
+      "source_id": "LD0901",
+      "latitude": 7.0138719,
+      "longitude": 72.9973781,
+      "category": "residential"
     },
     {
       "id": "ld0701",
       "name": "Muraidhoo",
       "atoll": "Haa Alifu",
-      "source_id": "LD0701"
+      "source_id": "LD0701",
+      "latitude": 6.8379211,
+      "longitude": 73.1673086,
+      "category": "residential"
+    },
+    {
+      "id": "ld1155",
+      "source_id": "LD1155",
+      "name": "Naridhoo",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 6.8949969,
+      "longitude": 73.1267625
     },
     {
       "id": "ld0984",
       "name": "Thakandhoo",
       "atoll": "Haa Alifu",
-      "source_id": "LD0984"
+      "source_id": "LD0984",
+      "latitude": 6.8442303,
+      "longitude": 72.9956247,
+      "category": "residential"
     },
     {
       "id": "ld0915",
       "name": "Thuraakunu",
       "atoll": "Haa Alifu",
-      "source_id": "LD0915"
+      "source_id": "LD0915",
+      "latitude": 7.1041833,
+      "longitude": 72.8991433,
+      "category": "residential"
     },
     {
       "id": "ld0488",
       "name": "Uligan",
       "atoll": "Haa Alifu",
-      "source_id": "LD0488"
+      "source_id": "LD0488",
+      "latitude": 7.0829236,
+      "longitude": 72.9263894,
+      "category": "residential"
     },
     {
       "id": "ld0507",
       "name": "Utheemu",
       "atoll": "Haa Alifu",
-      "source_id": "LD0507"
+      "source_id": "LD0507",
+      "latitude": 6.8346553,
+      "longitude": 73.1126092,
+      "category": "residential"
+    },
+    {
+      "id": "ld0593",
+      "source_id": "LD0593",
+      "name": "Van'gaaru",
+      "atoll": "Haa Alifu",
+      "category": "resort",
+      "latitude": 7.0932328,
+      "longitude": 72.8782631
     },
     {
       "id": "ld0232",
       "name": "Vashafaru",
       "atoll": "Haa Alifu",
-      "source_id": "LD0232"
+      "source_id": "LD0232",
+      "latitude": 6.8976039,
+      "longitude": 73.1597514,
+      "category": "residential"
+    },
+    {
+      "id": "ld0663",
+      "source_id": "LD0663",
+      "name": "Dhipparufushi",
+      "atoll": "Haa Dhaalu",
+      "category": "resort",
+      "latitude": 6.3190472,
+      "longitude": 72.6406442
     },
     {
       "id": "ld0441",
       "name": "Finey",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0441"
+      "source_id": "LD0441",
+      "latitude": 6.7459414,
+      "longitude": 73.0533894,
+      "category": "residential"
     },
     {
       "id": "ld0235",
       "name": "Hanimaadhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0235"
+      "source_id": "LD0235",
+      "latitude": 6.7539208,
+      "longitude": 73.1696578,
+      "category": "residential"
     },
     {
       "id": "ld0199",
       "name": "Hirimaradhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0199"
+      "source_id": "LD0199",
+      "latitude": 6.7248289,
+      "longitude": 73.0242169,
+      "category": "residential"
+    },
+    {
+      "id": "ld1192",
+      "source_id": "LD1192",
+      "name": "Hon'daafushi",
+      "atoll": "Haa Dhaalu",
+      "category": "resort",
+      "latitude": 6.7787236,
+      "longitude": 73.1221917
+    },
+    {
+      "id": "ld0489",
+      "source_id": "LD0489",
+      "name": "Kudafarufasgandu",
+      "atoll": "Haa Dhaalu",
+      "category": "resort",
+      "latitude": 6.7118875,
+      "longitude": 72.9250392
+    },
+    {
+      "id": "ld0346",
+      "source_id": "LD0346",
+      "name": "Kudamuraidhoo",
+      "atoll": "Haa Dhaalu",
+      "category": "resort",
+      "latitude": 6.6427706,
+      "longitude": 72.9198761
     },
     {
       "id": "ld0048",
       "name": "Kulhudhuffushi",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0048"
+      "source_id": "LD0048",
+      "latitude": 6.6232258,
+      "longitude": 73.0688894,
+      "category": "residential"
     },
     {
       "id": "ld0541",
       "name": "Kumundhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0541"
+      "source_id": "LD0541",
+      "latitude": 6.5716497,
+      "longitude": 73.0520219,
+      "category": "residential"
     },
     {
       "id": "ld0852",
       "name": "Kurin'bi",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0852"
+      "source_id": "LD0852",
+      "latitude": 6.6655506,
+      "longitude": 72.9966369,
+      "category": "residential"
     },
     {
       "id": "ld0699",
       "name": "Makunudhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0699"
+      "source_id": "LD0699",
+      "latitude": 6.409385,
+      "longitude": 72.7050881,
+      "category": "residential"
+    },
+    {
+      "id": "ld1196",
+      "source_id": "LD1196",
+      "name": "Muiri",
+      "atoll": "Haa Dhaalu",
+      "category": "resort",
+      "latitude": 6.6580822,
+      "longitude": 72.9362667
+    },
+    {
+      "id": "ld0369",
+      "source_id": "LD0369",
+      "name": "Naagoashi",
+      "atoll": "Haa Dhaalu",
+      "category": "resort",
+      "latitude": 6.6700878,
+      "longitude": 72.9032311
     },
     {
       "id": "ld0710",
       "name": "Naivaadhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0710"
+      "source_id": "LD0710",
+      "latitude": 6.7469583,
+      "longitude": 72.9348725,
+      "category": "residential"
     },
     {
       "id": "ld0698",
       "name": "Nellaidhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0698"
+      "source_id": "LD0698",
+      "latitude": 6.7148786,
+      "longitude": 72.9469781,
+      "category": "residential"
     },
     {
       "id": "ld0686",
       "name": "Neykurendhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0686"
+      "source_id": "LD0686",
+      "latitude": 6.5430444,
+      "longitude": 72.9797833,
+      "category": "residential"
     },
     {
       "id": "ld0658",
       "name": "Nolhivaran",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0658"
+      "source_id": "LD0658",
+      "latitude": 6.6624119,
+      "longitude": 73.0823739,
+      "category": "residential"
     },
     {
       "id": "ld0416",
       "name": "Nolhivaranfaru",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0416"
+      "source_id": "LD0416",
+      "latitude": 6.6952878,
+      "longitude": 73.1185322,
+      "category": "residential"
     },
     {
       "id": "ld0406",
       "name": "Vaikaradhoo",
       "atoll": "Haa Dhaalu",
-      "source_id": "LD0406"
+      "source_id": "LD0406",
+      "latitude": 6.5497997,
+      "longitude": 72.9531206,
+      "category": "residential"
+    },
+    {
+      "id": "ld1138",
+      "source_id": "LD1138",
+      "name": "Vaikaramuraidhoo",
+      "atoll": "Haa Dhaalu",
+      "category": "resort",
+      "latitude": 6.5409664,
+      "longitude": 72.8967469
+    },
+    {
+      "id": "ld1293",
+      "source_id": "LD1293",
+      "name": "Aanugan'dufinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3064,
+      "longitude": 73.5055647
+    },
+    {
+      "id": "ld1714",
+      "source_id": "LD1714",
+      "name": "Aanugan'duhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3078261,
+      "longitude": 73.5010422
+    },
+    {
+      "id": "ld1502",
+      "source_id": "LD1502",
+      "name": "Akasdhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.1238206,
+      "longitude": 73.4723131
+    },
+    {
+      "id": "ld0981",
+      "source_id": "LD0981",
+      "name": "Akirifushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6370975,
+      "longitude": 73.4025564
+    },
+    {
+      "id": "ld0536",
+      "source_id": "LD0536",
+      "name": "Asdhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.4663267,
+      "longitude": 73.6613003
+    },
+    {
+      "id": "ld0142",
+      "source_id": "LD0142",
+      "name": "Baros",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2847506,
+      "longitude": 73.427105
+    },
+    {
+      "id": "ld0160",
+      "source_id": "LD0160",
+      "name": "Biyaadhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9222331,
+      "longitude": 73.4563361
+    },
+    {
+      "id": "ld0026",
+      "source_id": "LD0026",
+      "name": "Boduban'dos",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2694072,
+      "longitude": 73.4914611
+    },
+    {
+      "id": "ld1194",
+      "source_id": "LD1194",
+      "name": "Bodufinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8574064,
+      "longitude": 73.4566014
+    },
+    {
+      "id": "ld0305",
+      "source_id": "LD0305",
+      "name": "Boduhithi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.4307683,
+      "longitude": 73.38467
+    },
+    {
+      "id": "ld0137",
+      "source_id": "LD0137",
+      "name": "Boduhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9674392,
+      "longitude": 73.5052042
+    },
+    {
+      "id": "ld0597",
+      "source_id": "LD0597",
+      "name": "Bolifushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.0972969,
+      "longitude": 73.3997958
     },
     {
       "id": "ld0894",
       "name": "Dhiffushi",
       "atoll": "Kaafu",
-      "source_id": "LD0894"
+      "source_id": "LD0894",
+      "latitude": 4.4419064,
+      "longitude": 73.7143269,
+      "category": "residential"
+    },
+    {
+      "id": "ld0321",
+      "source_id": "LD0321",
+      "name": "Dhigufinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9723869,
+      "longitude": 73.5022944
+    },
+    {
+      "id": "ld1300",
+      "source_id": "LD1300",
+      "name": "Dhonfushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6085881,
+      "longitude": 73.4077767
+    },
+    {
+      "id": "ld1501",
+      "source_id": "LD1501",
+      "name": "Ehmafushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.1229458,
+      "longitude": 73.4653989
+    },
+    {
+      "id": "ld0816",
+      "source_id": "LD0816",
+      "name": "En'boodhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.0840836,
+      "longitude": 73.5120872
+    },
+    {
+      "id": "ld0524",
+      "source_id": "LD0524",
+      "name": "En'boodhoofinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.1030581,
+      "longitude": 73.5253272
+    },
+    {
+      "id": "ld0648",
+      "source_id": "LD0648",
+      "name": "Eriadhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.5899375,
+      "longitude": 73.4143936
+    },
+    {
+      "id": "ld0624",
+      "source_id": "LD0624",
+      "name": "Erruhhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.815035,
+      "longitude": 73.4162756
+    },
+    {
+      "id": "ld1703",
+      "source_id": "LD1703",
+      "name": "Fariiruhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.5946847,
+      "longitude": 73.5842842
+    },
+    {
+      "id": "ld1705",
+      "source_id": "LD1705",
+      "name": "Farikan'duhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6032428,
+      "longitude": 73.5811419
+    },
+    {
+      "id": "ld1730",
+      "source_id": "LD1730",
+      "name": "Faritharihuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6143586,
+      "longitude": 73.5703089
+    },
+    {
+      "id": "ld0390",
+      "source_id": "LD0390",
+      "name": "Farukolhufushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2312894,
+      "longitude": 73.5441547
+    },
+    {
+      "id": "ld0150",
+      "source_id": "LD0150",
+      "name": "Feydhoofinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2128906,
+      "longitude": 73.4844364
+    },
+    {
+      "id": "ld0516",
+      "source_id": "LD0516",
+      "name": "Fihaalhohi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8772692,
+      "longitude": 73.3670714
+    },
+    {
+      "id": "ld1334",
+      "source_id": "LD1334",
+      "name": "Funfinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9762894,
+      "longitude": 73.5048161
+    },
+    {
+      "id": "ld1177",
+      "source_id": "LD1177",
+      "name": "Furanafushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2500836,
+      "longitude": 73.5450678
     },
     {
       "id": "ld0873",
       "name": "Gaafaru",
       "atoll": "Kaafu",
-      "source_id": "LD0873"
+      "source_id": "LD0873",
+      "latitude": 4.7361825,
+      "longitude": 73.4996058,
+      "category": "residential"
+    },
+    {
+      "id": "ld0803",
+      "source_id": "LD0803",
+      "name": "Gasfinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3613542,
+      "longitude": 73.6262564
+    },
+    {
+      "id": "ld0689",
+      "source_id": "LD0689",
+      "name": "Giraavaru",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2004944,
+      "longitude": 73.4129206
     },
     {
       "id": "ld0577",
       "name": "Gulhi",
       "atoll": "Kaafu",
-      "source_id": "LD0577"
+      "source_id": "LD0577",
+      "latitude": 3.9908933,
+      "longitude": 73.5089186,
+      "category": "residential"
+    },
+    {
+      "id": "ld0558",
+      "source_id": "LD0558",
+      "name": "Gulhigaathuhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9767622,
+      "longitude": 73.5065783
     },
     {
       "id": "ld0738",
       "name": "Guraidhoo",
       "atoll": "Kaafu",
-      "source_id": "LD0738"
+      "source_id": "LD0738",
+      "latitude": 3.9007061,
+      "longitude": 73.4680956,
+      "category": "residential"
+    },
+    {
+      "id": "ld1707",
+      "source_id": "LD1707",
+      "name": "Hastheem",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6220108,
+      "longitude": 73.4166242
+    },
+    {
+      "id": "ld1732",
+      "source_id": "LD1732",
+      "name": "Hathaafinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.0899344,
+      "longitude": 73.5237564
+    },
+    {
+      "id": "ld0036",
+      "source_id": "LD0036",
+      "name": "Helen'geli",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6343581,
+      "longitude": 73.5634608
+    },
+    {
+      "id": "ld0331",
+      "source_id": "LD0331",
+      "name": "Hen'badhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.4816983,
+      "longitude": 73.3933383
     },
     {
       "id": "ld1129",
       "name": "Hinmafushi",
       "atoll": "Kaafu",
-      "source_id": "LD1129"
+      "source_id": "LD1129",
+      "latitude": 4.308255,
+      "longitude": 73.5711447,
+      "category": "residential"
     },
     {
       "id": "ld0683",
       "name": "Huraa",
       "atoll": "Kaafu",
-      "source_id": "LD0683"
+      "source_id": "LD0683",
+      "latitude": 4.3335831,
+      "longitude": 73.6015492,
+      "category": "residential"
+    },
+    {
+      "id": "ld0154",
+      "source_id": "LD0154",
+      "name": "Ihuru",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.30677,
+      "longitude": 73.4160336
+    },
+    {
+      "id": "ld1507",
+      "source_id": "LD1507",
+      "name": "Ithaafushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.0119231,
+      "longitude": 73.3831225
     },
     {
       "id": "ld0665",
       "name": "Kaashidhoo",
       "atoll": "Kaafu",
-      "source_id": "LD0665"
+      "source_id": "LD0665",
+      "latitude": 4.9563714,
+      "longitude": 73.4603881,
+      "category": "residential"
+    },
+    {
+      "id": "ld0843",
+      "source_id": "LD0843",
+      "name": "Kagi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6767339,
+      "longitude": 73.5012175
+    },
+    {
+      "id": "ld0377",
+      "source_id": "LD0377",
+      "name": "Kan'doomaafushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9032017,
+      "longitude": 73.4736161
+    },
+    {
+      "id": "ld0960",
+      "source_id": "LD0960",
+      "name": "Kanifinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3435875,
+      "longitude": 73.6080078
+    },
+    {
+      "id": "ld0157",
+      "source_id": "LD0157",
+      "name": "Kanuoiyhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3190192,
+      "longitude": 73.5919153
+    },
+    {
+      "id": "ld0283",
+      "source_id": "LD0283",
+      "name": "Kohdhipparu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2597072,
+      "longitude": 73.380125
+    },
+    {
+      "id": "ld0230",
+      "source_id": "LD0230",
+      "name": "Kudaban'dos",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2638475,
+      "longitude": 73.499715
+    },
+    {
+      "id": "ld0324",
+      "source_id": "LD0324",
+      "name": "Kudafinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8651272,
+      "longitude": 73.4585475
+    },
+    {
+      "id": "ld1114",
+      "source_id": "LD1114",
+      "name": "Kudahuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3282142,
+      "longitude": 73.5974583
+    },
+    {
+      "id": "ld0972",
+      "source_id": "LD0972",
+      "name": "Lankanfinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2851508,
+      "longitude": 73.5539739
+    },
+    {
+      "id": "ld0886",
+      "source_id": "LD0886",
+      "name": "Lankanfushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2950325,
+      "longitude": 73.5570756
+    },
+    {
+      "id": "ld0473",
+      "source_id": "LD0473",
+      "name": "Lhohifushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3508319,
+      "longitude": 73.6175617
+    },
+    {
+      "id": "ld0128",
+      "source_id": "LD0128",
+      "name": "Maadhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8715708,
+      "longitude": 73.4595236
     },
     {
       "id": "ld0069",
       "name": "Maafushi",
       "atoll": "Kaafu",
-      "source_id": "LD0069"
+      "source_id": "LD0069",
+      "latitude": 3.9410892,
+      "longitude": 73.4896203,
+      "category": "residential"
+    },
+    {
+      "id": "ld1500",
+      "source_id": "LD1500",
+      "name": "Maaranfushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6101511,
+      "longitude": 73.4200244
+    },
+    {
+      "id": "ld0436",
+      "source_id": "LD0436",
+      "name": "Madivaru",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.5007475,
+      "longitude": 73.3686906
+    },
+    {
+      "id": "ld0633",
+      "source_id": "LD0633",
+      "name": "Mahaanaelhihuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8122697,
+      "longitude": 73.4112789
+    },
+    {
+      "id": "ld1142",
+      "source_id": "LD1142",
+      "name": "Makunudhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.5425928,
+      "longitude": 73.4056897
+    },
+    {
+      "id": "ld0202",
+      "source_id": "LD0202",
+      "name": "Makunufushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9178508,
+      "longitude": 73.4700964
+    },
+    {
+      "id": "ld0527",
+      "source_id": "LD0527",
+      "name": "Medhufinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.5145517,
+      "longitude": 73.3693986
+    },
+    {
+      "id": "ld1071",
+      "source_id": "LD1071",
+      "name": "Meerufenfushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.4540942,
+      "longitude": 73.7168394
+    },
+    {
+      "id": "ld1313",
+      "source_id": "LD1313",
+      "name": "Nakahchaahuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3420494,
+      "longitude": 73.3865178
+    },
+    {
+      "id": "ld0765",
+      "source_id": "LD0765",
+      "name": "Nakaiychaafushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3684481,
+      "longitude": 73.3697142
+    },
+    {
+      "id": "ld1706",
+      "source_id": "LD1706",
+      "name": "Nashvilu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6245286,
+      "longitude": 73.4065244
+    },
+    {
+      "id": "ld1335",
+      "source_id": "LD1335",
+      "name": "Noofinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9687431,
+      "longitude": 73.5030828
+    },
+    {
+      "id": "ld0415",
+      "source_id": "LD0415",
+      "name": "Olhigan'dufinolhu",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8119386,
+      "longitude": 73.4176261
+    },
+    {
+      "id": "ld0482",
+      "source_id": "LD0482",
+      "name": "Olhuhali",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.6900186,
+      "longitude": 73.4508167
+    },
+    {
+      "id": "ld0756",
+      "source_id": "LD0756",
+      "name": "Olhuveli",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8507628,
+      "longitude": 73.4559339
+    },
+    {
+      "id": "ld0196",
+      "source_id": "LD0196",
+      "name": "Rannaalhi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9032575,
+      "longitude": 73.3579186
+    },
+    {
+      "id": "ld1329",
+      "source_id": "LD1329",
+      "name": "Tholhimaraahuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.8246458,
+      "longitude": 73.3751978
+    },
+    {
+      "id": "ld0929",
+      "source_id": "LD0929",
+      "name": "Thulhaagiri",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3117511,
+      "longitude": 73.4872031
     },
     {
       "id": "ld0745",
       "name": "Thulusdhoo",
       "atoll": "Kaafu",
-      "source_id": "LD0745"
+      "source_id": "LD0745",
+      "latitude": 4.3731444,
+      "longitude": 73.6477422,
+      "category": "residential"
+    },
+    {
+      "id": "ld0903",
+      "source_id": "LD0903",
+      "name": "Vaadhoo",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.1241572,
+      "longitude": 73.4572214
+    },
+    {
+      "id": "ld0098",
+      "source_id": "LD0098",
+      "name": "Vaagali",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9486167,
+      "longitude": 73.3559281
+    },
+    {
+      "id": "ld0311",
+      "source_id": "LD0311",
+      "name": "Vabbinfaru",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3097414,
+      "longitude": 73.4239056
+    },
+    {
+      "id": "ld0954",
+      "source_id": "LD0954",
+      "name": "Velassaru",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.1214392,
+      "longitude": 73.4369375
+    },
+    {
+      "id": "ld1134",
+      "source_id": "LD1134",
+      "name": "Veligan'duhuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9717147,
+      "longitude": 73.5063936
+    },
+    {
+      "id": "ld1039",
+      "source_id": "LD1039",
+      "name": "Vihamanaafushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.2264822,
+      "longitude": 73.5197764
+    },
+    {
+      "id": "ld0215",
+      "source_id": "LD0215",
+      "name": "Vilin'gilimathidhahuraa",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.3775028,
+      "longitude": 73.6635711
+    },
+    {
+      "id": "ld1165",
+      "source_id": "LD1165",
+      "name": "Villivaru",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 3.9144828,
+      "longitude": 73.4552806
+    },
+    {
+      "id": "ld0399",
+      "source_id": "LD0399",
+      "name": "Ziyaaraiyfushi",
+      "atoll": "Kaafu",
+      "category": "resort",
+      "latitude": 4.5329453,
+      "longitude": 73.3724786
+    },
+    {
+      "id": "ld0994",
+      "source_id": "LD0994",
+      "name": "Baresdhoo",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.9678325,
+      "longitude": 73.5399556
+    },
+    {
+      "id": "ld1160",
+      "source_id": "LD1160",
+      "name": "Bodufinolhu",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.9454533,
+      "longitude": 73.5403478
+    },
+    {
+      "id": "ld1186",
+      "source_id": "LD1186",
+      "name": "Bodufinolhu",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 2.0278461,
+      "longitude": 73.372125
+    },
+    {
+      "id": "ld1014",
+      "source_id": "LD1014",
+      "name": "Boduhuraa",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.8012072,
+      "longitude": 73.2947542
+    },
+    {
+      "id": "ld0223",
+      "source_id": "LD0223",
+      "name": "Bodumungnafushi",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.98886,
+      "longitude": 73.3087347
     },
     {
       "id": "ld1049",
       "name": "Dhan'bidhoo",
       "atoll": "Laamu",
-      "source_id": "LD1049"
+      "source_id": "LD1049",
+      "latitude": 2.0942108,
+      "longitude": 73.5447031,
+      "category": "residential"
+    },
+    {
+      "id": "ld0988",
+      "source_id": "LD0988",
+      "name": "Fares",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.7991744,
+      "longitude": 73.3007392
     },
     {
       "id": "ld1038",
       "name": "Fonadhoo",
       "atoll": "Laamu",
-      "source_id": "LD1038"
+      "source_id": "LD1038",
+      "latitude": 1.8343425,
+      "longitude": 73.5000678,
+      "category": "residential"
     },
     {
       "id": "ld0152",
       "name": "Gan",
       "atoll": "Laamu",
-      "source_id": "LD0152"
+      "source_id": "LD0152",
+      "latitude": 1.9142561,
+      "longitude": 73.5409175,
+      "category": "residential"
+    },
+    {
+      "id": "ld0192",
+      "source_id": "LD0192",
+      "name": "Gasgan'dufinolhu",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.9523767,
+      "longitude": 73.5401272
+    },
+    {
+      "id": "ld0953",
+      "source_id": "LD0953",
+      "name": "Guraidhoo",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.9082386,
+      "longitude": 73.2550239
+    },
+    {
+      "id": "ld0733",
+      "source_id": "LD0733",
+      "name": "Haiythoshi",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.8420278,
+      "longitude": 73.2585028
     },
     {
       "id": "ld0265",
       "name": "Hithadhoo",
       "atoll": "Laamu",
-      "source_id": "LD0265"
+      "source_id": "LD0265",
+      "latitude": 1.7968289,
+      "longitude": 73.3882589,
+      "category": "residential"
+    },
+    {
+      "id": "ld0244",
+      "source_id": "LD0244",
+      "name": "Holhurahaa",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 2.068515,
+      "longitude": 73.5390211
     },
     {
       "id": "ld1070",
       "name": "Isdhoo",
       "atoll": "Laamu",
-      "source_id": "LD1070"
+      "source_id": "LD1070",
+      "latitude": 2.1243117,
+      "longitude": 73.5770097,
+      "category": "residential"
     },
     {
       "id": "ld1473",
       "name": "Kalaidhoo",
       "atoll": "Laamu",
-      "source_id": "LD1473"
+      "source_id": "LD1473",
+      "latitude": 2.1142294,
+      "longitude": 73.5605172,
+      "category": "residential"
+    },
+    {
+      "id": "ld0371",
+      "source_id": "LD0371",
+      "name": "Kashidhoo",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.9194192,
+      "longitude": 73.2536764
     },
     {
       "id": "ld0323",
       "name": "Kunahandhoo",
       "atoll": "Laamu",
-      "source_id": "LD0323"
+      "source_id": "LD0323",
+      "latitude": 1.7834003,
+      "longitude": 73.3682072,
+      "category": "residential"
     },
     {
       "id": "ld1053",
       "name": "Maabaidhoo",
       "atoll": "Laamu",
-      "source_id": "LD1053"
+      "source_id": "LD1053",
+      "latitude": 2.0293408,
+      "longitude": 73.5326175,
+      "category": "residential"
     },
     {
       "id": "ld0484",
       "name": "Maamendhoo",
       "atoll": "Laamu",
-      "source_id": "LD0484"
+      "source_id": "LD0484",
+      "latitude": 1.8178842,
+      "longitude": 73.3897178,
+      "category": "residential"
     },
     {
       "id": "ld0938",
       "name": "Maavah",
       "atoll": "Laamu",
-      "source_id": "LD0938"
+      "source_id": "LD0938",
+      "latitude": 1.8854953,
+      "longitude": 73.2431792,
+      "category": "residential"
+    },
+    {
+      "id": "ld0703",
+      "source_id": "LD0703",
+      "name": "Mahakanfushi",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.9588117,
+      "longitude": 73.5407156
     },
     {
       "id": "ld0102",
       "name": "Mundoo",
       "atoll": "Laamu",
-      "source_id": "LD0102"
+      "source_id": "LD0102",
+      "latitude": 2.0118478,
+      "longitude": 73.5338972,
+      "category": "residential"
+    },
+    {
+      "id": "ld1118",
+      "source_id": "LD1118",
+      "name": "Olhuveli",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 1.8168753,
+      "longitude": 73.404755
+    },
+    {
+      "id": "ld0628",
+      "source_id": "LD0628",
+      "name": "Vadinolhu",
+      "atoll": "Laamu",
+      "category": "resort",
+      "latitude": 2.0176156,
+      "longitude": 73.3588608
+    },
+    {
+      "id": "ld0394",
+      "source_id": "LD0394",
+      "name": "Bodufinolhu",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.2706267,
+      "longitude": 73.5713197
+    },
+    {
+      "id": "ld0234",
+      "source_id": "LD0234",
+      "name": "Dheruffinolhu",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.3244325,
+      "longitude": 73.6474347
+    },
+    {
+      "id": "ld1020",
+      "source_id": "LD1020",
+      "name": "Fushifaru",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.4912094,
+      "longitude": 73.5152286
     },
     {
       "id": "ld0340",
       "name": "Hinnavaru",
       "atoll": "Lhaviyani",
-      "source_id": "LD0340"
+      "source_id": "LD0340",
+      "latitude": 5.4924828,
+      "longitude": 73.4114239,
+      "category": "residential"
+    },
+    {
+      "id": "ld0307",
+      "source_id": "LD0307",
+      "name": "Hudhufushi",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.3621358,
+      "longitude": 73.6536853
+    },
+    {
+      "id": "ld0980",
+      "source_id": "LD0980",
+      "name": "Huravalhi",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.5211639,
+      "longitude": 73.4414606
+    },
+    {
+      "id": "ld0797",
+      "source_id": "LD0797",
+      "name": "Innahuraa",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.3501156,
+      "longitude": 73.6540675
+    },
+    {
+      "id": "ld1178",
+      "source_id": "LD1178",
+      "name": "Kanifushi",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.3662892,
+      "longitude": 73.3395783
+    },
+    {
+      "id": "ld0333",
+      "source_id": "LD0333",
+      "name": "Kanuhuraa",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.5327231,
+      "longitude": 73.5059969
+    },
+    {
+      "id": "ld1107",
+      "source_id": "LD1107",
+      "name": "Komandoo",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.4933561,
+      "longitude": 73.4242972
+    },
+    {
+      "id": "ld0837",
+      "source_id": "LD0837",
+      "name": "Kudadhoo",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.5028958,
+      "longitude": 73.4335639
+    },
+    {
+      "id": "ld0310",
+      "source_id": "LD0310",
+      "name": "Kurehdhoo",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.5494692,
+      "longitude": 73.4642272
     },
     {
       "id": "ld0510",
       "name": "Kurendhoo",
       "atoll": "Lhaviyani",
-      "source_id": "LD0510"
+      "source_id": "LD0510",
+      "latitude": 5.3340314,
+      "longitude": 73.463465,
+      "category": "residential"
+    },
+    {
+      "id": "ld0187",
+      "source_id": "LD0187",
+      "name": "Maabinhuraa",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.3371533,
+      "longitude": 73.6512814
+    },
+    {
+      "id": "ld0737",
+      "source_id": "LD0737",
+      "name": "Madhiriguraidhoo",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.4696872,
+      "longitude": 73.5594508
+    },
+    {
+      "id": "ld0812",
+      "source_id": "LD0812",
+      "name": "Medha Adihuraa",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.5407889,
+      "longitude": 73.5026956
     },
     {
       "id": "ld0020",
       "name": "Naifaru",
       "atoll": "Lhaviyani",
-      "source_id": "LD0020"
+      "source_id": "LD0020",
+      "latitude": 5.4448428,
+      "longitude": 73.3653031,
+      "category": "residential"
     },
     {
       "id": "ld0517",
       "name": "Olhuvelifushi",
       "atoll": "Lhaviyani",
-      "source_id": "LD0517"
+      "source_id": "LD0517",
+      "latitude": 5.2784628,
+      "longitude": 73.6068164,
+      "category": "residential"
+    },
+    {
+      "id": "ld1190",
+      "source_id": "LD1190",
+      "name": "Ookolhufinolhu",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.282115,
+      "longitude": 73.6228314
+    },
+    {
+      "id": "ld0879",
+      "source_id": "LD0879",
+      "name": "Thilamaafushi",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.273255,
+      "longitude": 73.5870656
+    },
+    {
+      "id": "ld0361",
+      "source_id": "LD0361",
+      "name": "Veyvah",
+      "atoll": "Lhaviyani",
+      "category": "resort",
+      "latitude": 5.4252114,
+      "longitude": 73.3611906
     },
     {
       "id": "ld0591",
       "name": "Hulhumalé",
       "atoll": "MLE",
-      "source_id": "LD0591"
+      "source_id": "LD0591",
+      "latitude": 4.2220714,
+      "longitude": 73.5424631,
+      "category": "residential"
     },
     {
       "id": "ld0442",
       "name": "Malé",
       "atoll": "MLE",
-      "source_id": "LD0442"
+      "source_id": "LD0442",
+      "latitude": 4.1744461,
+      "longitude": 73.5097,
+      "category": "residential"
     },
     {
       "id": "ld0268",
       "name": "Vilin'gili",
       "atoll": "MLE",
-      "source_id": "LD0268"
+      "source_id": "LD0268",
+      "latitude": 4.1733947,
+      "longitude": 73.4852794,
+      "category": "residential"
+    },
+    {
+      "id": "ld0554",
+      "source_id": "LD0554",
+      "name": "Boahuraa",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.9259014,
+      "longitude": 73.5855128
+    },
+    {
+      "id": "ld1112",
+      "source_id": "LD1112",
+      "name": "Dhekunuboduveli",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.8258336,
+      "longitude": 73.4522342
     },
     {
       "id": "ld0179",
       "name": "Dhiggaru",
       "atoll": "Meemu",
-      "source_id": "LD0179"
+      "source_id": "LD0179",
+      "latitude": 3.1118869,
+      "longitude": 73.5652319,
+      "category": "residential"
+    },
+    {
+      "id": "ld0045",
+      "source_id": "LD0045",
+      "name": "Gasveli",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.8187,
+      "longitude": 73.4437956
+    },
+    {
+      "id": "ld0322",
+      "source_id": "LD0322",
+      "name": "Hakuraahuraa",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.85486,
+      "longitude": 73.5384206
+    },
+    {
+      "id": "ld0876",
+      "source_id": "LD0876",
+      "name": "Hurasveli",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 3.0190306,
+      "longitude": 73.6178867
+    },
+    {
+      "id": "ld0659",
+      "source_id": "LD0659",
+      "name": "Kekuraalhuveli",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.829995,
+      "longitude": 73.4585597
     },
     {
       "id": "ld0061",
       "name": "Kolhufushi",
       "atoll": "Meemu",
-      "source_id": "LD0061"
+      "source_id": "LD0061",
+      "latitude": 2.7769739,
+      "longitude": 73.4243142,
+      "category": "residential"
+    },
+    {
+      "id": "ld0711",
+      "source_id": "LD0711",
+      "name": "Kudausfushi",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.8041583,
+      "longitude": 73.4335497
+    },
+    {
+      "id": "ld0827",
+      "source_id": "LD0827",
+      "name": "Maausfushi",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.7982311,
+      "longitude": 73.4320397
+    },
+    {
+      "id": "ld0764",
+      "source_id": "LD0764",
+      "name": "Madifushi",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 3.0811358,
+      "longitude": 73.6381083
     },
     {
       "id": "ld1166",
       "name": "Maduvvari",
       "atoll": "Meemu",
-      "source_id": "LD1166"
+      "source_id": "LD1166",
+      "latitude": 3.1048664,
+      "longitude": 73.5730806,
+      "category": "residential"
+    },
+    {
+      "id": "ld0206",
+      "source_id": "LD0206",
+      "name": "Medhufushi",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.8863133,
+      "longitude": 73.5755472
     },
     {
       "id": "ld0531",
       "name": "Mulah",
       "atoll": "Meemu",
-      "source_id": "LD0531"
+      "source_id": "LD0531",
+      "latitude": 2.9466014,
+      "longitude": 73.5843956,
+      "category": "residential"
     },
     {
       "id": "ld0446",
       "name": "Muli",
       "atoll": "Meemu",
-      "source_id": "LD0446"
+      "source_id": "LD0446",
+      "latitude": 2.9180469,
+      "longitude": 73.5810864,
+      "category": "residential"
     },
     {
       "id": "ld0793",
       "name": "Naalaafushi",
       "atoll": "Meemu",
-      "source_id": "LD0793"
+      "source_id": "LD0793",
+      "latitude": 2.8953633,
+      "longitude": 73.5774231,
+      "category": "residential"
     },
     {
       "id": "ld0786",
       "name": "Raiymandhoo",
       "atoll": "Meemu",
-      "source_id": "LD0786"
+      "source_id": "LD0786",
+      "latitude": 3.0894089,
+      "longitude": 73.6391117,
+      "category": "residential"
+    },
+    {
+      "id": "ld0523",
+      "source_id": "LD0523",
+      "name": "Seedheehuraa",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.8583806,
+      "longitude": 73.5565167
+    },
+    {
+      "id": "ld0437",
+      "source_id": "LD0437",
+      "name": "Seedheehuraaveligan'du",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 2.8603336,
+      "longitude": 73.5545486
+    },
+    {
+      "id": "ld0986",
+      "source_id": "LD0986",
+      "name": "Uthuruboduveli",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 3.0258508,
+      "longitude": 73.6175478
+    },
+    {
+      "id": "ld0565",
+      "source_id": "LD0565",
+      "name": "Uthurugaseveli",
+      "atoll": "Meemu",
+      "category": "resort",
+      "latitude": 3.0307939,
+      "longitude": 73.6187797
     },
     {
       "id": "ld1167",
       "name": "Veyvah",
       "atoll": "Meemu",
-      "source_id": "LD1167"
+      "source_id": "LD1167",
+      "latitude": 2.9562844,
+      "longitude": 73.5998814,
+      "category": "residential"
+    },
+    {
+      "id": "ld1052",
+      "source_id": "LD1052",
+      "name": "Dhigurah",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.7321142,
+      "longitude": 73.3594078
+    },
+    {
+      "id": "ld0409",
+      "source_id": "LD0409",
+      "name": "Ehdhuffarumairah",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.6956156,
+      "longitude": 73.4086664
+    },
+    {
+      "id": "ld0335",
+      "source_id": "LD0335",
+      "name": "Ekulhivaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.9499439,
+      "longitude": 73.3068822
     },
     {
       "id": "ld0332",
       "name": "Fodhdhoo",
       "atoll": "Noonu",
-      "source_id": "LD0332"
+      "source_id": "LD0332",
+      "latitude": 5.7438011,
+      "longitude": 73.2159514,
+      "category": "residential"
+    },
+    {
+      "id": "ld0169",
+      "source_id": "LD0169",
+      "name": "Fushivelavaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.8310742,
+      "longitude": 73.2093553
     },
     {
       "id": "ld0962",
       "name": "Hen'badhoo",
       "atoll": "Noonu",
-      "source_id": "LD0962"
+      "source_id": "LD0962",
+      "latitude": 5.9675478,
+      "longitude": 73.3928844,
+      "category": "residential"
     },
     {
       "id": "ld0455",
       "name": "Holhudhoo",
       "atoll": "Noonu",
-      "source_id": "LD0455"
+      "source_id": "LD0455",
+      "latitude": 5.7530875,
+      "longitude": 73.2554989,
+      "category": "residential"
+    },
+    {
+      "id": "ld0620",
+      "source_id": "LD0620",
+      "name": "Huivani",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.9130494,
+      "longitude": 73.3156289
+    },
+    {
+      "id": "ld0639",
+      "source_id": "LD0639",
+      "name": "Huvan'dhumaavattaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.8452542,
+      "longitude": 73.4448939
     },
     {
       "id": "ld0866",
       "name": "Ken'dhikulhudhoo",
       "atoll": "Noonu",
-      "source_id": "LD0866"
+      "source_id": "LD0866",
+      "latitude": 5.9525169,
+      "longitude": 73.4154736,
+      "category": "residential"
     },
     {
       "id": "ld0391",
       "name": "Kudafari",
       "atoll": "Noonu",
-      "source_id": "LD0391"
+      "source_id": "LD0391",
+      "latitude": 5.8828289,
+      "longitude": 73.4004178,
+      "category": "residential"
+    },
+    {
+      "id": "ld0982",
+      "source_id": "LD0982",
+      "name": "Kudafunafaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.8846947,
+      "longitude": 73.3779958
+    },
+    {
+      "id": "ld0140",
+      "source_id": "LD0140",
+      "name": "Kunnamalei",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.9529678,
+      "longitude": 73.1335
+    },
+    {
+      "id": "ld1086",
+      "source_id": "LD1086",
+      "name": "Kuredhivaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.8752739,
+      "longitude": 73.3434572
     },
     {
       "id": "ld0191",
       "name": "Landhoo",
       "atoll": "Noonu",
-      "source_id": "LD0191"
+      "source_id": "LD0191",
+      "latitude": 5.8818036,
+      "longitude": 73.4661539,
+      "category": "residential"
     },
     {
       "id": "ld0500",
       "name": "Lhohi",
       "atoll": "Noonu",
-      "source_id": "LD0500"
+      "source_id": "LD0500",
+      "latitude": 5.8160372,
+      "longitude": 73.3776306,
+      "category": "residential"
+    },
+    {
+      "id": "ld0767",
+      "source_id": "LD0767",
+      "name": "Loafaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.7859678,
+      "longitude": 73.2764744
     },
     {
       "id": "ld0560",
       "name": "Maafaru",
       "atoll": "Noonu",
-      "source_id": "LD0560"
+      "source_id": "LD0560",
+      "latitude": 5.8246244,
+      "longitude": 73.4715275,
+      "category": "residential"
     },
     {
       "id": "ld0203",
       "name": "Maalhendhoo",
       "atoll": "Noonu",
-      "source_id": "LD0203"
+      "source_id": "LD0203",
+      "latitude": 5.9023592,
+      "longitude": 73.4560917,
+      "category": "residential"
+    },
+    {
+      "id": "ld0002",
+      "source_id": "LD0002",
+      "name": "Maavelavaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.8056992,
+      "longitude": 73.1713911
     },
     {
       "id": "ld0907",
       "name": "Magoodhoo",
       "atoll": "Noonu",
-      "source_id": "LD0907"
+      "source_id": "LD0907",
+      "latitude": 5.7764272,
+      "longitude": 73.3624633,
+      "category": "residential"
     },
     {
       "id": "ld0392",
       "name": "Manadhoo",
       "atoll": "Noonu",
-      "source_id": "LD0392"
+      "source_id": "LD0392",
+      "latitude": 5.7659917,
+      "longitude": 73.4108619,
+      "category": "residential"
+    },
+    {
+      "id": "ld1036",
+      "source_id": "LD1036",
+      "name": "Medhafushi",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.7445794,
+      "longitude": 73.3238619
+    },
+    {
+      "id": "ld0088",
+      "source_id": "LD0088",
+      "name": "Medhufaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.7135303,
+      "longitude": 73.4144092
     },
     {
       "id": "ld1068",
       "name": "Miladhoo",
       "atoll": "Noonu",
-      "source_id": "LD1068"
+      "source_id": "LD1068",
+      "latitude": 5.7904867,
+      "longitude": 73.3625994,
+      "category": "residential"
+    },
+    {
+      "id": "ld0249",
+      "source_id": "LD0249",
+      "name": "Orivaru",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.8021208,
+      "longitude": 73.2977169
+    },
+    {
+      "id": "ld0996",
+      "source_id": "LD0996",
+      "name": "Raafushi",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.6475925,
+      "longitude": 73.2985853
+    },
+    {
+      "id": "ld0512",
+      "source_id": "LD0512",
+      "name": "Raalhulaakolhu",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.6868261,
+      "longitude": 73.4046203
+    },
+    {
+      "id": "ld1042",
+      "source_id": "LD1042",
+      "name": "Randheli",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.6919161,
+      "longitude": 73.3417219
+    },
+    {
+      "id": "ld1125",
+      "source_id": "LD1125",
+      "name": "Than'burudhuffushi",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.7085456,
+      "longitude": 73.2423803
+    },
+    {
+      "id": "ld0750",
+      "source_id": "LD0750",
+      "name": "Thoshigan'dukolhu",
+      "atoll": "Noonu",
+      "category": "resort",
+      "latitude": 5.7325894,
+      "longitude": 73.4136489
     },
     {
       "id": "ld0497",
       "name": "Velidhoo",
       "atoll": "Noonu",
-      "source_id": "LD0497"
+      "source_id": "LD0497",
+      "latitude": 5.6644264,
+      "longitude": 73.2734367,
+      "category": "residential"
+    },
+    {
+      "id": "ld0444",
+      "source_id": "LD0444",
+      "name": "Aarah",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.4476661,
+      "longitude": 72.9413503
     },
     {
       "id": "ld0588",
       "name": "Alifushi",
       "atoll": "Raa",
-      "source_id": "LD0588"
+      "source_id": "LD0588",
+      "latitude": 5.9672681,
+      "longitude": 72.9532008,
+      "category": "residential"
     },
     {
       "id": "ld0281",
       "name": "An'golhitheemu",
       "atoll": "Raa",
-      "source_id": "LD0281"
+      "source_id": "LD0281",
+      "latitude": 5.7928969,
+      "longitude": 73.0066492,
+      "category": "residential"
+    },
+    {
+      "id": "ld0739",
+      "source_id": "LD0739",
+      "name": "Bodufarufinolhu",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.5295514,
+      "longitude": 72.8058342
+    },
+    {
+      "id": "ld0097",
+      "source_id": "LD0097",
+      "name": "Bodufushi",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.5076825,
+      "longitude": 72.9688967
+    },
+    {
+      "id": "ld0918",
+      "source_id": "LD0918",
+      "name": "Dhigali",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.4752786,
+      "longitude": 72.9537739
+    },
+    {
+      "id": "ld0218",
+      "source_id": "LD0218",
+      "name": "Dhoragali",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.4940892,
+      "longitude": 72.9975967
     },
     {
       "id": "ld0790",
       "name": "Dhuvaafaru",
       "atoll": "Raa",
-      "source_id": "LD0790"
+      "source_id": "LD0790",
+      "latitude": 5.6292469,
+      "longitude": 73.0414006,
+      "category": "residential"
+    },
+    {
+      "id": "ld0643",
+      "source_id": "LD0643",
+      "name": "Ehthigili",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.9788497,
+      "longitude": 72.9383469
+    },
+    {
+      "id": "ld0125",
+      "source_id": "LD0125",
+      "name": "Faarufushi",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.7680217,
+      "longitude": 72.9652878
     },
     {
       "id": "ld0924",
       "name": "Fainu",
       "atoll": "Raa",
-      "source_id": "LD0924"
+      "source_id": "LD0924",
+      "latitude": 5.463455,
+      "longitude": 73.0345819,
+      "category": "residential"
+    },
+    {
+      "id": "ld0477",
+      "source_id": "LD0477",
+      "name": "Fasmendhoo",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.4942164,
+      "longitude": 72.8816025
+    },
+    {
+      "id": "ld0043",
+      "source_id": "LD0043",
+      "name": "Filaidhoo",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.4918178,
+      "longitude": 72.9384144
+    },
+    {
+      "id": "ld0236",
+      "source_id": "LD0236",
+      "name": "Fuggiri",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.7244683,
+      "longitude": 72.8540575
+    },
+    {
+      "id": "ld0058",
+      "source_id": "LD0058",
+      "name": "Furaveri",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.4402497,
+      "longitude": 72.9083092
     },
     {
       "id": "ld0600",
       "name": "Hulhudhuffaaru",
       "atoll": "Raa",
-      "source_id": "LD0600"
+      "source_id": "LD0600",
+      "latitude": 5.7654964,
+      "longitude": 73.0121297,
+      "category": "residential"
+    },
+    {
+      "id": "ld0585",
+      "source_id": "LD0585",
+      "name": "Huruvalhi",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.3920358,
+      "longitude": 72.9790489
     },
     {
       "id": "ld1121",
       "name": "In'guraidhoo",
       "atoll": "Raa",
-      "source_id": "LD1121"
+      "source_id": "LD1121",
+      "latitude": 5.4769936,
+      "longitude": 73.0367161,
+      "category": "residential"
     },
     {
       "id": "ld0564",
       "name": "Innamaadhoo",
       "atoll": "Raa",
-      "source_id": "LD0564"
+      "source_id": "LD0564",
+      "latitude": 5.5493875,
+      "longitude": 73.0442494,
+      "category": "residential"
+    },
+    {
+      "id": "ld0914",
+      "source_id": "LD0914",
+      "name": "Kan'doogan'du",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.7808539,
+      "longitude": 72.8761817
     },
     {
       "id": "ld0194",
       "name": "Kinolhas",
       "atoll": "Raa",
-      "source_id": "LD0194"
+      "source_id": "LD0194",
+      "latitude": 5.4484486,
+      "longitude": 73.03005,
+      "category": "residential"
+    },
+    {
+      "id": "ld1127",
+      "source_id": "LD1127",
+      "name": "Kottefaru",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.5100778,
+      "longitude": 73.0408944
+    },
+    {
+      "id": "ld1016",
+      "source_id": "LD1016",
+      "name": "Kudafushi",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.5106736,
+      "longitude": 72.9804089
+    },
+    {
+      "id": "ld0110",
+      "source_id": "LD0110",
+      "name": "Kudakurathu",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.5837397,
+      "longitude": 73.0444381
+    },
+    {
+      "id": "ld0295",
+      "source_id": "LD0295",
+      "name": "Kuroshigiri",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.5139753,
+      "longitude": 72.8503206
+    },
+    {
+      "id": "ld0241",
+      "source_id": "LD0241",
+      "name": "Lun'dhufushi",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.6436208,
+      "longitude": 72.9870647
     },
     {
       "id": "ld0180",
       "name": "Maakurathu",
       "atoll": "Raa",
-      "source_id": "LD0180"
+      "source_id": "LD0180",
+      "latitude": 5.6061692,
+      "longitude": 73.0437189,
+      "category": "residential"
+    },
+    {
+      "id": "ld0746",
+      "source_id": "LD0746",
+      "name": "Maamin'gili",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.6511172,
+      "longitude": 72.8844628
+    },
+    {
+      "id": "ld0675",
+      "source_id": "LD0675",
+      "name": "Maamunagau",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.3599053,
+      "longitude": 72.9190708
+    },
+    {
+      "id": "ld0961",
+      "source_id": "LD0961",
+      "name": "Maanenfushi",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.7510439,
+      "longitude": 72.9614111
     },
     {
       "id": "ld0573",
       "name": "Maduvvari",
       "atoll": "Raa",
-      "source_id": "LD0573"
+      "source_id": "LD0573",
+      "latitude": 5.4863278,
+      "longitude": 72.8959889,
+      "category": "residential"
     },
     {
       "id": "ld0605",
       "name": "Meedhoo",
       "atoll": "Raa",
-      "source_id": "LD0605"
+      "source_id": "LD0605",
+      "latitude": 5.45815,
+      "longitude": 72.9552711,
+      "category": "residential"
+    },
+    {
+      "id": "ld0095",
+      "source_id": "LD0095",
+      "name": "Meedhupparu",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.4559456,
+      "longitude": 72.9799181
+    },
+    {
+      "id": "ld0401",
+      "source_id": "LD0401",
+      "name": "Muravandhoo",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.6079153,
+      "longitude": 72.9518322
     },
     {
       "id": "ld0178",
       "name": "Rasgetheemu",
       "atoll": "Raa",
-      "source_id": "LD0178"
+      "source_id": "LD0178",
+      "latitude": 5.8076989,
+      "longitude": 73.0029536,
+      "category": "residential"
     },
     {
       "id": "ld0423",
       "name": "Rasmaadhoo",
       "atoll": "Raa",
-      "source_id": "LD0423"
+      "source_id": "LD0423",
+      "latitude": 5.5630692,
+      "longitude": 73.0436994,
+      "category": "residential"
     },
     {
       "id": "ld1175",
       "name": "Un'goofaaru",
       "atoll": "Raa",
-      "source_id": "LD1175"
+      "source_id": "LD1175",
+      "latitude": 5.6682875,
+      "longitude": 73.0297442,
+      "category": "residential"
+    },
+    {
+      "id": "ld0428",
+      "source_id": "LD0428",
+      "name": "Uthurumaafaru",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.6699528,
+      "longitude": 72.8457878
     },
     {
       "id": "ld0609",
       "name": "Vaadhoo",
       "atoll": "Raa",
-      "source_id": "LD0609"
+      "source_id": "LD0609",
+      "latitude": 5.8562244,
+      "longitude": 72.9910703,
+      "category": "residential"
+    },
+    {
+      "id": "ld1063",
+      "source_id": "LD1063",
+      "name": "Veyvah",
+      "atoll": "Raa",
+      "category": "resort",
+      "latitude": 5.7671397,
+      "longitude": 72.8933725
     },
     {
       "id": "ld0299",
       "name": "Addu Hulhudhoo",
       "atoll": "Seenu",
-      "source_id": "LD0299"
+      "source_id": "LD0299",
+      "latitude": -0.5973956,
+      "longitude": 73.2278939,
+      "category": "residential"
     },
     {
       "id": "ld0272",
       "name": "Addu Meedhoo",
       "atoll": "Seenu",
-      "source_id": "LD0272"
+      "source_id": "LD0272",
+      "latitude": -0.5845556,
+      "longitude": 73.2301131,
+      "category": "residential"
     },
     {
       "id": "ld0947",
       "name": "Feydhoo",
       "atoll": "Seenu",
-      "source_id": "LD0947"
+      "source_id": "LD0947",
+      "latitude": -0.6827208,
+      "longitude": 73.1348725,
+      "category": "residential"
+    },
+    {
+      "id": "ld0722",
+      "source_id": "LD0722",
+      "name": "Geskalhuheraa",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.6461381,
+      "longitude": 73.2214003
+    },
+    {
+      "id": "ld0817",
+      "source_id": "LD0817",
+      "name": "Gomahera",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.6909489,
+      "longitude": 73.1833047
+    },
+    {
+      "id": "ld0219",
+      "source_id": "LD0219",
+      "name": "Hankede",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.6558336,
+      "longitude": 73.1115089
+    },
+    {
+      "id": "ld0990",
+      "source_id": "LD0990",
+      "name": "Herethere",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.6246672,
+      "longitude": 73.2247989
     },
     {
       "id": "ld1004",
       "name": "Hithadhoo",
       "atoll": "Seenu",
-      "source_id": "LD1004"
+      "source_id": "LD1004",
+      "latitude": -0.6121325,
+      "longitude": 73.0917558,
+      "category": "residential"
+    },
+    {
+      "id": "ld1472",
+      "source_id": "LD1472",
+      "name": "Ismehelaahera",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.5792925,
+      "longitude": 73.2158219
     },
     {
       "id": "ld0288",
       "name": "Maradhoo",
       "atoll": "Seenu",
-      "source_id": "LD0288"
+      "source_id": "LD0288",
+      "latitude": -0.6652161,
+      "longitude": 73.1189342,
+      "category": "residential"
     },
     {
       "id": "ld0081",
       "name": "Maradhoofeydhoo",
       "atoll": "Seenu",
-      "source_id": "LD0081"
+      "source_id": "LD0081",
+      "latitude": -0.6735267,
+      "longitude": 73.1257947,
+      "category": "residential"
+    },
+    {
+      "id": "ld0384",
+      "source_id": "LD0384",
+      "name": "Mulikede",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.6589675,
+      "longitude": 73.2161808
+    },
+    {
+      "id": "ld0899",
+      "source_id": "LD0899",
+      "name": "Savaaheli",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.6810358,
+      "longitude": 73.1260264
+    },
+    {
+      "id": "ld0035",
+      "source_id": "LD0035",
+      "name": "Vilin'gili",
+      "atoll": "Seenu",
+      "category": "resort",
+      "latitude": -0.6796369,
+      "longitude": 73.1926222
     },
     {
       "id": "ld1064",
       "name": "Bileiyfahi",
       "atoll": "Shaviyani",
-      "source_id": "LD1064"
+      "source_id": "LD1064",
+      "latitude": 6.3378322,
+      "longitude": 72.9739706,
+      "category": "residential"
+    },
+    {
+      "id": "ld0562",
+      "source_id": "LD0562",
+      "name": "Dholhiyadhoo",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 5.9938203,
+      "longitude": 73.2151644
     },
     {
       "id": "ld1149",
       "name": "Feevah",
       "atoll": "Shaviyani",
-      "source_id": "LD1149"
+      "source_id": "LD1149",
+      "latitude": 6.3488983,
+      "longitude": 73.2093583,
+      "category": "residential"
     },
     {
       "id": "ld1100",
       "name": "Feydhoo",
       "atoll": "Shaviyani",
-      "source_id": "LD1100"
+      "source_id": "LD1100",
+      "latitude": 6.3605531,
+      "longitude": 73.0488492,
+      "category": "residential"
     },
     {
       "id": "ld0646",
       "name": "Foakaidhoo",
       "atoll": "Shaviyani",
-      "source_id": "LD0646"
+      "source_id": "LD0646",
+      "latitude": 6.3266989,
+      "longitude": 73.1493403,
+      "category": "residential"
     },
     {
       "id": "ld0863",
       "name": "Funadhoo",
       "atoll": "Shaviyani",
-      "source_id": "LD0863"
+      "source_id": "LD0863",
+      "latitude": 6.1532525,
+      "longitude": 73.2898528,
+      "category": "residential"
+    },
+    {
+      "id": "ld0629",
+      "source_id": "LD0629",
+      "name": "Fushifaru",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.3956531,
+      "longitude": 72.9258394
+    },
+    {
+      "id": "ld0927",
+      "source_id": "LD0927",
+      "name": "Gaakoshibi",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.2867636,
+      "longitude": 73.0120244
     },
     {
       "id": "ld0836",
       "name": "Goidhoo",
       "atoll": "Shaviyani",
-      "source_id": "LD0836"
+      "source_id": "LD0836",
+      "latitude": 6.4300892,
+      "longitude": 72.9297231,
+      "category": "residential"
+    },
+    {
+      "id": "ld0921",
+      "source_id": "LD0921",
+      "name": "Hurasfaru",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.1405736,
+      "longitude": 73.0365081
+    },
+    {
+      "id": "ld0424",
+      "source_id": "LD0424",
+      "name": "Kan'baalifaru",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.1242039,
+      "longitude": 73.2534339
     },
     {
       "id": "ld1092",
       "name": "Kan'ditheemu",
       "atoll": "Shaviyani",
-      "source_id": "LD1092"
+      "source_id": "LD1092",
+      "latitude": 6.4405367,
+      "longitude": 72.9160806,
+      "category": "residential"
     },
     {
       "id": "ld1058",
       "name": "Komandoo",
       "atoll": "Shaviyani",
-      "source_id": "LD1058"
+      "source_id": "LD1058",
+      "latitude": 6.0542144,
+      "longitude": 73.0542508,
+      "category": "residential"
+    },
+    {
+      "id": "ld0304",
+      "source_id": "LD0304",
+      "name": "Kudalhaimendhoo",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.0149506,
+      "longitude": 73.295135
     },
     {
       "id": "ld0978",
       "name": "Lhaimagu",
       "atoll": "Shaviyani",
-      "source_id": "LD0978"
+      "source_id": "LD0978",
+      "latitude": 6.1640125,
+      "longitude": 73.2514781,
+      "category": "residential"
     },
     {
       "id": "ld0016",
       "name": "Maaun'goodhoo",
       "atoll": "Shaviyani",
-      "source_id": "LD0016"
+      "source_id": "LD0016",
+      "latitude": 6.0367056,
+      "longitude": 73.2837931,
+      "category": "residential"
     },
     {
       "id": "ld1144",
       "name": "Maroshi",
       "atoll": "Shaviyani",
-      "source_id": "LD1144"
+      "source_id": "LD1144",
+      "latitude": 6.2096653,
+      "longitude": 73.0613908,
+      "category": "residential"
     },
     {
       "id": "ld0525",
       "name": "Milandhoo",
       "atoll": "Shaviyani",
-      "source_id": "LD0525"
+      "source_id": "LD0525",
+      "latitude": 6.2864953,
+      "longitude": 73.2445072,
+      "category": "residential"
+    },
+    {
+      "id": "ld1170",
+      "source_id": "LD1170",
+      "name": "Naainfarufinolhu",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.2033922,
+      "longitude": 72.9989922
+    },
+    {
+      "id": "ld0744",
+      "source_id": "LD0744",
+      "name": "Nalandhoo",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.3249461,
+      "longitude": 73.228295
     },
     {
       "id": "ld0551",
       "name": "Narudhoo",
       "atoll": "Shaviyani",
-      "source_id": "LD0551"
+      "source_id": "LD0551",
+      "latitude": 6.2643272,
+      "longitude": 73.2181561,
+      "category": "residential"
     },
     {
       "id": "ld0985",
       "name": "Noomaraa",
       "atoll": "Shaviyani",
-      "source_id": "LD0985"
+      "source_id": "LD0985",
+      "latitude": 6.4342242,
+      "longitude": 73.0690719,
+      "category": "residential"
+    },
+    {
+      "id": "ld0674",
+      "source_id": "LD0674",
+      "name": "Van'garu",
+      "atoll": "Shaviyani",
+      "category": "resort",
+      "latitude": 6.0894761,
+      "longitude": 73.2033292
     },
     {
       "id": "ld0254",
       "name": "Buruni",
       "atoll": "Thaa",
-      "source_id": "LD0254"
+      "source_id": "LD0254",
+      "latitude": 2.5588486,
+      "longitude": 73.1065197,
+      "category": "residential"
     },
     {
       "id": "ld0200",
       "name": "Dhiyamigili",
       "atoll": "Thaa",
-      "source_id": "LD0200"
+      "source_id": "LD0200",
+      "latitude": 2.33994,
+      "longitude": 73.3368003,
+      "category": "residential"
+    },
+    {
+      "id": "ld1001",
+      "source_id": "LD1001",
+      "name": "Ekuruffushi",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.2659983,
+      "longitude": 73.2262578
+    },
+    {
+      "id": "ld1078",
+      "source_id": "LD1078",
+      "name": "Elaa",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.1720067,
+      "longitude": 73.0794028
     },
     {
       "id": "ld0427",
       "name": "Gaadhiffushi",
       "atoll": "Thaa",
-      "source_id": "LD0427"
+      "source_id": "LD0427",
+      "latitude": 2.2526775,
+      "longitude": 73.2125247,
+      "category": "residential"
     },
     {
       "id": "ld1163",
       "name": "Guraidhoo",
       "atoll": "Thaa",
-      "source_id": "LD1163"
+      "source_id": "LD1163",
+      "latitude": 2.3225825,
+      "longitude": 73.3175747,
+      "category": "residential"
     },
     {
       "id": "ld0350",
       "name": "Hirilandhoo",
       "atoll": "Thaa",
-      "source_id": "LD0350"
+      "source_id": "LD0350",
+      "latitude": 2.2703947,
+      "longitude": 72.9321492,
+      "category": "residential"
+    },
+    {
+      "id": "ld0533",
+      "source_id": "LD0533",
+      "name": "Kaaddoo",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.2818497,
+      "longitude": 73.2543386
+    },
+    {
+      "id": "ld1173",
+      "source_id": "LD1173",
+      "name": "Kalhudheyfushi",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.2949764,
+      "longitude": 73.2762861
     },
     {
       "id": "ld0504",
       "name": "Kan'doodhoo",
       "atoll": "Thaa",
-      "source_id": "LD0504"
+      "source_id": "LD0504",
+      "latitude": 2.3212628,
+      "longitude": 72.9166567,
+      "category": "residential"
     },
     {
       "id": "ld0422",
       "name": "Kin'bidhoo",
       "atoll": "Thaa",
-      "source_id": "LD0422"
+      "source_id": "LD0422",
+      "latitude": 2.1682631,
+      "longitude": 73.0660686,
+      "category": "residential"
+    },
+    {
+      "id": "ld0029",
+      "source_id": "LD0029",
+      "name": "Lhavaddoo",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.3057694,
+      "longitude": 73.2912117
+    },
+    {
+      "id": "ld0556",
+      "source_id": "LD0556",
+      "name": "Maalefushi",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.3109981,
+      "longitude": 73.2983342
     },
     {
       "id": "ld0627",
       "name": "Madifushi",
       "atoll": "Thaa",
-      "source_id": "LD0627"
+      "source_id": "LD0627",
+      "latitude": 2.3568011,
+      "longitude": 73.3546969,
+      "category": "residential"
+    },
+    {
+      "id": "ld0939",
+      "source_id": "LD0939",
+      "name": "Olhufushi",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.3656872,
+      "longitude": 72.9083103
+    },
+    {
+      "id": "ld1103",
+      "source_id": "LD1103",
+      "name": "Olhufushifinolhu",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.3722139,
+      "longitude": 72.9081061
+    },
+    {
+      "id": "ld0240",
+      "source_id": "LD0240",
+      "name": "Olhugiri",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.5057258,
+      "longitude": 73.2558197
     },
     {
       "id": "ld0783",
       "name": "Omadhoo",
       "atoll": "Thaa",
-      "source_id": "LD0783"
+      "source_id": "LD0783",
+      "latitude": 2.1675778,
+      "longitude": 73.0236108,
+      "category": "residential"
+    },
+    {
+      "id": "ld0709",
+      "source_id": "LD0709",
+      "name": "Ruhthibirah",
+      "atoll": "Thaa",
+      "category": "resort",
+      "latitude": 2.1688731,
+      "longitude": 73.0528417
     },
     {
       "id": "ld0082",
       "name": "Thimarafushi",
       "atoll": "Thaa",
-      "source_id": "LD0082"
+      "source_id": "LD0082",
+      "latitude": 2.2092861,
+      "longitude": 73.1485467,
+      "category": "residential"
     },
     {
       "id": "ld0859",
       "name": "Vandhoo",
       "atoll": "Thaa",
-      "source_id": "LD0859"
+      "source_id": "LD0859",
+      "latitude": 2.2917103,
+      "longitude": 72.9419364,
+      "category": "residential"
     },
     {
       "id": "ld0694",
       "name": "Veymandoo",
       "atoll": "Thaa",
-      "source_id": "LD0694"
+      "source_id": "LD0694",
+      "latitude": 2.1871719,
+      "longitude": 73.0949622,
+      "category": "residential"
     },
     {
       "id": "ld0205",
       "name": "Vilufushi",
       "atoll": "Thaa",
-      "source_id": "LD0205"
+      "source_id": "LD0205",
+      "latitude": 2.5031661,
+      "longitude": 73.3082478,
+      "category": "residential"
+    },
+    {
+      "id": "ld0051",
+      "source_id": "LD0051",
+      "name": "Aarah",
+      "atoll": "Vaavu",
+      "category": "resort",
+      "latitude": 3.4993072,
+      "longitude": 73.53011
+    },
+    {
+      "id": "ld0148",
+      "source_id": "LD0148",
+      "name": "Alimathaa",
+      "atoll": "Vaavu",
+      "category": "resort",
+      "latitude": 3.5937258,
+      "longitude": 73.4980358
+    },
+    {
+      "id": "ld1043",
+      "source_id": "LD1043",
+      "name": "Anbaraa",
+      "atoll": "Vaavu",
+      "category": "resort",
+      "latitude": 3.372275,
+      "longitude": 73.4393008
+    },
+    {
+      "id": "ld0813",
+      "source_id": "LD0813",
+      "name": "Bodumohoraa",
+      "atoll": "Vaavu",
+      "category": "resort",
+      "latitude": 3.3431922,
+      "longitude": 73.5205686
     },
     {
       "id": "ld0075",
       "name": "Felidhoo",
       "atoll": "Vaavu",
-      "source_id": "LD0075"
+      "source_id": "LD0075",
+      "latitude": 3.4719667,
+      "longitude": 73.5470756,
+      "category": "residential"
+    },
+    {
+      "id": "ld0935",
+      "source_id": "LD0935",
+      "name": "Fohtheyobodufushi",
+      "atoll": "Vaavu",
+      "category": "resort",
+      "latitude": 3.4553147,
+      "longitude": 73.758
     },
     {
       "id": "ld0182",
       "name": "Fulidhoo",
       "atoll": "Vaavu",
-      "source_id": "LD0182"
+      "source_id": "LD0182",
+      "latitude": 3.6804331,
+      "longitude": 73.41567,
+      "category": "residential"
     },
     {
       "id": "ld0260",
       "name": "Keyodhoo",
       "atoll": "Vaavu",
-      "source_id": "LD0260"
+      "source_id": "LD0260",
+      "latitude": 3.4621092,
+      "longitude": 73.5500922,
+      "category": "residential"
+    },
+    {
+      "id": "ld1148",
+      "source_id": "LD1148",
+      "name": "Kunaaveshi",
+      "atoll": "Vaavu",
+      "category": "resort",
+      "latitude": 3.6366736,
+      "longitude": 73.3651683
     },
     {
       "id": "ld0420",
       "name": "Rakeedhoo",
       "atoll": "Vaavu",
-      "source_id": "LD0420"
+      "source_id": "LD0420",
+      "latitude": 3.3149033,
+      "longitude": 73.4697272,
+      "category": "residential"
     },
     {
       "id": "ld1079",
       "name": "Thinadhoo",
       "atoll": "Vaavu",
-      "source_id": "LD1079"
+      "source_id": "LD1079",
+      "latitude": 3.4877164,
+      "longitude": 73.5383,
+      "category": "residential"
     }
   ],
   "airports": [
     {
       "id": "VRMU",
       "name": "Dhaalu Airport",
-      "iata": "DDD"
+      "iata": "DDD",
+      "latitude": 2.6661111,
+      "longitude": 72.8863889
     },
     {
       "id": "VRMD",
       "name": "Dharavandhoo Airport",
-      "iata": "DRV"
+      "iata": "DRV",
+      "latitude": 5.1561111,
+      "longitude": 73.1302778
     },
     {
       "id": "VRQF",
       "name": "Faresmaathodaa Airport",
-      "iata": "FMT"
+      "iata": "FMT",
+      "latitude": 0.1925,
+      "longitude": 73.1972222
     },
     {
       "id": "VRCF",
       "name": "Funadhoo Airport",
-      "iata": "FND"
+      "iata": "FND",
+      "latitude": 6.1625,
+      "longitude": 73.2875
     },
     {
       "id": "VRMR",
       "name": "Fuvahmulah Airport",
-      "iata": "FVM"
+      "iata": "FVM",
+      "latitude": -0.3097222,
+      "longitude": 73.4330556
     },
     {
       "id": "VRMG",
       "name": "Gan International Airport",
-      "iata": "GAN"
+      "iata": "GAN",
+      "latitude": -0.6933333,
+      "longitude": 73.1555556
     },
     {
       "id": "VRMH",
       "name": "Hanimaadhoo International Airport",
-      "iata": "HAQ"
+      "iata": "HAQ",
+      "latitude": 6.7461111,
+      "longitude": 73.1683333
     },
     {
       "id": "VRAH",
       "name": "Hoarafushi Airport",
-      "iata": "HRF"
+      "iata": "HRF",
+      "latitude": 6.9694444,
+      "longitude": 72.8963889
     },
     {
       "id": "VREI",
       "name": "Ifuru Airport",
-      "iata": "IFU"
+      "iata": "IFU",
+      "latitude": 5.7083333,
+      "longitude": 73.025
     },
     {
       "id": "VRMT",
       "name": "Kaadedhdhoo Airport",
-      "iata": "KDM"
+      "iata": "KDM",
+      "latitude": 0.4883333,
+      "longitude": 72.9961111
     },
     {
       "id": "VRMK",
       "name": "Kadhdhoo Airport",
-      "iata": "KDO"
+      "iata": "KDO",
+      "latitude": 1.8583333,
+      "longitude": 73.5194444
     },
     {
       "id": "VRMO",
       "name": "Kooddoo Airport",
-      "iata": "GKK"
+      "iata": "GKK",
+      "latitude": 0.7333333,
+      "longitude": 73.4341667
     },
     {
       "id": "VRBK",
       "name": "Kulhudhuffushi Airport",
-      "iata": "HDK"
+      "iata": "HDK",
+      "latitude": 6.6308333,
+      "longitude": 73.0677778
     },
     {
       "id": "VRDA",
       "name": "Maafaru International Airport",
-      "iata": "NMF"
+      "iata": "NMF",
+      "latitude": 5.8183333,
+      "longitude": 73.4697222
     },
     {
       "id": "VRQM",
       "name": "Maavarulu Airport",
-      "iata": "RUL"
+      "iata": "RUL",
+      "latitude": 0.3380556,
+      "longitude": 73.5127778
     },
     {
       "id": "VRGD",
       "name": "Madivaru Airport",
-      "iata": "LMV"
+      "iata": "LMV",
+      "latitude": 5.4577778,
+      "longitude": 73.3702778
     },
     {
       "id": "VRKM",
       "name": "Muli Airport",
-      "iata": "MUM"
+      "iata": "MUM",
+      "latitude": 2.9113889,
+      "longitude": 73.5836111
     },
     {
       "id": "VRNT",
       "name": "Thimarafushi Airport",
-      "iata": "TMF"
+      "iata": "TMF",
+      "latitude": 2.2108333,
+      "longitude": 73.1530556
     },
     {
       "id": "VRMM",
       "name": "Velana International Airport",
-      "iata": "MLE"
+      "iata": "MLE",
+      "latitude": 4.1916667,
+      "longitude": 73.5291667
     },
     {
       "id": "VRMV",
       "name": "Villa International Airport Maamigili",
-      "iata": "VAM"
+      "iata": "VAM",
+      "latitude": 3.4705556,
+      "longitude": 72.8452778
     }
-  ]
+  ],
+  "resort_note": "Tourism Island category from OneMap; does not confirm an operating resort or current commercial name."
 }

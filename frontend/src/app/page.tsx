@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import dynamic from "next/dynamic";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
+
+const TransportMap = dynamic(() => import("./components/TransportMap"), { ssr: false, loading: () => <p className="py-6">Loading interactive map…</p> });
 
 type Sailing = { id: string; service: string; operator: string; departure_at: string; harbour_arrival_at: string; airport_arrival_at: string; connection_buffer_minutes: number; classification: "recommended" | "tight" | "too_late" | "cancelled" };
 type Result = { destination: string; destination_code: string; schedule_coverage: boolean; coverage_message: string | null; origin: string; flight_at: string; check_in_deadline_at: string; transfer_minutes: number | null; safety_minutes: number; sailings: Sailing[] };
@@ -11,7 +14,7 @@ function localTime(value: string) {
 }
 
 export default function Home() {
-  const [islands, setIslands] = useState<{ id: string; name: string; atoll: string }[]>([]);
+  const [islands, setIslands] = useState<{ id: string; name: string; atoll: string; category: string }[]>([]);
   const [airports, setAirports] = useState<{ id: string; name: string; iata: string }[]>([]);
   const [island, setIsland] = useState("ld0205");
   const [islandFilter, setIslandFilter] = useState("");
@@ -29,6 +32,13 @@ export default function Home() {
       const data = await response.json(); setIslands(data.islands); setAirports(data.airports);
     }).catch(error => { if (!controller.signal.aborted) setIslandError(error.message); });
     return () => controller.abort();
+  }, []);
+
+  const selectIsland = useCallback((id: string) => {
+    setIsland(id); setIslandFilter(""); setResult(null); setError("");
+  }, []);
+  const selectAirport = useCallback((id: string) => {
+    setAirport(id); setResult(null); setError("");
   }, []);
 
   async function search(event: FormEvent<HTMLFormElement>) {
@@ -55,25 +65,27 @@ export default function Home() {
       </header>
       <div className="mb-9 max-w-2xl"><p className="text-sm font-semibold uppercase tracking-widest text-teal-700">From your island to your flight</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Find a ferry that fits your flight.</h1>
-        <p className="mt-4 leading-7 text-slate-600">Choose from inhabited islands and land airports across the Maldives. Demo ferry connections currently serve Thimarafushi Airport.</p>
+        <p className="mt-4 leading-7 text-slate-600">Choose from inhabited islands, resort islands, and land airports across the Maldives. Demo ferry connections currently serve Thimarafushi Airport.</p>
       </div>
       <aside className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">Demonstration only. All sailings, durations, cancellations, and transfer allowances are fictional. They repeat daily for testing and are not RTL schedules. No real tickets are available.</aside>
+      <TransportMap island={island} airport={airport} onIslandSelect={selectIsland} onAirportSelect={selectAirport} />
       <div className="grid items-start gap-8 lg:grid-cols-[320px_1fr]">
         <form onSubmit={search} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="mb-5 text-xl font-semibold">Plan your connection</h2>
+          <p aria-live="polite" className="mb-4 text-sm text-teal-800">Selected: {islands.find(item => item.id === island)?.name ?? "Loading…"} → {airports.find(item => item.id === airport)?.name ?? "Loading…"}</p>
           <label className="mb-4 block text-sm font-medium">Find an island or atoll
             <input type="search" value={islandFilter} onChange={event => setIslandFilter(event.target.value)} placeholder="e.g. Guraidhoo or Thaa" className="mt-2 block w-full rounded-lg border border-slate-300 p-3" />
           </label>
           <label className="mb-4 block text-sm font-medium">Departure island
-            <select name="island" value={island} onChange={event => setIsland(event.target.value)} required disabled={!islands.length || loading} className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3">
+            <select name="island" value={island} onChange={event => selectIsland(event.target.value)} required disabled={!islands.length || loading} className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3">
               {!islands.length && <option value="">Loading islands…</option>}
-              {[...new Set(visibleIslands.map(item => item.atoll))].sort().map(atoll => <optgroup key={atoll} label={atoll === "MLE" ? "Malé City" : `${atoll} Atoll`}>{visibleIslands.filter(item => item.atoll === atoll).map(item => <option key={item.id} value={item.id}>{item.name} · {item.atoll}</option>)}</optgroup>)}
+              {[...new Set(visibleIslands.map(item => item.atoll))].sort().map(atoll => <optgroup key={atoll} label={atoll === "MLE" ? "Malé City" : `${atoll} Atoll`}>{visibleIslands.filter(item => item.atoll === atoll).map(item => <option key={item.id} value={item.id}>{item.name} · {item.atoll}{item.category === "resort" ? " · Resort island" : ""}</option>)}</optgroup>)}
             </select>
             {islandFilter && <span className="mt-2 block text-xs font-normal text-slate-500">{filteredIslands.length} matches. Your current selection stays available.</span>}
           </label>
           {islandError && <p role="alert" className="mb-4 text-sm text-rose-800">{islandError}</p>}
           <label className="mb-4 block text-sm font-medium">Destination airport
-            <select name="airport" value={airport} onChange={event => setAirport(event.target.value)} required disabled={!airports.length || loading} className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3">
+            <select name="airport" value={airport} onChange={event => selectAirport(event.target.value)} required disabled={!airports.length || loading} className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3">
               {!airports.length && <option value="">Loading airports…</option>}
               {airports.map(item => <option key={item.id} value={item.id}>{item.name} ({item.iata})</option>)}
             </select>
@@ -101,7 +113,7 @@ export default function Home() {
         </section>
       </div>
       <footer className="mt-10 border-t border-slate-200 pt-5 text-xs leading-6 text-slate-500">
-        Directory: {islands.length || "…"} residential islands and {airports.length || "…"} land airports. Island names and categories: <a href="https://readme.onemap.mv/" className="underline">Geomatics Department, Ministry of Infrastructure, Housing and Urban Development (OneMap)</a>, under its <a href="https://readme.onemap.mv/pdf/Data%20Usage%20License.pdf" className="underline">Data Usage License</a>. Airports: <a href="https://caa.gov.mv/attachments/RkSqFC1muGxI4GakQ992lPnwqT5gjTxwiat2m7af.pdf" className="underline">Maldives CAA land-aerodrome list (July 2025)</a>. Directory retrieved 24 October 2026; inclusion does not confirm current operations or ferry service. Seaplane platforms are outside this land-airport directory. No official endorsement.
+        Directory: {islands.filter(item => item.category === "residential").length || "…"} residential islands, {islands.filter(item => item.category === "resort").length || "…"} tourism/resort islands and {airports.length || "…"} land airports. Island names and categories: <a href="https://readme.onemap.mv/" className="underline">Geomatics Department, Ministry of Infrastructure, Housing and Urban Development (OneMap)</a>, under its <a href="https://readme.onemap.mv/pdf/Data%20Usage%20License.pdf" className="underline">Data Usage License</a>. Airports: <a href="https://caa.gov.mv/attachments/RkSqFC1muGxI4GakQ992lPnwqT5gjTxwiat2m7af.pdf" className="underline">Maldives CAA land-aerodrome list (July 2025)</a>. Directory retrieved 24 October 2026; inclusion does not confirm current operations or ferry service. Seaplane platforms are outside this land-airport directory. No official endorsement.
       </footer>
     </main>
   );

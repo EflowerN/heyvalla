@@ -55,7 +55,7 @@ class FerrySearchTest extends TestCase
 
     public function test_islands_and_empty_results(): void
     {
-        $this->getJson('/api/v1/islands')->assertOk()->assertJsonCount(189, 'islands')->assertJsonCount(20, 'airports');
+        $this->getJson('/api/v1/islands')->assertOk()->assertJsonCount(531, 'islands')->assertJsonCount(20, 'airports');
         config(['demo_ferries.sailings' => []]);
         $this->search()->assertOk()->assertJsonCount(0, 'sailings');
     }
@@ -83,5 +83,37 @@ class FerrySearchTest extends TestCase
         $airports = collect(config('locations.airports'));
         $this->assertCount(20, $airports->pluck('id')->unique());
         $this->assertContains('VRMK', $airports->pluck('id')->all());
+    }
+
+    public function test_map_coordinates_and_demo_route_references_are_complete(): void
+    {
+        $response = $this->getJson('/api/v1/islands')->assertOk()->assertJsonCount(3, 'routes');
+        $data = $response->json();
+        foreach (array_merge($data['islands'], $data['airports']) as $place) {
+            $this->assertIsNumeric($place['latitude']);
+            $this->assertIsNumeric($place['longitude']);
+            $this->assertGreaterThan(-1, $place['latitude']);
+            $this->assertLessThan(8, $place['latitude']);
+            $this->assertGreaterThan(72, $place['longitude']);
+            $this->assertLessThan(74, $place['longitude']);
+        }
+        foreach ($data['routes'] as $route) {
+            $this->assertContains($route['origin_id'], array_column($data['islands'], 'id'));
+            $this->assertContains($route['airport_id'], array_column($data['airports'], 'id'));
+            $this->assertTrue($route['demo']);
+        }
+        $airport = collect($data['airports'])->firstWhere('id', 'VRNT');
+        $this->assertEqualsWithDelta(2.2108333, $airport['latitude'], 0.000001);
+        $this->assertEqualsWithDelta(73.1530556, $airport['longitude'], 0.000001);
+    }
+
+    public function test_resort_islands_are_selectable_without_inventing_schedules(): void
+    {
+        $islands = collect(config('locations.islands'));
+        $this->assertCount(342, $islands->where('category', 'resort'));
+        $this->assertCount(189, $islands->where('category', 'residential'));
+        $resort = $islands->firstWhere('category', 'resort');
+        $this->search(['island' => $resort['id']])->assertOk()
+            ->assertJsonPath('schedule_coverage', false)->assertJsonCount(0, 'sailings');
     }
 }
