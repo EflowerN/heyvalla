@@ -1,4 +1,4 @@
-# Datathon datasets: usefulness for HeyValla
+# Datathon datasets: usefulness for Dhathuru App
 
 Reviewed 24 October 2026. Inspected every table/CSV in the MTCC, MACL and Avas Ride release v1.0 archives. This is an assessment only: no application data, booking rules or runtime screens were changed. Original archives and analysis intermediates remain in the task's work directory, outside the application repository.
 

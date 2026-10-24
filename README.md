@@ -1,12 +1,12 @@
-# HeyValla
+# Dhathuru App
 
 **Plan your whole journey across the Maldives.**
 
-HeyValla brings ferry, launch, flight and ground transport information into one place. Start with **“Where are you?”** and **“Where are you going?”**, compare connections on a map, and keep the selected services in **My itineraries**. Passengers can plan a journey with a flight or travel entirely by sea.
+Dhathuru App brings ferry, launch, flight and ground transport information into one place. Start with **“Where are you?”** and **“Where are you going?”**, compare connections on a map, and keep the selected services in **My itineraries**. Passengers can plan a journey with a flight or travel entirely by sea.
 
 The project began with a Thaa Atoll pilot: helping passengers reach Thimarafushi Airport in time for check-in. It now demonstrates a broader approach to coordinating island travel and giving boat owners a place to publish services and updates that would otherwise be scattered across apps and manual messages.
 
-> **Working demo, not a live booking service.** Confirmations are simulated. HeyValla does not collect payments, issue real tickets, dispatch vehicles or reserve supplier inventory. Public reference data, owner-entered information and fictional demo schedules are identified separately. No transport-provider partnership or live API integration is claimed.
+> **Working demo, not a live booking service.** Confirmations are simulated. Dhathuru App does not collect payments, issue real tickets, dispatch vehicles or reserve supplier inventory. Public reference data, owner-entered information and fictional demo schedules are identified separately. No transport-provider partnership or live API integration is claimed.
 
 ## What you can do
 
@@ -52,7 +52,7 @@ docs/           Product plans, implementation notes and source references
 presentation/   Presentation materials
 ```
 
-Product plans and source references live in [`docs/`](docs/). [`presentation/`](presentation/) is reserved for presentation materials. Exact dependencies are recorded in the committed lockfiles.
+Product plans and source references live in [`docs/`](docs/). [`presentation/`](presentation/) is reserved for presentation materials. Exact dependencies are recorded in the committed lockfiles. The repository name, `heyvalla:*` setup commands, demo credentials and internal session keys retain their existing technical names for compatibility; the product is branded Dhathuru App.
 
 ## Local setup
 
@@ -81,7 +81,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [HeyValla locally](http://localhost:3000). The frontend's server-only `LARAVEL_API_URL` defaults to `http://127.0.0.1:8000`. If Laravel uses another port, update that value in `frontend/.env.local` and restart Next.js.
+Open [Dhathuru App locally](http://localhost:3000). The frontend's server-only `LARAVEL_API_URL` defaults to `http://127.0.0.1:8000`. If Laravel uses another port, update that value in `frontend/.env.local` and restart Next.js.
 
 Health checks:
 

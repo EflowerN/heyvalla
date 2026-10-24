@@ -13,7 +13,7 @@ Checked on 2026-10-24: the RTL portal is JavaScript-based and its schedule conte
 - Record route/direction, ordered stops, service days, departure/arrival times, exceptions, validity dates, official reference, and last verification timestamp.
 - Attribute official schedule entries to RTL/MTCC, label their verification time, and distinguish them from sample entries.
 - Display scheduled times as scheduled, never live. Only a verified update source may supply real cancellations/delays; dashboard simulations stay labelled.
-- A timetable does not supply bookable capacity. HeyValla bookings remain simulated. For actual RTL purchases, direct passengers to the official service until an approved integration exists.
+- A timetable does not supply bookable capacity. Dhathuru App bookings remain simulated. For actual RTL purchases, direct passengers to the official service until an approved integration exists.
 
 ## Import design for a later milestone
 

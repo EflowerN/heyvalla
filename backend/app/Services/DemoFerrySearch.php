@@ -46,7 +46,7 @@ class DemoFerrySearch
                     'bookable' => $classification === 'recommended' && $available > 0 && $departure->isFuture(),
                     'id' => $sailing['id'].'-'.$departure->toDateString(),
                     'service' => $sailing['id'],
-                    'operator' => 'HeyValla Demo Ferries',
+                    'operator' => 'Dhathuru App Demo Ferries',
                     'departure_at' => $departure->toIso8601String(),
                     'harbour_arrival_at' => $arrival->toIso8601String(),
                     'airport_arrival_at' => $airportArrival->toIso8601String(),

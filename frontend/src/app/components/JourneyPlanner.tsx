@@ -142,7 +142,7 @@ export default function JourneyPlanner() {
     <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">From your island to your doorstep</p>
     <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Your whole journey, in one place.</h1>
     <p className="mt-4 max-w-3xl leading-7 text-ocean/75">Connect your ferry, airport transfer, flight and onward ride. Start with two places, then add your flight details.</p>
-    <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights can use checked Maldivian website references or your own details; book flights, taxis and buses through our in-app demo checkout. Onward taxis are estimates. HeyValla does not issue real tickets or collect payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
+    <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights can use checked Maldivian website references or your own details; book flights, taxis and buses through our in-app demo checkout. Onward taxis are estimates. Dhathuru App does not issue real tickets or collect payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
     <form id="search" onSubmit={search} onChange={invalidate} className="tile scroll-mt-4 p-5 sm:p-7">
       <div className="grid gap-6 md:grid-cols-2">
         <LocationSearch id="journey-origin" label="Where are you?" places={origins} value={originText} selected={origin} onChange={value => { invalidate(); setOriginText(value); setOriginId(""); }} onSelect={pickOrigin} disabled={!directory.islands.length} />
@@ -211,7 +211,7 @@ export default function JourneyPlanner() {
       <div className="mt-5"><BookingDesk choice={choice} onClose={() => setChoice(null)} onBooked={refresh} /></div>
     </div>}
     <IntegrationRoadmap/>
-    <footer className="mt-8 text-xs leading-6 text-ocean/65">Data already in HeyValla: OneMap/CAA locations, fictional and provider-entered ferry schedules, organizer-provided Avas Ride matrix. Checked Maldivian fare references are available; there is no live airline feed, geocoding or road routing. <Link href="/journeys" className="text-lagoon underline">View saved booking itineraries</Link>.</footer>
+    <footer className="mt-8 text-xs leading-6 text-ocean/65">Data already in Dhathuru App: OneMap/CAA locations, fictional and provider-entered ferry schedules, organizer-provided Avas Ride matrix. Checked Maldivian fare references are available; there is no live airline feed, geocoding or road routing. <Link href="/journeys" className="text-lagoon underline">View saved booking itineraries</Link>.</footer>
     <Footer residential={directory.islands.filter(place => place.category === "residential").length} resorts={directory.islands.filter(place => place.category === "resort").length} airports={directory.airports.length} />
     <MobileNav resultCount={result ? result.sailings.filter(item => canBookForParty(item, plan?.passengers ?? 1)).length : null} />
   </main>;

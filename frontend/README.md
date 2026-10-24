@@ -1,4 +1,4 @@
-# HeyValla frontend
+# Dhathuru App frontend
 
 Next.js App Router with TypeScript, Tailwind CSS, and ESLint. See the repository root README for setup and `docs/demo-plan.md` for scope.
 

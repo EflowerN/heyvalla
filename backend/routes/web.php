@@ -13,7 +13,7 @@ Route::get('/', function () {
 Route::get('/api/health', function (): JsonResponse {
     return response()->json([
         'status' => 'ok',
-        'application' => 'HeyValla',
+        'application' => 'Dhathuru App',
         'mode' => 'demo',
         'service_timezone' => 'Indian/Maldives',
     ]);

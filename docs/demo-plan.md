@@ -1,4 +1,4 @@
-# HeyValla demo plan
+# Dhathuru App demo plan
 
 ## Problem and pilot
 

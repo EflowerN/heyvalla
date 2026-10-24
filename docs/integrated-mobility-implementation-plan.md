@@ -1,4 +1,4 @@
-# HeyValla integrated passenger and cargo implementation plan
+# Dhathuru App integrated passenger and cargo implementation plan
 
 ## Product outcome
 

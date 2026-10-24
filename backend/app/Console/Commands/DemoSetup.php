@@ -32,7 +32,7 @@ class DemoSetup extends Command
                     DB::table('provider_accounts')->where('id', $existing->id)->delete();
                     $existing = null;
                 }
-                $owner = $existing->id ?? DB::table('provider_accounts')->insertGetId(['demo_seed_key' => $key, 'owner_name' => ucfirst($key).' Demo Owner', 'email' => $email, 'password' => Hash::make('heyvalla-demo-2026'), 'organization_name' => ucfirst($key).' Demo Launches', 'description' => 'Fictional provider for the HeyValla demonstration. No actual transport offered.', 'coverage' => 'Thaa Atoll demo', 'created_at' => now(), 'updated_at' => now()]);
+                $owner = $existing->id ?? DB::table('provider_accounts')->insertGetId(['demo_seed_key' => $key, 'owner_name' => ucfirst($key).' Demo Owner', 'email' => $email, 'password' => Hash::make('heyvalla-demo-2026'), 'organization_name' => ucfirst($key).' Demo Launches', 'description' => 'Fictional provider for the Dhathuru App demonstration. No actual transport offered.', 'coverage' => 'Thaa Atoll demo', 'created_at' => now(), 'updated_at' => now()]);
                 $vessel = DB::table('provider_vessels')->where('provider_account_id', $owner)->orderBy('id')->value('id') ?? DB::table('provider_vessels')->insertGetId(['provider_account_id' => $owner, 'name' => ucfirst($key).' Demo One', 'passenger_capacity' => 12, 'booking_mode' => 'request_to_book', 'cargo_enquiries' => false, 'version' => 1, 'created_at' => now(), 'updated_at' => now()]);
                 $name = collect(config('locations.islands'))->firstWhere('id', $provider['origin'])['name'];
                 for ($day = 0; $day < $days; $day++) {

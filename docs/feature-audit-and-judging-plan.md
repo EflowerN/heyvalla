@@ -1,4 +1,4 @@
-# HeyValla feature audit and judging plan
+# Dhathuru App feature audit and judging plan
 
 ## Follow-up implementation — 24 October 2026
 
@@ -24,7 +24,7 @@ Audited 24 October 2026 against the local working tree and the requests in this 
 
 ## Verdict
 
-**Not all requested features are implemented.** HeyValla has working, persistent demo workflows for flight-aware ferry selection, ferry seats, an airport taxi add-on, provider publishing and provider seat approval. It also has a national location directory, an interactive map, bus references and a Greater Malé fare estimator. It does not yet deliver one complete passenger/cargo journey across those services.
+**Not all requested features are implemented.** Dhathuru App has working, persistent demo workflows for flight-aware ferry selection, ferry seats, an airport taxi add-on, provider publishing and provider seat approval. It also has a national location directory, an interactive map, bus references and a Greater Malé fare estimator. It does not yet deliver one complete passenger/cargo journey across those services.
 
 The strongest next improvement is a coherent Thaa airport-connection journey with an operator disruption and a passenger recovery decision. More disconnected pages would add less value to that story.
 

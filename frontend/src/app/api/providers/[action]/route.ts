@@ -4,7 +4,7 @@ const methods: Record<string, string[]> = { operations: ["POST"], register: ["PO
 async function proxy(request: Request, context: RouteContext<"/api/providers/[action]">) {
   const { action } = await context.params;
   if (!methods[action]?.includes(request.method)) return Response.json({ message: "Not found." }, { status: 404 });
-  if (request.method !== "GET" && !sameOrigin(request)) return Response.json({ message: "Please submit from HeyValla." }, { status: 403 });
+  if (request.method !== "GET" && !sameOrigin(request)) return Response.json({ message: "Please submit from Dhathuru App." }, { status: 403 });
   const jar = await cookies();
   const token = jar.get("heyvalla_provider")?.value;
   if (!["register", "login", "catalogue"].includes(action) && !token) return Response.json({ message: "Provider sign-in required." }, { status: 401 });

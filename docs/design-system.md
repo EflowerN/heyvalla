@@ -1,4 +1,4 @@
-# HeyValla colour system
+# Dhathuru App colour system
 
 User-approved app palette:
 
