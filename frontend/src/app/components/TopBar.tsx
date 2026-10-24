@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
@@ -38,7 +39,9 @@ export default function TopBar() {
   return (
     <header className="mx-auto max-w-6xl px-5 pt-8 sm:px-8 sm:pt-10">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-b border-ocean/15 pb-5">
-        <Link href="/" className="text-xl font-bold tracking-tight text-ocean">heyvalla<span className="text-coral">.</span></Link>
+        <Link href="/" aria-label="Dhathuru App home" className="relative block h-24 w-24 shrink-0 overflow-hidden rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lagoon sm:h-28 sm:w-28">
+          <Image src="/dhathuru-app-logo-transparent.png" alt="Dhathuru App" width={1254} height={1254} preload className="h-full w-full scale-[1.2] object-contain" sizes="135px" />
+        </Link>
         <span className="rounded-full bg-lagoon/10 px-3 py-1 text-xs font-semibold text-ocean sm:order-last">Maldives · Demo</span>
         <nav ref={nav} aria-label="Sections" className="relative flex w-full overflow-x-auto rounded-full border border-ocean/15 bg-white p-1 shadow-sm sm:w-auto">
           <span

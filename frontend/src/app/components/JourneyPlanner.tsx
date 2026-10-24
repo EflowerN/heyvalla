@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { journeyDetailsInput, buildJourney, canBookForParty, taxiDestinationZone, validatePlan, type Directory, type FareEstimate, type Place, type PlanInput } from "@/lib/journey-plan";
 import SeaJourneyPlanner from "./SeaJourneyPlanner";
+import SlideSwitch from "./SlideSwitch";
+import GreaterMaleTaxiPlanner from "./GreaterMaleTaxiPlanner";
 import IntegrationRoadmap from "./IntegrationRoadmap";
 import FlightSearch from "./FlightSearch";
 import FlightReference from "./FlightReference";
@@ -25,7 +27,7 @@ const field = "mt-2 block w-full rounded-xl border border-ocean/15 bg-white p-3 
 const money = (minor: number) => `${(minor / 100).toFixed(2)} MVR`;
 
 export default function JourneyPlanner() {
-  const [travelMode,setTravelMode] = useState<"flight"|"sea">("flight");
+  const [travelMode,setTravelMode] = useState<"flight"|"sea"|"taxi">("flight");
   const [directory, setDirectory] = useState<Directory>(emptyDirectory);
   const [directoryError, setDirectoryError] = useState("");
   const [retry, setRetry] = useState(0);
@@ -57,7 +59,8 @@ export default function JourneyPlanner() {
   const request = useRef<AbortController | null>(null);
   const activePlan = useRef<PlanInput | null>(null);
   const reviewPanel = useRef<HTMLDivElement>(null);
-  const origin = directory.islands.find(place => place.id === originId) ?? null;
+  const origins = useMemo(() => [...directory.islands, ...directory.airports.filter(place => place.id === "VRMM")], [directory]);
+  const origin = origins.find(place => place.id === originId) ?? null;
   const destinations = useMemo(() => [...directory.islands, ...directory.airports], [directory]);
   const destination = destinations.find(place => place.id === destinationId) ?? null;
   const activeFlight = matchingFlight(selectedFlight, departureAirportId, destination?.iata ? destination.id : arrivalAirportId,
@@ -78,7 +81,7 @@ export default function JourneyPlanner() {
     activePlan.current = null;
     request.current?.abort(); setLoading(false); setResult(null); setPlan(null); setFare(null); setFareMessage(""); setError(""); setChoice(null); setReview(false); setSelectedLeg("");
   }, []);
-  const pickOrigin = useCallback((place: Place) => { invalidate(); setOriginId(place.id); setOriginText(place.name); }, [invalidate]);
+  const pickOrigin = useCallback((place: Place) => { invalidate(); if (place.id === "VRMM") { setTravelMode("taxi"); return; } setOriginId(place.id); setOriginText(place.name); }, [invalidate]);
   const pickDestination = useCallback((place: Place) => { invalidate(); setDestinationId(place.id); setDestinationText(place.name); setAddress(""); if (place.iata) setArrivalAirportId(place.id); }, [invalidate]);
 
   async function fetchConnections(query: URLSearchParams, input: PlanInput, refresh = false) {
@@ -132,7 +135,8 @@ export default function JourneyPlanner() {
   const subtotal = knownPrices.reduce((sum, leg) => sum + (leg.price ?? 0), 0);
   const hasOnwardGap = legs.some(leg => leg.id === "destination" && !leg.points.length);
 
-  const modeSwitch = <div className="mb-6 flex flex-wrap gap-3" aria-label="Journey type">{([['flight','Journey with a flight'],['sea','Ferries & launches · no flight']] as const).map(([mode,label])=><button key={mode} type="button" aria-pressed={travelMode===mode} onClick={()=>{invalidate();setTravelMode(mode);}} className={`rounded-full px-5 py-3 font-semibold ${travelMode===mode?"bg-lagoon text-white":"bg-white border border-lagoon/30 text-lagoon"}`}>{label}</button>)}</div>;
+  const modeSwitch = <div className="mb-6"><SlideSwitch label="Journey type" variant="journey" value={travelMode} options={[{ value: "flight", label: "With a flight" }, { value: "sea", label: "Ferries & launches" }, { value: "taxi", label: "Taxi" }]} onChange={mode => { invalidate(); setTravelMode(mode as "flight" | "sea" | "taxi"); }} /></div>;
+  if (travelMode === "taxi") return <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8">{modeSwitch}<GreaterMaleTaxiPlanner embedded initialTo={destinationId === "ld0591" ? taxiZone : "male"} /></main>;
   if(travelMode==='sea')return <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8">{modeSwitch}<SeaJourneyPlanner directory={directory} directoryError={directoryError}/></main>;
   return <main className="mx-auto max-w-6xl px-5 pb-28 pt-8 sm:px-8 md:pb-16">
     {modeSwitch}
@@ -142,7 +146,7 @@ export default function JourneyPlanner() {
     <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights can use checked Maldivian website references or your own details; book flights, taxis and buses through our in-app demo checkout. Onward taxis are estimates. HeyValla does not issue real tickets or collect payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
     <form id="search" onSubmit={search} onChange={invalidate} className="tile scroll-mt-4 p-5 sm:p-7">
       <div className="grid gap-6 md:grid-cols-2">
-        <LocationSearch id="journey-origin" label="Where are you?" places={directory.islands} value={originText} selected={origin} onChange={value => { invalidate(); setOriginText(value); setOriginId(""); }} onSelect={pickOrigin} disabled={!directory.islands.length} />
+        <LocationSearch id="journey-origin" label="Where are you?" places={origins} value={originText} selected={origin} onChange={value => { invalidate(); setOriginText(value); setOriginId(""); }} onSelect={pickOrigin} disabled={!directory.islands.length} />
         <LocationSearch id="journey-destination" label="Where are you going?" places={destinations} value={destinationText} selected={destination} onChange={value => { invalidate(); setDestinationText(value); setDestinationId(""); }} onSelect={pickDestination} disabled={!destinations.length} />
       </div>
       {directoryError && <p role="alert" className="mt-4 text-rose-800">{directoryError} <button type="button" onClick={() => setRetry(value => value + 1)} className="underline">Retry locations</button></p>}

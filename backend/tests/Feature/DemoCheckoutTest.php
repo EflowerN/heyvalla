@@ -53,6 +53,25 @@ class DemoCheckoutTest extends TestCase
         $this->postJson('/api/v1/demo-checkout', ['kind' => 'flight', 'id' => 'maldivian-tmf-mle-20261029-flex', 'passengers' => 7, 'confirm' => false])->assertUnprocessable();
     }
 
+    public function test_airport_taxis_book_without_a_ferry_or_flight_and_persist_all_supported_city_destinations(): void
+    {
+        foreach (['velana-airport', 'domestic-terminal', 'seaplane'] as $from) {
+            foreach (['male', 'hulhumale-phase-1', 'hulhumale-phase-2'] as $to) {
+                $input = ['kind' => 'taxi', 'from' => $from, 'to' => $to, 'date' => '2026-10-25', 'passengers' => 5];
+                $booking = $this->confirm($input);
+                $this->assertNull($booking['journey_reference']);
+                $this->assertSame('2026-10-25', $booking['travel_date']);
+                $this->assertSame(config('greater_male_fares.fares_minor')[$from][$to] * 2, $booking['total_minor']);
+                $this->assertSame(collect(config('greater_male_fares.zones'))->firstWhere('id', $from)['name'], $booking['items'][0]['from']);
+                $this->assertSame(collect(config('greater_male_fares.zones'))->firstWhere('id', $to)['name'], $booking['items'][0]['to']);
+                $this->assertSame($booking['reference'], $this->confirm($input)['reference']);
+            }
+        }
+        $this->getJson('/api/v1/demo-checkout')->assertOk()->assertJsonCount(9, 'bookings');
+        $this->assertDatabaseCount('travel_journeys', 0);
+        $this->assertDatabaseCount('demo_bookings', 0);
+    }
+
     public function test_complete_journey_uses_matching_bus_and_invalidates_after_details_change(): void
     {
         $payload = ['island' => 'ld0205', 'airport' => 'VRNT', 'flight_date' => '2026-10-29', 'flight_time' => '21:05', 'check_in_minutes' => 60, 'sailing_id' => 'HV101-2026-10-29', 'request_id' => (string) Str::uuid(), 'passenger_name' => 'Demo Test', 'email' => 'demo@example.test', 'seats' => 1, 'journey_details' => ['arrival_airport_id' => 'VRMM', 'destination_id' => 'ld0591', 'flight_arrival_at' => '2026-10-29T21:55:00+05:00', 'address' => 'Demo Home', 'taxi_zone' => 'hulhumale-phase-1', 'flight_offer_id' => 'maldivian-tmf-mle-20261029-flex']];

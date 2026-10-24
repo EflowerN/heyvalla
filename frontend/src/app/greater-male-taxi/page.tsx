@@ -1,30 +1,5 @@
-"use client";
-import DemoCheckout from "../components/DemoCheckout";
-import { useEffect, useState, type FormEvent } from "react";
-type Zone = { id: string; name: string };
-type Estimate = { from: string; to: string; amount_minor: number; currency: string; same_zone: boolean };
-export default function GreaterMaleTaxi() {
-  const [zones, setZones] = useState<Zone[]>([]); const [from, setFrom] = useState("male"); const [to, setTo] = useState("velana-airport");
-  const [estimate, setEstimate] = useState<Estimate | null>(null); const [error, setError] = useState(""); const [busy, setBusy] = useState(false); const [retry, setRetry] = useState(0);
-  useEffect(() => {
-    const controller = new AbortController();
-    fetch("/api/greater-male-fares", { signal: controller.signal }).then(async response => { if (!response.ok) throw new Error("Could not load fare zones. Retry below."); setZones((await response.json()).zones); setError(""); }).catch(error => { if (!controller.signal.aborted) setError(error.message); });
-    return () => controller.abort();
-  }, [retry]);
-  async function calculate(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); if (from === to) { setError("Choose different pickup and drop-off zones."); setEstimate(null); return; } setBusy(true); setError(""); setEstimate(null);
-    try { const response = await fetch(`/api/greater-male-fares?${new URLSearchParams({ from, to })}`); const data = await response.json(); if (!response.ok) throw new Error(data.errors ? Object.values(data.errors).flat().join(" ") : data.message); setEstimate(data.estimate); }
-    catch(error) { setError(error instanceof Error ? error.message : "Could not estimate fare."); } finally { setBusy(false); }
-  }
-  const name = (id: string) => zones.find(zone => zone.id === id)?.name ?? id;
-  return <main className="mx-auto max-w-6xl px-5 pt-6 pb-16 sm:px-8 sm:pt-8">
-    <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">Avas Ride fare matrix</p><span className="mb-3 inline-block rounded-full bg-taxi px-3 py-1 text-xs font-semibold text-white">Taxi</span><span className="mb-3 ml-2 inline-block rounded-full bg-lagoon/10 px-3 py-1 text-xs font-medium">Greater Malé only</span><h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Estimate your taxi fare.</h1><p className="mt-4 max-w-3xl leading-7 text-ocean/80">Compare zone-to-zone fares for Malé, Hulhumalé and Velana airport terminals. This estimator is separate from Thimarafushi taxi requests.</p>
-    <aside className="my-7 rounded-xl border border-coral/50 bg-coral/10 p-5 text-sm leading-6">Dataset reference estimate, not a live operator quote. Currency is MVR, confirmed by the project owner. The source file has no fare validity dates. Availability, vehicle capacity and any surcharges are not established by this matrix.</aside>
-    <div className="grid gap-6 md:grid-cols-2"><form onSubmit={calculate} className="tile p-6"><h2 className="mb-5 text-xl font-semibold">Choose your zones</h2>
-      <label className="mb-5 block text-sm font-medium">Pickup zone<select value={from} onChange={event=>{setFrom(event.target.value);setEstimate(null);}} disabled={busy || !zones.length} className="tap mt-2 block w-full rounded-lg border border-ocean/25 bg-white p-3 text-base">{!zones.length && <option>Loading zones…</option>}{zones.map(zone=><option key={zone.id} value={zone.id} disabled={zone.id === to}>{zone.name}</option>)}</select></label>
-      <label className="mb-5 block text-sm font-medium">Drop-off zone<select value={to} onChange={event=>{setTo(event.target.value);setEstimate(null);}} disabled={busy || !zones.length} className="tap mt-2 block w-full rounded-lg border border-ocean/25 bg-white p-3 text-base">{!zones.length && <option>Loading zones…</option>}{zones.map(zone=><option key={zone.id} value={zone.id} disabled={zone.id === from}>{zone.name}</option>)}</select></label>
-      <div className="flex flex-wrap gap-4"><button disabled={busy || !zones.length || from === to} className="tap rounded-lg bg-lagoon px-5 py-3 font-semibold text-white hover:bg-lagoon/90 disabled:opacity-50">{busy ? "Calculating…" : "Estimate fare"}</button><button type="button" disabled={busy || !zones.length} onClick={()=>{setFrom(to);setTo(from);setEstimate(null);}} className="tap rounded-full border border-lagoon/30 px-4 font-medium text-lagoon hover:bg-lagoon/10"><span aria-hidden="true">⇄ </span>Swap zones</button></div>
-    </form><section aria-live="polite" aria-busy={busy} className="rounded-2xl border border-lagoon/25 bg-lagoon/10 p-6 md:sticky md:top-4 md:self-start">{error && <p role="alert" className="mb-4 text-rose-800">{error} {!zones.length && <button onClick={()=>setRetry(value=>value+1)} className="underline">Retry</button>}</p>}{estimate ? <><p className="text-sm text-ocean/80">{name(estimate.from)} → {name(estimate.to)}</p><h2 className="mt-4 text-5xl font-semibold tracking-tight text-ocean">{(estimate.amount_minor/100).toFixed(2)} MVR</h2><p className="mt-3 text-sm">Zone-to-zone value from the supplied matrix.</p><p className="mt-6 text-sm leading-6 text-ocean/80">Confirm the current price with the operator before travelling. Use the demo checkout below to rehearse booking. No real driver is dispatched.</p><DemoCheckout key={`${estimate.from}:${estimate.to}`} kind="taxi" from={estimate.from} to={estimate.to} /></> : <><h2 className="text-xl font-semibold">Your fare estimate</h2><p className="mt-3 leading-7 text-ocean/80">Choose pickup and drop-off zones, then estimate. No distance, duration or waiting-time prediction is included.</p></>}</section></div>
-    <footer className="mt-8 text-xs leading-6 text-ocean/70">Source: organizer-provided Avas Ride release v1.0, car_fare_matrix.csv. Six zones; estimates require different pickup and drop-off zones. Currency confirmed by the project owner on 24 October 2026. Geographic labels follow the supplied file; zone boundaries were not supplied.</footer>
-  </main>;
+import GreaterMaleTaxiPlanner from "../components/GreaterMaleTaxiPlanner";
+
+export default function GreaterMaleTaxiPage() {
+  return <GreaterMaleTaxiPlanner />;
 }

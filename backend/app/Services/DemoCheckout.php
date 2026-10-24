@@ -60,8 +60,9 @@ class DemoCheckout
             $to = $input['to'] ?? '';
             $fare = config('greater_male_fares.fares_minor')[$from][$to] ?? null;
             abort_unless($from !== $to && $fare !== null, 422, 'Choose different valid taxi zones.');
+            $zones = collect(config('greater_male_fares.zones'))->keyBy('id');
             $id = $from.':'.$to.':'.$input['date'];
-            $items[] = self::item('taxi', 'Greater Malé taxi · demo', $from, $to, $fare * (int) ceil($count / 4), 'Avas Ride matrix reference; four seats per demo vehicle. No real driver or pickup time assigned.');
+            $items[] = self::item('taxi', 'Greater Malé taxi · demo', $zones[$from]['name'], $zones[$to]['name'], $fare * (int) ceil($count / 4), 'Avas Ride matrix reference; four seats per demo vehicle. No real driver or pickup time assigned.');
         } else {
             $route = collect(config('rtl_buses.routes'))->firstWhere('id', $id);
             abort_unless($route && $route['fare_minor'] !== null, 422, 'Choose a bus route with a known reference fare.');

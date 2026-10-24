@@ -3,7 +3,7 @@ import "./globals.css";
 import TopBar from "./components/TopBar";
 
 export const metadata: Metadata = {
-  title: "HeyValla | Your whole journey",
+  title: "Dhathuru App | Your whole journey",
   description: "Plan ferry, airport transfer, flight and onward taxi connections in one Maldives journey preview.",
 };
 
