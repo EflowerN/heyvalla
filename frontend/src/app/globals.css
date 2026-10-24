@@ -26,6 +26,24 @@ button:disabled { cursor: not-allowed; }
   .tap { min-height: 2.75rem; min-width: 2.75rem; }
 }
 
+@layer base {
+  a, button, summary, input, select, textarea { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
+  button:not(:disabled):active, a.tap:active { transform: scale(0.97); }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* Entrance animations */
+@keyframes fade { from { opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+@keyframes grow { from { transform: scaleX(0); } }
+.page-in { animation: fade 0.28s ease; }
+.rise, [role="status"], [role="alert"], details[open] > :not(summary) { animation: rise 0.3s ease backwards; }
+article { animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
+article:nth-of-type(2) { animation-delay: 0.06s; } article:nth-of-type(3) { animation-delay: 0.12s; }
+article:nth-of-type(4) { animation-delay: 0.18s; } article:nth-of-type(5) { animation-delay: 0.24s; }
+article:nth-of-type(n+6) { animation-delay: 0.3s; }
+.meter-fill { transform-origin: left; animation: grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s backwards; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

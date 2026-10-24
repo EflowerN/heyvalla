@@ -1,5 +1,4 @@
 "use client";
-import SubHeader from "../components/SubHeader";
 import { useEffect, useState, type FormEvent } from "react";
 type Zone = { id: string; name: string };
 type Estimate = { from: string; to: string; amount_minor: number; currency: string; same_zone: boolean };
@@ -17,8 +16,8 @@ export default function GreaterMaleTaxi() {
     catch(error) { setError(error instanceof Error ? error.message : "Could not estimate fare."); } finally { setBusy(false); }
   }
   const name = (id: string) => zones.find(zone => zone.id === id)?.name ?? id;
-  return <main className="mx-auto max-w-4xl px-5 py-8 pb-16 sm:px-8 sm:py-12"><SubHeader backLabel="Ferry journey planner" aside={<span className="rounded-full bg-lagoon/10 px-3 py-1 text-sm">Greater Malé only</span>} />
-    <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">Avas Ride fare matrix</p><span className="mb-3 inline-block rounded-full bg-taxi px-3 py-1 text-xs font-semibold text-white">Taxi</span><h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Estimate your airport taxi fare.</h1><p className="mt-4 leading-7 text-ocean/80">Compare zone-to-zone fares for Malé, Hulhumalé and Velana airport terminals. This estimator is separate from Thimarafushi taxi requests.</p>
+  return <main className="mx-auto max-w-6xl px-5 pt-6 pb-16 sm:px-8 sm:pt-8">
+    <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">Avas Ride fare matrix</p><span className="mb-3 inline-block rounded-full bg-taxi px-3 py-1 text-xs font-semibold text-white">Taxi</span><span className="mb-3 ml-2 inline-block rounded-full bg-lagoon/10 px-3 py-1 text-xs font-medium">Greater Malé only</span><h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Estimate your airport taxi fare.</h1><p className="mt-4 max-w-3xl leading-7 text-ocean/80">Compare zone-to-zone fares for Malé, Hulhumalé and Velana airport terminals. This estimator is separate from Thimarafushi taxi requests.</p>
     <aside className="my-7 rounded-xl border border-coral/50 bg-coral/10 p-5 text-sm leading-6">Dataset reference estimate, not a live operator quote. Currency is MVR, confirmed by the project owner. The source file has no fare validity dates. Availability, vehicle capacity and any surcharges are not established by this matrix.</aside>
     <div className="grid gap-6 md:grid-cols-2"><form onSubmit={calculate} className="rounded-2xl border border-ocean/15 bg-white p-6 shadow-sm"><h2 className="mb-5 text-xl font-semibold">Choose your zones</h2>
       <label className="mb-5 block text-sm font-medium">Pickup zone<select value={from} onChange={event=>{setFrom(event.target.value);setEstimate(null);}} disabled={busy || !zones.length} className="tap mt-2 block w-full rounded-lg border border-ocean/25 bg-white p-3 text-base">{!zones.length && <option>Loading zones…</option>}{zones.map(zone=><option key={zone.id} value={zone.id} disabled={zone.id === to}>{zone.name}</option>)}</select></label>

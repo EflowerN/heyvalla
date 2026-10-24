@@ -9,7 +9,6 @@ import MobileNav from "./components/MobileNav";
 import ResultsPanel from "./components/ResultsPanel";
 import SearchCard from "./components/SearchCard";
 import TransportLegend from "./components/TransportLegend";
-import TopBar from "./components/TopBar";
 import type { Airport, Island, Result } from "./ferry";
 
 const TransportMap = dynamic(() => import("./components/TransportMap"), {
@@ -74,8 +73,7 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-5 py-10 pb-28 sm:px-8 sm:py-16 md:pb-16">
-      <TopBar />
+    <main className="mx-auto max-w-6xl px-5 pt-6 pb-28 sm:px-8 sm:pt-8 md:pb-16">
       <div className="mb-6 max-w-2xl"><p className="text-sm font-semibold uppercase tracking-widest text-lagoon">From your island to your flight</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Find a ferry that fits your flight.</h1>
         <p className="mt-3 leading-7 text-ocean/80">Choose from inhabited islands, resort islands, and land airports across the Maldives. Demo ferry connections currently serve Thimarafushi Airport.</p>

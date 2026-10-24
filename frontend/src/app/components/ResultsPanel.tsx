@@ -52,7 +52,7 @@ function BufferMeter({ sailing, safety }: { sailing: Sailing; safety: number }) 
   return (
     <div className="border-t border-ocean/10 pt-4">
       <div aria-hidden="true" className="relative h-2 rounded-full bg-ocean/10">
-        <div className={`h-2 rounded-full ${meterFill[sailing.classification]}`} style={{ width: `${fill}%` }} />
+        <div className={`meter-fill h-2 rounded-full ${meterFill[sailing.classification]}`} style={{ width: `${fill}%` }} />
         <span className="absolute -top-1 left-1/2 h-4 w-0.5 bg-ocean/60" />
       </div>
       <div className="mt-2 flex items-start justify-between gap-3 text-xs text-ocean/70">

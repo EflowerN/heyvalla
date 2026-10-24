@@ -52,7 +52,7 @@ export default function BookingDesk({ choice, onClose, onBooked }: { choice: Boo
     <p className="text-sm leading-6 text-ocean/80">No payment, real ticket, or email is sent. Use sample passenger details. Bookings are saved for this browser for 30 days; clearing cookies loses access. This is not an account.</p>
     {error && <p role="alert" className="mt-3 text-sm text-rose-800">{error}</p>}
     {confirmation && <div role="status" className="mt-4 rounded-xl border-2 border-dashed border-lagoon/40 bg-lagoon/5 p-4"><p className="font-semibold text-lagoon"><span aria-hidden="true">✓ </span>Demo booking confirmed</p><p className="mt-2 text-2xl font-bold tracking-wide">{confirmation.reference}</p><p>{confirmation.seats} seat(s) for {confirmation.passenger_name}. No money collected.</p></div>}
-    {choice && <form key={choice.sailing_id} onSubmit={book} className="mt-5 space-y-4 rounded-xl border border-ocean/15 bg-sand p-4">
+    {choice && <form key={choice.sailing_id} onSubmit={book} className="rise mt-5 space-y-4 rounded-xl border border-ocean/15 bg-sand p-4">
       <h3 className="font-semibold">Book {choice.service} · {choice.available_seats} seats available</h3>
       <label className="block text-sm font-medium">Lead passenger name<input name="passenger_name" required maxLength={100} disabled={busy} placeholder="Demo Passenger" className="tap mt-2 block w-full rounded-lg border border-ocean/25 bg-white p-3 text-base" /></label>
       <label className="block text-sm font-medium">Email (demo only)<input name="email" type="email" required maxLength={255} disabled={busy} placeholder="passenger@example.com" className="tap mt-2 block w-full rounded-lg border border-ocean/25 bg-white p-3 text-base" /></label>
