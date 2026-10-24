@@ -29,7 +29,7 @@ class DemoFerrySearch
                 $date = $flight->startOfDay()->addDays($dayOffset);
                 $departure = $date->setTimeFromTimeString($sailing['departure']);
                 $arrival = $date->addDays($sailing['arrival_day'])->setTimeFromTimeString($sailing['arrival']);
-                if ($arrival->toDateString() !== $flight->toDateString()) {
+                if ($arrival->toDateString() !== $flight->toDateString() || ! $departure->isFuture()) {
                     continue;
                 }
 
@@ -41,6 +41,7 @@ class DemoFerrySearch
                 $inventory = DB::table('demo_inventories')->where('sailing_id', $sailingId)->first();
                 $available = $inventory ? $inventory->capacity - $inventory->reserved : config('demo_ferries.capacity');
                 $results[] = [
+                    'source' => 'legacy',
                     'available_seats' => $sailing['status'] === 'cancelled' ? 0 : $available,
                     'bookable' => $classification === 'recommended' && $available > 0 && $departure->isFuture(),
                     'id' => $sailing['id'].'-'.$departure->toDateString(),
@@ -54,6 +55,20 @@ class DemoFerrySearch
                     'status' => $sailing['status'],
                 ];
             }
+        }
+
+        if ($airport['id'] === 'VRNT') {
+            $providers = DB::table('provider_sailings as s')->join('provider_accounts as p', 'p.id', '=', 's.provider_account_id')->join('provider_vessels as v', 'v.id', '=', 's.provider_vessel_id')->where('s.status', 'published')->where('s.origin_id', $input['island'])->where('s.destination_id', TravelJourneys::HARBOUR_ISLAND)->where('s.departure_at', '>', now())->whereBetween('s.arrival_at', [$flight->startOfDay()->utc(), $flight->endOfDay()->utc()])->get(['s.*', 'p.organization_name', 'v.booking_mode', 'v.name as vessel_name']);
+            foreach ($providers as $sailing) {
+                $departure = CarbonImmutable::parse($sailing->departure_at, 'UTC')->setTimezone($timezone);
+                $arrival = CarbonImmutable::parse($sailing->arrival_at, 'UTC')->setTimezone($timezone);
+                $airportArrival = $arrival->addMinutes($transfer);
+                $buffer = (int) $airportArrival->diffInMinutes($deadline, false);
+                $classification = $buffer < 0 ? 'too_late' : ($buffer < $safety ? 'tight' : 'recommended');
+                $available = $sailing->seat_capacity - $sailing->confirmed_seats;
+                $results[] = ['source' => 'provider', 'provider_sailing_id' => $sailing->id, 'version' => $sailing->version, 'fare_minor' => $sailing->fare_minor, 'id' => 'provider-'.$sailing->id, 'service' => $sailing->vessel_name, 'operator' => $sailing->organization_name, 'available_seats' => $available, 'bookable' => $classification === 'recommended' && $available > 0 && $sailing->fare_minor !== null && $sailing->booking_mode === 'request_to_book', 'departure_at' => $departure->toIso8601String(), 'harbour_arrival_at' => $arrival->toIso8601String(), 'airport_arrival_at' => $airportArrival->toIso8601String(), 'connection_buffer_minutes' => $buffer, 'classification' => $classification, 'status' => 'scheduled'];
+            }
+            $covered = $covered || $providers->isNotEmpty();
         }
 
         usort($results, fn (array $a, array $b): int => strcmp($a['departure_at'], $b['departure_at']));

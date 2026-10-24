@@ -6,7 +6,7 @@ Next.js uses Webpack for local development and production builds, with Tailwind'
 
 The health endpoint is intentionally public and returns only application metadata. The initial Laravel `/api/health` route lives in `routes/web.php`; future product API routes should be registered separately with versioning, authentication, and authorization as appropriate. Next.js calls the endpoint server-side through `/api/backend-health`; no CORS configuration is needed for this check. The backend URL is a server-only environment variable.
 
-Authentication and the operator dashboard are not scaffolded yet. Laravel's default welcome route and migrations remain available. Laravel's Vite files are starter assets; the product UI is in Next.js, so backend npm installation is not needed for this setup.
+Individual provider owner accounts and the shared demo taxi dashboard are implemented. Laravel's default welcome route and migrations remain available. Laravel's Vite files are starter assets; the product UI is in Next.js, so backend npm installation is not needed for this setup.
 
 Local `.env` files, application keys, installed dependencies, build outputs, and the SQLite database are ignored by Git. Never commit these files. Use the environment examples and lockfiles to reproduce the setup.
 
@@ -34,7 +34,7 @@ OpenStreetMap background tiles load directly in the browser with visible attribu
 
 The directory also includes all 342 records classified `Tourism Island` in the same OneMap layer, retrieved with the documented residential query parameters but `where=category='Tourism Island'`. The response was not truncated. They are stored with `category=resort`; the 189 residential records use `category=residential`. Tourism designation does not establish that a resort is currently operating, nor provide its commercial brand name. Geographic names and coordinates are retained, with source attribution unchanged.
 
-Purple map dots and a separate Resorts layer distinguish these entries. All 531 island records are valid departure options. A click on an island sets the form origin and clears the island text filter; an airport click sets the destination. Either change clears previous search results and errors. Dates and check-in settings stay intact. The map retains its current view when selecting a marker or toggling a layer. Resort destinations do not receive invented transport schedules.
+Coral map dots and a separate Resorts layer distinguish these entries. All 531 island records are valid departure options. A click on an island sets the form origin and clears the island text filter; an airport click sets the destination. Either change clears previous search results and errors. Dates and check-in settings stay intact. The map retains its current view when selecting a marker or toggling a layer. Resort destinations do not receive invented transport schedules.
 
 ## Demo seat bookings
 
@@ -72,8 +72,56 @@ Pickup and drop-off zones must now differ, enforced by both disabled UI choices 
 
 ## Transport theme and RTL buses
 
-App/transport palettes are recorded in `docs/design-system.md`. `/buses` displays the verified Greater Malé RTL route snapshot through `/api/v1/rtl-buses`, with route/stop search, airport-only filter, fares, ordered stops and expandable origin departure lists. Route data is sourced separately from the synthetic organizer MTCC demand workbook. No bus booking or bus-to-flight feasibility calculation is implied by these reference screens. Fare-date/service-calendar gaps are exposed in the interface. Atoll bus routes and verified map geometries remain outside this first bus catalogue.
+App/transport palettes are recorded in `docs/design-system.md`. `/buses` displays the verified Greater Malé RTL route snapshot through `/api/v1/rtl-buses`, with route/stop search, airport-only filter, fares, ordered stops and expandable origin departure lists. Route data is sourced separately from the synthetic organizer MTCC demand workbook. No bus booking or bus-to-flight feasibility calculation is implied by these reference screens. Fare-date/service-calendar gaps are exposed in the interface. Atoll routes were added subsequently as described below; verified route geometries remain unavailable.
 
 ### Atoll buses
 
 `/buses` now includes 13 atoll routes alongside the 15 Greater Malé routes. Select an area, search route/stop/area text, or filter airport connections. All seven areas listed in RTL's atoll selector were checked. Cards preserve ordered stops and the available origin departure snapshot. Unknown fares remain null and render as unavailable. No operating days or future travel-date guarantees are inferred. See `docs/data-sources.md` for coverage and limitations.
+
+### Provider publishing workspace
+
+Run `cd backend && php artisan migrate` after pulling this change. No new environment values or dependencies are required. Open `/providers` and create an individual demo owner account (password at least 12 characters); this is separate from the existing `/operator` taxi demo. Account passwords and session tokens are hashed in Laravel; Next stores the bearer token in an HttpOnly, SameSite=Strict cookie for eight hours. Logout revokes the current session server-side.
+
+Add vessels, create future dated sailing drafts in Maldives time, review, then publish to `/sailings`. Providers can only read/change their own profile, vessels and drafts. Published records are explicitly unverified demo information. Passenger catalogue responses exclude account email and credentials. Request-to-book is implemented with operator seat approval; cargo remains a saved future preference and GPS is off. Draft creation is not idempotent: after a connection failure, refresh before retrying to check whether the draft was saved.
+
+`php artisan test --compact --filter=ProviderPublishingTest` covers isolation, hashed/revoked/expired sessions, private drafts, public-field boundaries, version conflicts, timing validation and unknown fares. Demo accounts have no email verification, password recovery or team membership yet; do not use real business credentials in this local prototype.
+
+### Provider seat requests and approval
+
+This supersedes the earlier publishing-only booking limitation. Run `php artisan migrate` in `backend` to add per-sailing capacity and seat requests. A vessel set to request-to-book enables requests on future published sailings with a known fare. Passengers use `/sailings`; providers confirm or decline from the bottom of `/providers`.
+
+Requests snapshot the accepted MVR price, route, dates, provider/vessel names and demo terms. They do not hold seats. Operator confirmation allocates seats through a conditional database update in a transaction; cancellation returns confirmed seats. A sailing's capacity is copied from the vessel when its draft is created. Later vessel-capacity changes apply to new sailings. Pending requests can exceed remaining capacity, but confirmations cannot. Turning bookings off preserves existing requests and allows their approval. Withdrawal is blocked while pending/confirmed requests exist; it must not silently erase commitments.
+
+Passengers use the existing HttpOnly guest cookie; booking history is private to that browser, not recoverable across devices. Submission UUIDs protect retries, and version checks protect status changes. Confirmation/cancellation retries do not allocate/release capacity twice. Declines require reasons. The timeline records request, confirmation, decline and passenger cancellation, with Maldives-time display. No real ticket, payment, notification delivery or seat assignment is implied. Booking changes are limited to before departure; fulfilment and post-departure handling remain future work.
+
+`ProviderBookingTest` verifies allocation limits, duplicate submissions, cancellation, private histories, organization isolation, immutable accepted snapshots, stale fares/versions and unavailable sailings. Concurrency on MySQL still needs deployment-level verification; local tests use SQLite. Cargo enquiries and live location remain unavailable. Delay/last-call updates and customer acknowledgements are the next timeline extension.
+
+## Unified itineraries and audit fixes — 24 October 2026
+
+`travel_journeys` links exactly one legacy or provider ferry booking to an optional flight plan. `demo_taxi_requests` now supports either parent via nullable unique foreign keys; requests cannot be made until the ferry is confirmed. Legacy bookings are backfilled into itineraries by the migration. Older snapshots without complete check-in/harbour fields remain readable and can attach a fresh future flight target. No deadline is fabricated from incomplete history.
+
+`GET/POST /api/v1/journeys` lists the guest's latest 100 itineraries and attaches a validated future flight target. The Next proxy uses the same HttpOnly guest cookie as existing bookings. `/journeys` shows ordered ferry/taxi/flight legs, approval status, MVR prices and unknown prices, the check-in margin and cancellation. A flight is always external/unbooked. A taxi for fewer people than the ferry party cannot make the whole connection confirmed or its ground price complete.
+
+Published provider sailings with canonical origin island and Thimarafushi destination island IDs join `/api/v1/ferry-search`. Only future departures arriving on the flight date are searched, with the same 20-minute demo transfer and 30-minute safety margin. Provider booking mode, fare, remaining seats and version are revalidated at submission. The legacy booking endpoint explicitly refuses provider services so it cannot bypass provider approval. The selected flight target is snapshotted with the provider request; catalogue requests may attach one later. Airports other than Thimarafushi do not inherit these transfer assumptions.
+
+Provider drafts can be edited with version checks and canonical island selectors. Drafts with booking history cannot be rewritten. Publication checks for overlapping trips on the same vessel, including a 15-minute demo turnaround allowance. This does not validate repositioning, crew, seaworthiness or real travel time. Sailing cancellation requires a reason and atomically updates active requests and linked taxis. Pending requests expire after departure with one timeline event; providers may record arrival for confirmed seats after arrival time. Taxi handling remains available for an already-arranged, upcoming pickup after ferry arrival.
+
+Original HV bookings now support cancellation and release their dated seat allocation once. Passengers and the taxi operator can cancel taxis; declined/cancelled taxis may request a fresh quote with a version check, before harbour arrival. New requests remain limited to one taxi, four people/four bags. Quote acceptance remains guarded by expiry and pickup timing. Cancellation has no financial refund meaning in this demo.
+
+Provider/passenger seat lists, itineraries and the taxi dashboard poll every 15 seconds while visible. This is not delivery/read tracking or push notification. Request retry keys are kept in sessionStorage under a SHA-256 payload fingerprint, so a same-tab reload retains an ambiguous submission's identity without storing raw passenger details there. Clearing storage, changing browsers or intentionally changing the payload still requires review of existing bookings.
+
+Selected-journey map bounds refit when endpoints change or the user explicitly requests a fit. Layer toggles preserve the view. In-flight search responses are aborted when a map endpoint changes. Past flight searches are rejected and the usable count includes only bookable services.
+
+Use the [README rehearsal](../README.md#repeatable-local-demonstration) for the demo command and scenario. No external data was imported in this follow-up; existing source-register references remain applicable. SQLite regression tests exercise state/authorization/capacity guards; they do not prove concurrent MySQL execution. Provider GPS lines, calendar-aware RTL integration, delay/reschedule recovery, cargo/charter workflows, multi-car transfers, roles/account recovery, production rate limiting, pagination and automated browser CI remain open.
+
+## Hosted demo deployment
+
+The Next.js frontend runs on Vercel and the Laravel API runs on Railway. Vercel's serverless runtime cannot keep SQLite writes, so it cannot host the backend.
+
+Backend (Railway): create a service from this GitHub repo with root directory `backend`. `backend/railway.json` builds `backend/Dockerfile`. Attach a volume at `/data`, which holds `/data/database.sqlite`. On every boot, `docker/start.sh` migrates, starts the scheduler (`heyvalla:expire-requests`) and serves on `$PORT`. Set `APP_KEY` (from `php artisan key:generate --show`), `APP_URL` and a random `DEMO_OPERATOR_TOKEN` of at least 32 characters. Generate a public domain for the service.
+
+`HEYVALLA_ALLOW_DEMO_SEED=true` runs the idempotent `heyvalla:demo` seeder on each boot, outside local/testing. It creates the two fictional providers with the published password `heyvalla-demo-2026`, so anyone can sign in as them. Use the flag only for the hosted datathon demo, never for real provider data.
+
+Frontend (Vercel): import the repo with root directory `frontend`. Set `LARAVEL_API_URL` to the Railway URL without a trailing slash, the same `DEMO_OPERATOR_TOKEN`, and a new `DEMO_OPERATOR_PASSWORD` (not the local `heyvalla-demo`). Redeploy after changing environment variables.
+
+The hosted service runs Laravel's single-process `artisan serve` with SQLite. That is enough for a demo, not for production load. The operator login rate limit is in-process on Vercel and does not hold across serverless instances.

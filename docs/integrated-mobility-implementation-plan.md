@@ -92,3 +92,29 @@ Build provider onboarding/ownership and per-vessel controls first. Deliver one s
 Test cross-provider isolation, public/private location scope, quote expiry/versioning, capacity races, duplicate submissions, notification deduplication, last-call rescheduling, midnight/calendars, downstream missed connections, cargo cut-offs/custody and partial booking failures. Verify mobile publishing, customer acknowledgement and stale/offline states in the browser.
 
 Measure planning completion, confirmed versus partial journeys, quote response time, notification delivery/acknowledgement, and unresolved booking changes. Establish baselines through pilot testing; do not invent target performance claims from synthetic MTCC demand figures.
+
+## Implementation progress — 24 October 2026
+
+First provider-publishing slice is implemented locally:
+
+- `/providers`: individual owner account registration/sign-in, private profile editing, declared coverage, vessel capacity and future request-to-book/cargo preferences.
+- Database-backed eight-hour sessions, hashed credentials/tokens, server-side ownership checks, login rate limits and version checks on vessel/publishing changes.
+- Private dated sailing drafts, preview, explicit publication and withdrawal. Departure/arrival input uses Maldives time and storage uses UTC.
+- `/sailings`: passenger catalogue of future published demo sailings, with MVR per-seat fares or an explicit unknown price, unverified-provider labels and no private account contact fields.
+
+This is a publishing stage. Booking preferences do not activate reservations yet; location sharing remains off. The existing shared taxi demo login remains separate. Dispatcher memberships, reviewer verification, password recovery, email verification, route/map geometry and CSV imports remain unfinished Phase 1 work. Draft content editing is not yet available; drafts can currently be reviewed and published/withdrawn. No new official/public transport data was used for this feature.
+
+Next delivery: provider sailing seat requests and operator approval, followed by booking-specific delay/last-call events and passenger acknowledgements. Integrate these separately from the existing fictional ferry inventory and RTL reference snapshots, preserving atomic capacity checks and accepted terms.
+
+### Provider booking progress — 24 October 2026
+
+Seat requests and operator approval are now implemented for future provider-published demo sailings with known MVR fares. Passengers explicitly accept the displayed journey/total and demo terms. Requests retain an immutable price/journey snapshot; the operator confirms or declines with a reason. Passenger cancellation releases confirmed capacity. Both views show a private request timeline, protected by provider ownership or guest-browser ownership. Confirmations use an atomic capacity guard; retries use submission UUIDs and status versions. New-booking opt-out preserves existing requests and confirmations. Sailings with active commitments cannot be withdrawn to private drafts.
+
+This supersedes the earlier note that request-to-book preferences do not activate requests. Cargo preferences still do not activate cargo enquiries. Next: sailing delay/cancellation/last-call events, passenger acknowledgements and connection-impact warnings, followed by cargo requests/quotes. No new public data sources were used.
+
+
+### Follow-up: reliable demo and unified itinerary (24 October 2026)
+
+Implemented the first integrated Thimarafushi slice: canonical provider endpoints; published provider sailing search against a manual flight deadline; provider approval; one linked airport taxi quote/acceptance; a shared guest itinerary with ordered legs, statuses, MVR subtotal and unknown flight cost. A partial-party taxi remains incomplete. Source schedules and transfer durations are explicitly fictional/provider demo assumptions.
+
+The same slice adds local repeatable seeded providers, request expiry, draft edits, vessel overlap checks, ferry/taxi cancellation, old-booking compatibility and visible-page polling. The README contains the rehearsal/reset commands. Delay recovery, multi-airport routing, bus/flight booking, cargo, private charter, location sharing, notifications and production readiness remain separate deliverables, as detailed in the audit follow-up.

@@ -9,3 +9,7 @@ For public data sources outside the organizer-provided list in `docs/data-source
 ## Product colours
 
 Follow `docs/design-system.md` for the user-approved app palette and transport identity colours: flight light blue, sea dark blue, land orange, taxi black and bus green. Keep mode identity distinct from selection/status styling, and accompany colour with text labels.
+
+## Judging priorities
+
+The user supplied weighted datathon judging criteria. Consult `docs/feature-audit-and-judging-plan.md` when prioritizing features and preparing the demo. Technical execution (20%), impact (15%) and scalability/readiness (15%) together carry half the marks. Keep real, historical, provider-entered and simulated data distinguishable. The screenshot is cropped, so do not infer unseen competition eligibility rules from it.

@@ -3,12 +3,13 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import TransportLegend from "./components/TransportLegend";
+import { SeatRequestForm } from "./components/ProviderSeatRequests";
 import BookingDesk, { type BookingChoice } from "./components/BookingDesk";
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 
 const TransportMap = dynamic(() => import("./components/TransportMap"), { ssr: false, loading: () => <p className="py-6">Loading interactive map…</p> });
 
-type Sailing = { available_seats: number; bookable: boolean; id: string; service: string; operator: string; departure_at: string; harbour_arrival_at: string; airport_arrival_at: string; connection_buffer_minutes: number; classification: "recommended" | "tight" | "too_late" | "cancelled" };
+type Sailing = { source: "legacy" | "provider"; provider_sailing_id?: number; version?: number; fare_minor?: number | null; available_seats: number; bookable: boolean; id: string; service: string; operator: string; departure_at: string; harbour_arrival_at: string; airport_arrival_at: string; connection_buffer_minutes: number; classification: "recommended" | "tight" | "too_late" | "cancelled" };
 type Result = { search: Record<string, string | number>; destination: string; destination_code: string; schedule_coverage: boolean; coverage_message: string | null; origin: string; flight_at: string; check_in_deadline_at: string; transfer_minutes: number | null; safety_minutes: number; sailings: Sailing[] };
 const labels = { recommended: "Meets arrival target", tight: "Tight connection", too_late: "Too late for check-in", cancelled: "Cancelled · unavailable" };
 const colors = { recommended: "bg-lagoon/10 text-ocean", tight: "bg-coral/20 text-ocean", too_late: "bg-rose-100 text-rose-900", cancelled: "bg-ocean/10 text-ocean" };
@@ -17,6 +18,7 @@ function localTime(value: string) {
 }
 
 export default function Home() {
+  const searchRequest = useRef<AbortController|null>(null);
   const [islands, setIslands] = useState<{ id: string; name: string; atoll: string; category: string }[]>([]);
   const [airports, setAirports] = useState<{ id: string; name: string; iata: string }[]>([]);
   const [island, setIsland] = useState("ld0205");
@@ -42,9 +44,11 @@ export default function Home() {
   }, []);
 
   const selectIsland = useCallback((id: string) => {
+    searchRequest.current?.abort(); setLoading(false);
     setIsland(id); setIslandFilter(""); setResult(null); setBookingChoice(null); setError("");
   }, [setResult, setBookingChoice]);
   const selectAirport = useCallback((id: string) => {
+    searchRequest.current?.abort(); setLoading(false);
     setAirport(id); setResult(null); setBookingChoice(null); setError("");
   }, [setResult, setBookingChoice]);
 
@@ -53,15 +57,16 @@ export default function Home() {
     const data = new FormData(event.currentTarget);
     const query = new URLSearchParams();
     data.forEach((value, key) => query.set(key, String(value)));
+    searchRequest.current?.abort(); const controller = new AbortController(); searchRequest.current = controller;
     setLoading(true); setError(""); setResult(null); setBookingChoice(null);
     try {
-      const response = await fetch(`/api/ferry-search?${query}`);
+      const response = await fetch(`/api/ferry-search?${query}`, {signal: controller.signal});
       const body = await response.json();
       if (!response.ok) throw new Error(body.errors ? Object.values(body.errors).flat().join(" ") : body.message);
-      setResult(body);
+      if (!controller.signal.aborted) setResult(body);
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Could not search. Please try again.");
-    } finally { setLoading(false); }
+      if (!controller.signal.aborted) setError(error instanceof Error ? error.message : "Could not search. Please try again.");
+    } finally { if (!controller.signal.aborted) setLoading(false); }
   }
 
   return (
@@ -69,6 +74,8 @@ export default function Home() {
       <header className="mb-10 flex flex-wrap items-center justify-between gap-3 border-b border-ocean/15 pb-6">
         <span className="text-xl font-bold tracking-tight text-ocean">heyvalla<span className="text-coral">.</span></span>
         <Link href="/greater-male-taxi" className="text-sm font-medium text-lagoon underline">Greater Malé taxi fares</Link>
+        <Link href="/journeys" className="rounded-full bg-lagoon px-3 py-1 text-sm font-medium text-white">My itineraries</Link>
+        <Link href="/sailings" className="rounded-full border border-sea px-3 py-1 text-sm font-medium text-sea">Provider sailings</Link>
         <Link href="/buses" className="rounded-full bg-bus px-3 py-1 text-sm font-medium text-white">RTL buses</Link>
         <Link href="/operator" className="text-sm font-medium text-lagoon underline">Operator dashboard</Link>
         <span className="rounded-full bg-lagoon/10 px-3 py-1 text-xs font-semibold text-ocean">Maldives · Demo</span>
@@ -77,7 +84,7 @@ export default function Home() {
         <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Find a ferry that fits your flight.</h1>
         <p className="mt-4 leading-7 text-ocean/80">Choose from inhabited islands, resort islands, and land airports across the Maldives. Demo ferry connections currently serve Thimarafushi Airport.</p>
       </div>
-      <aside className="mb-8 rounded-xl border border-coral/50 bg-coral/10 p-4 text-sm leading-6 text-ocean">Demonstration only. All sailings, durations, cancellations, and transfer allowances are fictional. They repeat daily for testing and are not RTL schedules. No real tickets are available.</aside>
+      <aside className="mb-8 rounded-xl border border-coral/50 bg-coral/10 p-4 text-sm leading-6 text-ocean">Demonstration only. All sailings, durations, cancellations, and transfer allowances are fictional. Built-in ferries repeat daily; provider sailings have specific dates. These are not RTL schedules. No real tickets are available.</aside>
       <TransportLegend />
       <TransportMap island={island} airport={airport} onIslandSelect={selectIsland} onAirportSelect={selectAirport} />
       <div className="grid items-start gap-8 lg:grid-cols-[320px_1fr]">
@@ -120,14 +127,14 @@ export default function Home() {
           {error && <p role="alert" className="rounded-xl border border-rose-200 bg-rose-50 p-5 text-rose-900">{error}</p>}
           {!result && !error && <div className="rounded-2xl border border-dashed border-ocean/25 p-10 text-center"><h2 className="text-xl font-semibold">Your journey starts here</h2><p className="mt-3 leading-7 text-ocean/70">Choose a flight date and search to compare demo ferries. Try Vilufushi (Thaa) to Thimarafushi with a 14:00 flight to see suitable, tight, late, and cancelled options.</p></div>}
           {result && <>
-            <div className="mb-6"><h2 className="text-2xl font-semibold">{result.origin} → {result.destination} ({result.destination_code})</h2><p className="mt-2 text-sm leading-6 text-ocean/80"><span className="rounded-full bg-flight px-2 py-1 text-xs font-semibold text-ocean">Flight</span> {localTime(result.flight_at)} · Check-in target: {localTime(result.check_in_deadline_at)}<br />{result.schedule_coverage ? `${result.sailings.filter(s => s.classification === "recommended").length} ferry connections meet the target with the ${result.safety_minutes}-minute safety margin.` : "Schedule coverage is not available for this route yet."}</p></div>
+            <div className="mb-6"><h2 className="text-2xl font-semibold">{result.origin} → {result.destination} ({result.destination_code})</h2><p className="mt-2 text-sm leading-6 text-ocean/80"><span className="rounded-full bg-flight px-2 py-1 text-xs font-semibold text-ocean">Flight</span> {localTime(result.flight_at)} · Check-in target: {localTime(result.check_in_deadline_at)}<br />{result.schedule_coverage ? `${result.sailings.filter(s => s.bookable).length} ferry connections are accepting demo bookings and meet the target with the ${result.safety_minutes}-minute safety margin.` : "Schedule coverage is not available for this route yet."}</p></div>
             {!result.sailings.length && <p className="rounded-xl bg-white p-6">{result.coverage_message ?? "No demo sailings arrive on this flight date. Try another island or date."}</p>}
             {!!result.sailings.length && !result.sailings.some(s => s.classification === "recommended") && <p className="mb-5 rounded-xl bg-coral/10 p-4 text-ocean">No ferry meets the recommended arrival target. Consider travelling earlier or arranging another service; this demo does not provide a confirmed alternative.</p>}
             <div className="space-y-4">{result.sailings.map(sailing => <article key={sailing.id} className="rounded-2xl border border-ocean/15 bg-white p-5 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-semibold">{sailing.service} <span className="font-normal text-ocean/70">· <span className="rounded-full bg-sea px-2 py-1 text-xs text-white">Sea · Demo ferry</span></span></h3><span className={`rounded-full px-3 py-1 text-xs font-semibold ${colors[sailing.classification]}`}>{labels[sailing.classification]}</span></div>
               <dl className="my-5 grid gap-4 text-sm sm:grid-cols-3">{[["Departs island", sailing.departure_at], ["Arrives harbour", sailing.harbour_arrival_at], ["Reaches airport", sailing.airport_arrival_at]].map(([label, value]) => <div key={label}><dt className="text-ocean/70">{label}</dt><dd className="mt-1 font-semibold">{localTime(value)}</dd></div>)}</dl>
               <p className="border-t border-ocean/10 pt-3 text-sm text-ocean/80">{sailing.classification === "cancelled" ? "This simulated sailing is cancelled and cannot be used." : sailing.connection_buffer_minutes < 0 ? `Arrives ${Math.abs(sailing.connection_buffer_minutes)} minutes after your check-in target.` : `${sailing.connection_buffer_minutes} minutes before your check-in target.${sailing.classification === "tight" ? " Below the recommended safety margin." : " Includes the recommended safety margin."}`}</p>
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3"><span className="text-sm text-ocean/80">{sailing.available_seats} demo seats remaining</span><button type="button" disabled={!sailing.bookable} onClick={() => setBookingChoice({ sailing_id: sailing.id, service: sailing.service, available_seats: sailing.available_seats, search: result.search })} className="rounded-lg bg-lagoon px-4 py-2 text-sm font-semibold text-white disabled:bg-ocean/10 disabled:text-ocean/80">{sailing.bookable ? "Book demo seats" : sailing.available_seats === 0 && sailing.classification !== "cancelled" ? "Sold out" : "Not bookable for this flight"}</button></div>
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3"><span className="text-sm text-ocean/80">{sailing.available_seats} demo seats remaining · {sailing.source === "provider" ? "Provider approval required" : "Built-in demo"}</span>{sailing.source !== "provider" && <button type="button" disabled={!sailing.bookable} onClick={() => setBookingChoice({ sailing_id: sailing.id, service: sailing.service, available_seats: sailing.available_seats, search: result.search })} className="rounded-lg bg-lagoon px-4 py-2 text-sm font-semibold text-white disabled:bg-ocean/10 disabled:text-ocean/80">{sailing.bookable ? "Book demo seats" : sailing.available_seats === 0 && sailing.classification !== "cancelled" ? "Sold out" : "Not bookable for this flight"}</button>}</div>{sailing.source === "provider" && <><p className="mt-3 text-sm">{sailing.operator} · {sailing.fare_minor == null ? "Fare unavailable" : `${(sailing.fare_minor / 100).toFixed(2)} MVR per seat`} · Unverified demo provider</p>{sailing.bookable ? <SeatRequestForm sailing={{id:sailing.provider_sailing_id!,version:sailing.version!,fare_minor:sailing.fare_minor??null,remaining_seats:sailing.available_seats}} flightContext={result.search} onSaved={()=>{}}/> : <p className="mt-2 text-sm">Not accepting requests for this flight connection.</p>}</>}
             </article>)}</div>
             <p className="mt-5 text-xs leading-6 text-ocean/70">Planning estimates only, not guaranteed connections. Search includes sailings arriving on the flight date, including departures the previous evening. Earlier-day arrival options are outside this demo search.</p>
           </>}
