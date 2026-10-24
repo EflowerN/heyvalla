@@ -42,6 +42,10 @@ article { animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
 article:nth-of-type(2) { animation-delay: 0.06s; } article:nth-of-type(3) { animation-delay: 0.12s; }
 article:nth-of-type(4) { animation-delay: 0.18s; } article:nth-of-type(5) { animation-delay: 0.24s; }
 article:nth-of-type(n+6) { animation-delay: 0.3s; }
+/* Toggle pills: the tint wipes in from the left when switched on */
+.wipe { position: relative; overflow: hidden; isolation: isolate; }
+.wipe::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgb(8 127 140 / 0.12); transform: scaleX(0); transform-origin: left; transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.wipe[aria-pressed="true"]::before, .wipe:has(:checked)::before { transform: scaleX(1); }
 .meter-fill { transform-origin: left; animation: grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s backwards; }
 
 @media (prefers-reduced-motion: reduce) {

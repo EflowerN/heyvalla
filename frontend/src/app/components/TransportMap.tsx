@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { transportColors } from "@/lib/transport-colors";
+import SlideSwitch from "./SlideSwitch";
 import type * as Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -90,18 +91,14 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
   const inhabited = directory ? directory.islands.filter(item => item.category !== "resort").length : 0;
   const resorts = directory ? directory.islands.filter(item => item.category === "resort").length : 0;
   const airportCount = directory ? directory.airports.length : 0;
-  const toggle = (on: boolean) => `tap inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${on ? "border-lagoon bg-lagoon/10 text-ocean" : "border-ocean/20 bg-white text-ocean/60"}`;
-  const segment = (on: boolean) => `tap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${on ? "bg-lagoon text-white" : "text-ocean hover:bg-lagoon/10"}`;
+  const toggle = (on: boolean) => `wipe tap inline-flex items-center gap-2 rounded-full border bg-white px-3.5 py-1.5 text-sm font-medium transition-colors ${on ? "border-lagoon text-ocean" : "border-ocean/20 text-ocean/60"}`;
 
   return <section className="mb-6 overflow-hidden rounded-2xl border border-ocean/15 bg-white shadow-sm" aria-label="Interactive Maldives transport map">
     <div className="p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div><h2 className="text-xl font-semibold">Explore the connections</h2>
           <p className="mt-1 text-sm text-ocean/70">{directory ? `${inhabited} inhabited ${inhabited === 1 ? "island" : "islands"} · ${resorts} resort ${resorts === 1 ? "island" : "islands"} · ${airportCount} ${airportCount === 1 ? "airport" : "airports"}` : "Loading locations…"}</p></div>
-        <div role="group" aria-label="Map view" className="inline-flex rounded-full border border-ocean/15 bg-sand p-1">
-          <button type="button" aria-pressed={view === "country"} onClick={() => setView("country")} className={segment(view === "country")}>All Maldives</button>
-          <button type="button" aria-pressed={view === "selection"} onClick={() => setView("selection")} className={segment(view === "selection")}>Selected journey</button>
-        </div>
+        <SlideSwitch label="Map view" value={view} onChange={next => setView(next as "country" | "selection")} options={[{ value: "country", label: "All Maldives" }, { value: "selection", label: "Selected journey" }]} />
       </div>
       <div role="group" aria-label="Map layers" className="mt-4 flex flex-wrap gap-2">
         <button type="button" aria-pressed={showIslands} onClick={() => setShowIslands(value => !value)} className={toggle(showIslands)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />Islands</button>
