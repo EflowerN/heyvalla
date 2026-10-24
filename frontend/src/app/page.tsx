@@ -75,18 +75,18 @@ export default function Home() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-28 pt-5 sm:px-8 sm:pt-8 md:pb-12">
+    <main className="mx-auto max-w-6xl px-5 py-10 pb-28 sm:px-8 sm:py-16 md:pb-16">
       <TopBar />
-
-      <div className="mb-8 max-w-2xl">
-        <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">From your island to your flight</p>
-        <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">Find a ferry that fits your flight.</h1>
+      <div className="mb-9 max-w-2xl"><p className="text-sm font-semibold uppercase tracking-widest text-lagoon">From your island to your flight</p>
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Find a ferry that fits your flight.</h1>
         <p className="mt-4 leading-7 text-ocean/80">Choose from inhabited islands, resort islands, and land airports across the Maldives. Demo ferry connections currently serve Thimarafushi Airport.</p>
       </div>
-
       <DemoNotice />
-
-      <div className="grid items-start gap-6 lg:grid-cols-[380px_1fr]">
+      <div id="map" className="scroll-mt-4">
+        <TransportLegend />
+        <TransportMap island={island} airport={airport} onIslandSelect={selectIsland} onAirportSelect={selectAirport} />
+      </div>
+      <div className="grid items-start gap-8 lg:grid-cols-[320px_1fr]">
         <div id="search" className="scroll-mt-4">
           <SearchCard
             islands={islands} airports={airports} island={island} airport={airport}
@@ -95,20 +95,13 @@ export default function Home() {
             onSubmit={search} loading={loading} islandError={islandError}
           />
         </div>
-        <div className="min-w-0 space-y-6">
-          <div id="map" className="scroll-mt-4 [&>div]:mt-0 [&>section]:my-0">
-            <TransportLegend />
-            <TransportMap island={island} airport={airport} onIslandSelect={selectIsland} onAirportSelect={selectAirport} />
-          </div>
-          <div id="results" ref={resultsRef} className="scroll-mt-4">
-            <BookingDesk choice={bookingChoice} onClose={() => setBookingChoice(null)} onBooked={() => {
-              if (result) fetch(`/api/ferry-search?${new URLSearchParams(Object.entries(result.search).map(([key, value]) => [key, String(value)]))}`).then(response => response.ok ? response.json() : null).then(data => { if (data) setResult(data); }).catch(() => {});
-            }} />
-            <ResultsPanel result={result} error={error} loading={loading} onBook={setBookingChoice} />
-          </div>
+        <div id="results" ref={resultsRef} className="scroll-mt-4">
+          <BookingDesk choice={bookingChoice} onClose={() => setBookingChoice(null)} onBooked={() => {
+            if (result) fetch(`/api/ferry-search?${new URLSearchParams(Object.entries(result.search).map(([key, value]) => [key, String(value)]))}`).then(response => response.ok ? response.json() : null).then(data => { if (data) setResult(data); }).catch(() => {});
+          }} />
+          <ResultsPanel result={result} error={error} loading={loading} onBook={setBookingChoice} />
         </div>
       </div>
-
       <Footer
         residential={islands.filter(item => item.category === "residential").length}
         resorts={islands.filter(item => item.category === "resort").length}
