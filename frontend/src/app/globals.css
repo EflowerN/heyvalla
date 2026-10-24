@@ -51,3 +51,6 @@ article:nth-of-type(n+6) { animation-delay: 0.3s; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* Keep nearby island and airport labels readable on narrow maps. */
+.island-map-label { max-width: 220px; white-space: normal; color: #12343B; border-color: #FFFFFF; }

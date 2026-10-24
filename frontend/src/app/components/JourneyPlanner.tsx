@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { journeyDetailsInput, buildJourney, canBookForParty, taxiDestinationZone, validatePlan, type Directory, type FareEstimate, type Place, type PlanInput } from "@/lib/journey-plan";
+import JourneyStep from "./JourneyStep";
 import { transportColors } from "@/lib/transport-colors";
 import { labels, localTime, type Result } from "../ferry";
 import BookingDesk, { type BookingChoice } from "./BookingDesk";
@@ -157,7 +158,7 @@ export default function JourneyPlanner() {
           {!result.sailings.length ? <p role="status" className="mt-5 rounded-xl bg-sand p-4 text-sm leading-6">{result.coverage_message ?? "No future sailings match this flight date. Try a different date or island."} No complete route has been generated.</p> : <label className="mt-5 block text-sm font-medium">Choose your ferry<select value={sailingId} onChange={event => { setSailingId(event.target.value); setSelectedLeg(""); setReview(false); setChoice(null); }} className={field}><option value="" disabled>Select a sailing</option>{result.sailings.map(item => <option value={item.id} disabled={item.classification === "cancelled"} key={item.id}>{item.service} · {localTime(item.departure_at)} · {item.classification === "cancelled" ? "Cancelled" : canBookForParty(item, plan?.passengers ?? 1) ? "Available" : "Not bookable"}</option>)}</select></label>}
           {sailing && <>
             <p className={`mt-4 rounded-lg p-3 text-sm ${bookable ? "bg-lagoon/10" : "bg-coral/20"}`}>{labels[sailing.classification]} · {sailing.available_seats} seats left.{plan && sailing.available_seats < plan.passengers ? " Not enough seats for your party." : ""}</p>
-            <ol className="my-5 space-y-3">{legs.map((leg, index) => <li key={leg.id}>
+            <ol className="my-5">{legs.map((leg, index) => <JourneyStep key={leg.id} mode={leg.mode} label={leg.title} last={index === legs.length - 1}>
               <button type="button" aria-pressed={selectedLeg === leg.id} onClick={() => setSelectedLeg(current => current === leg.id ? "" : leg.id)} className={`w-full rounded-xl border border-l-4 p-4 text-left ${selectedLeg === leg.id ? "border-ocean bg-lagoon/5 ring-1 ring-ocean" : "border-ocean/15"}`} style={{ borderLeftColor: transportColors[leg.mode] }}>
                 <span className="text-xs font-semibold uppercase" style={{ color: leg.mode === "flight" || leg.mode === "land" ? "#12343B" : transportColors[leg.mode] }}>{index + 1}. {leg.mode === "sea" ? "Ferry" : leg.mode === "land" ? "Transfer" : leg.mode}</span>
                 <span className="mt-1 block font-semibold">{leg.title}</span><span className="mt-2 block text-sm">{leg.from} → {leg.to}</span>
@@ -167,7 +168,7 @@ export default function JourneyPlanner() {
                 {selectedLeg === leg.id && <span className="mt-3 block text-xs leading-6 text-ocean/75">{leg.detail}</span>}
               </button>
               {leg.id === "airport-taxi" && <p className="my-3 border-l-2 border-coral pl-3 text-xs leading-6">Check-in target: {localTime(result.check_in_deadline_at)}.<br />{sailing.connection_buffer_minutes >= 0 ? `${sailing.connection_buffer_minutes} minutes before check-in` : `${Math.abs(sailing.connection_buffer_minutes)} minutes late for check-in`}. Target safety margin: {result.safety_minutes} minutes. Planning estimate only.</p>}
-            </li>)}</ol>
+            </JourneyStep>)}</ol>
             {hasOnwardGap && <p role="status" className="mb-4 rounded-lg bg-coral/20 p-3 text-sm">The final connection is missing. This is an incomplete journey, not a through-bookable route.</p>}
             {fareMessage && <p role="status" className="mb-4 text-sm text-rose-800">{fareMessage}</p>}
             <div className="rounded-xl bg-sand p-4"><p className="font-semibold">{knownPrices.length ? `Known price subtotal: ${money(subtotal)}` : "Total price not available yet"}</p><p className="mt-2 text-xs leading-6">{knownPrices.length ? "Includes only priced legs shown above. " : ""}Flight and unquoted transfers are excluded. Taxi matrix prices are per vehicle with unknown capacity and validity; this is not a complete trip quote.</p></div>

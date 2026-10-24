@@ -15,6 +15,28 @@ Maintain this register whenever public data is added or refreshed. Retrieval dat
 - License: https://readme.onemap.mv/pdf/Data%20Usage%20License.pdf . The published license permits reuse with source acknowledgement; the app footer links the source and license and does not imply endorsement.
 - Limits: Tourism designation does not confirm an operating resort or commercial brand. Island reference points are not verified harbour boarding locations. Same-named islands can occur in multiple atolls.
 
+## OneMap island outline snapshot
+
+- Publisher, source layer and license: the same official OneMap source and Data Usage License cited above. Retrieved: 2026-10-24; layer identifier `island_20240509` (not a verified last-update date).
+- Dataset query endpoint: https://services7.arcgis.com/yvCbn3q8PPtPLZIM/arcgis/rest/services/island_20240509/FeatureServer/0/query
+- Used: all 1,560 polygon features from the layer, including uninhabited and other non-bookable island categories. No atoll or maritime boundary geometries are imported.
+- Query: `where=1=1`, `outFields=OBJECTID,FCODE,islandName,category`, `orderByFields=OBJECTID`, `returnGeometry=true`, `outSR=4326`, `geometryPrecision=5`, `maxAllowableOffset=0.00002`, `f=geojson`, pages of 500 features. Count and unique OBJECTIDs checked against `returnCountOnly=true`; polygon types and Maldives coordinate bounds validated.
+- Stored in: `frontend/public/data/maldives-islands.geojson`; reproducible import: `scripts/import-island-outlines.py`.
+- Transformations: ArcGIS projects to WGS84 longitude/latitude, generalizes with a roughly two-metre angular tolerance and rounds to five decimal places; property names normalized, FCODE lowercased. Display uses sand-filled island polygons and teal outlines on a pale ocean background. Directory markers remain separate reference points.
+- Attribution: visible OneMap/Geomatics Department credit on both maps; source, retrieval date and license URL retained inside the GeoJSON. Reuse follows the previously recorded OneMap license.
+- Limitations: historical coastline snapshot, not a hydrographic chart or current reclamation survey. Source outlines do not establish operating resorts, transport availability, harbour locations or navigable routes. No invented coastlines or circular areas are presented as island geometry.
+
+## OneMap natural reefs and lagoons
+
+- Publisher: Geomatics Department, Ministry of Infrastructure, Housing and Urban Development, Maldives. Official download catalogue: https://readme.onemap.mv/ .
+- Source archives: https://readme.onemap.mv/Datashare/Reefs.rar and https://readme.onemap.mv/Datashare/Lagoons.rar . Retrieved 2026-10-24. Included ArcGIS XML metadata shows creation 2022-06-07 and modification 2022-06-19; these are metadata dates, not verified survey or current-condition dates.
+- Used: all 2,573 reef polygons and 1,191 lagoon polygons. These are natural geographic features, not administrative atoll borders. Source coverage is not a claim of a complete modern reef survey.
+- Stored in: `frontend/public/data/maldives-reefs-lagoons.geojson`; converter: `scripts/import-reef-lagoon-outlines.py`. Original archives are downloaded to temporary storage during conversion. Source archive URLs, counts, CRS, shapefile SHA-256 hashes, retrieval date and license URL are retained in the GeoJSON.
+- Transformations: read each `.prj` (WGS84 / UTM zone 43N), repair five invalid lagoon geometries with Shapely `make_valid` and retain polygonal parts, simplify by 10 metres with topology preservation, then project to WGS84 longitude/latitude using `always_xy`. Polygon holes are preserved. Validate all feature counts, geometry validity and Maldives coordinate bounds before saving. Conversion used pyshp 3.1.6, pyproj 3.6.1 and Shapely 2.0.7 in an isolated conversion environment; these are not app runtime dependencies.
+- Display: subtle lagoon fill and stronger reef edges below islands and journey lines, on both Leaflet maps. No artificial circular atoll hulls, Google imagery or Google geometries are used.
+- License: https://readme.onemap.mv/pdf/Data%20Usage%20License.pdf permits copying, adapting and publishing with attribution and no implication of endorsement. Both maps display OneMap/Geomatics Department attribution and the license link.
+- Limitations: historical natural-feature outlines for visual orientation only. No bathymetry, water-depth, reef-condition, tide, navigability or safe-passage conclusions should be drawn. Source gaps and geometry simplification remain; straight demo routes do not avoid reefs or establish safe navigation.
+
 ## Maldives CAA land airports
 
 - Publisher: Maldives Civil Aviation Authority.
@@ -46,7 +68,7 @@ Maintain this register whenever public data is added or refreshed. Retrieval dat
 - Copyright/attribution: https://www.openstreetmap.org/copyright
 - Tile usage policy: https://operations.osmfoundation.org/policies/tiles/
 - First integrated/reviewed: 2026-10-24. Tiles load live in the browser; no fixed dataset version or snapshot retrieval date applies to subsequent map views.
-- Used in: `frontend/src/app/components/TransportMap.tsx` as background map imagery. No bulk download or offline tile archive is created. Browser caching follows service headers.
+- Historical use (replaced 2026-10-24 by the bundled OneMap outlines above): `frontend/src/app/components/TransportMap.tsx` and `JourneyMap.tsx` used these tiles as background map imagery. No bulk download or offline tile archive is created. Browser caching follows service headers.
 - Transformations: display only through Leaflet, with visible OpenStreetMap attribution. The basemap does not supply ferry routes, journey times or vessel positions.
 - Limits: best-effort external tile availability; review provider policy/capacity before public deployment. A replacement provider needs its own saved source reference and correct UI attribution.
 
