@@ -89,7 +89,7 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
           <p className="mt-2 text-sm leading-6 text-ocean/80">
             <span className="rounded-full bg-flight px-2 py-1 text-xs font-semibold text-ocean">Flight</span> {localTime(result.flight_at)} · Check-in target: {localTime(result.check_in_deadline_at)}<br />
             {result.schedule_coverage
-              ? `${meetsTarget} ferry connections meet the target with the ${result.safety_minutes}-minute safety margin.`
+              ? `${meetsTarget} ferry ${meetsTarget === 1 ? "connection meets" : "connections meet"} the target with the ${result.safety_minutes}-minute safety margin.`
               : "Schedule coverage is not available for this route yet."}
           </p>
         </div>

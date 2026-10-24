@@ -87,21 +87,46 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
     return () => { disposed = true; if (map.current) { viewport.current = { center: map.current.getCenter(), zoom: map.current.getZoom() }; map.current.remove(); } map.current = null; };
   }, [directory, island, airport, showIslands, showAirports, showRoutes, showResorts, view, retry, onIslandSelect, onAirportSelect]);
 
-  return <section className="my-8 overflow-hidden rounded-2xl border border-ocean/15 bg-white" aria-label="Interactive Maldives transport map">
-    <div className="flex flex-wrap items-center justify-between gap-4 p-5"><div><h2 className="text-xl font-semibold">Explore the connections</h2><p className="mt-1 text-sm text-ocean/70">{directory ? `${directory.islands.filter(item => item.category !== "resort").length} inhabited · ${directory.islands.filter(item => item.category === "resort").length} resort islands · ${directory.airports.length} airports` : "Loading locations…"}</p></div>
-      <div className="flex flex-wrap gap-4 text-sm">
-        <label><input type="checkbox" checked={showIslands} onChange={e => setShowIslands(e.target.checked)} /> Islands</label>
-        <label><input type="checkbox" checked={showResorts} onChange={e => setShowResorts(e.target.checked)} /> Resorts</label>
-        <label><input type="checkbox" checked={showAirports} onChange={e => setShowAirports(e.target.checked)} /> Airports</label>
-        <label><input type="checkbox" checked={showRoutes} onChange={e => setShowRoutes(e.target.checked)} /> Demo routes</label>
-        <button type="button" onClick={() => setView("country")} className="font-medium text-lagoon underline">All Maldives</button>
-        <button type="button" onClick={() => setView("selection")} className="font-medium text-lagoon underline">Selected journey</button>
+  const inhabited = directory ? directory.islands.filter(item => item.category !== "resort").length : 0;
+  const resorts = directory ? directory.islands.filter(item => item.category === "resort").length : 0;
+  const airportCount = directory ? directory.airports.length : 0;
+  const toggle = (on: boolean) => `tap inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${on ? "border-lagoon bg-lagoon/10 text-ocean" : "border-ocean/20 bg-white text-ocean/60"}`;
+  const segment = (on: boolean) => `tap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${on ? "bg-lagoon text-white" : "text-ocean hover:bg-lagoon/10"}`;
+
+  return <section className="my-8 overflow-hidden rounded-2xl border border-ocean/15 bg-white shadow-sm" aria-label="Interactive Maldives transport map">
+    <div className="p-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div><h2 className="text-xl font-semibold">Explore the connections</h2>
+          <p className="mt-1 text-sm text-ocean/70">{directory ? `${inhabited} inhabited ${inhabited === 1 ? "island" : "islands"} · ${resorts} resort ${resorts === 1 ? "island" : "islands"} · ${airportCount} ${airportCount === 1 ? "airport" : "airports"}` : "Loading locations…"}</p></div>
+        <div role="group" aria-label="Map view" className="inline-flex rounded-full border border-ocean/15 bg-sand p-1">
+          <button type="button" aria-pressed={view === "country"} onClick={() => setView("country")} className={segment(view === "country")}>All Maldives</button>
+          <button type="button" aria-pressed={view === "selection"} onClick={() => setView("selection")} className={segment(view === "selection")}>Selected journey</button>
+        </div>
+      </div>
+      <div role="group" aria-label="Map layers" className="mt-4 flex flex-wrap gap-2">
+        <button type="button" aria-pressed={showIslands} onClick={() => setShowIslands(value => !value)} className={toggle(showIslands)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />Islands</button>
+        <button type="button" aria-pressed={showResorts} onClick={() => setShowResorts(value => !value)} className={toggle(showResorts)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-coral" />Resorts</button>
+        <button type="button" aria-pressed={showAirports} onClick={() => setShowAirports(value => !value)} className={toggle(showAirports)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm bg-flight" />Airports</button>
+        <button type="button" aria-pressed={showRoutes} onClick={() => setShowRoutes(value => !value)} className={toggle(showRoutes)}><span aria-hidden="true" className="h-0.5 w-4 border-t-2 border-dashed border-sea" />Demo routes</button>
       </div>
     </div>
-    {error && <p role="alert" className="p-5 text-rose-800">{error} <button type="button" className="underline" onClick={() => setRetry(value => value + 1)}>Retry</button></p>}
-    {!directory && !error && <p role="status" className="px-5 pb-5">Loading map…</p>}
-    <div ref={container} className="relative z-0 h-[460px] bg-flight/10" aria-label="Pan and zoom map of Maldives islands, airports and illustrative ferry routes" />
+    {error && <p role="alert" className="px-5 pb-5 text-rose-800">{error} <button type="button" className="underline" onClick={() => setRetry(value => value + 1)}>Retry</button></p>}
+    {!directory && !error && <div role="status" aria-label="Loading map" className="mx-5 mb-5 h-[340px] animate-pulse rounded-xl bg-flight/20 sm:h-[460px] lg:h-[520px]" />}
+    <div ref={container} className={`relative z-0 h-[340px] bg-flight/10 sm:h-[460px] lg:h-[520px] ${directory ? "" : "hidden"}`} aria-label="Pan and zoom map of Maldives islands, airports and illustrative ferry routes" />
     {tilesUnavailable && <p role="status" className="px-5 pt-3 text-sm text-ocean">Some background map tiles could not load. Location markers remain available.</p>}
-    <p className="p-5 text-xs leading-6 text-ocean/80">Teal dots: residential islands. Coral dots: tourism/resort islands (not verified operating resorts). Light-blue planes: airports. Dark-blue dashed lines: sea connections. Dashed lines: fictional ferry connections; not navigation paths or live vessel positions. A larger deep-ocean dot marks the selected origin; thicker sea lines mark the selected connection. Island coordinates: OneMap, Geomatics Department. Airport coordinates: Maldives CAA (July 2025). Click any island dot to set your departure island, or an airport marker to set your destination in the form below. Resort labels use geographic island names, not necessarily resort brand names. Background map requires internet access.</p>
+    <div className="p-5">
+      <ul aria-label="Map legend" className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-ocean/80">
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />Residential island</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-coral" />Resort island</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-4 w-4 rounded-sm bg-flight text-center text-[10px] leading-4 text-ocean">✈</span>Airport</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block w-5 border-t-2 border-dashed border-sea" />Fictional sea connection</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-3.5 w-3.5 rounded-full border-2 border-ocean bg-ocean/40" />Selected departure (larger dot, thicker line)</li>
+      </ul>
+      <p className="mt-3 text-xs leading-5 text-ocean/70">Tap a dot to choose your departure island, or a plane to choose the airport. Coordinates: OneMap (Geomatics Department) and Maldives CAA (July 2025).</p>
+      <details className="mt-2 text-xs leading-5 text-ocean/70">
+        <summary className="inline-block rounded font-medium text-lagoon">About this map</summary>
+        <p className="mt-2">Resort islands are not verified operating resorts, and labels use geographic island names, not necessarily resort brand names. Dashed lines are fictional ferry connections; they are not navigation paths or live vessel positions. Click any island dot to set your departure island, or an airport marker to set your destination in the form below. Island coordinates: OneMap, Geomatics Department. Airport coordinates: Maldives CAA (July 2025). The background map requires internet access.</p>
+      </details>
+    </div>
   </section>;
 }
