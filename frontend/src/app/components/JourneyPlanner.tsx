@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { journeyDetailsInput, buildJourney, canBookForParty, taxiDestinationZone, validatePlan, type Directory, type FareEstimate, type Place, type PlanInput } from "@/lib/journey-plan";
 import JourneyStep from "./JourneyStep";
+import ModeIcon from "./ModeIcon";
 import { transportColors } from "@/lib/transport-colors";
 import { labels, localTime, type Result } from "../ferry";
 import BookingDesk, { type BookingChoice } from "./BookingDesk";
@@ -13,9 +14,9 @@ import LocationSearch from "./LocationSearch";
 import MobileNav from "./MobileNav";
 import Footer from "./Footer";
 
-const JourneyMap = dynamic(() => import("./JourneyMap"), { ssr: false, loading: () => <div className="card h-96 p-6">Loading journey map…</div> });
+const JourneyMap = dynamic(() => import("./JourneyMap"), { ssr: false, loading: () => <div className="tile h-96 p-6">Loading journey map…</div> });
 const emptyDirectory: Directory = { islands: [], airports: [] };
-const field = "mt-2 block w-full rounded-lg border border-ocean/25 bg-white p-3 text-base";
+const field = "mt-2 block w-full rounded-xl border border-ocean/15 bg-white p-3 text-base shadow-sm";
 const money = (minor: number) => `${(minor / 100).toFixed(2)} MVR`;
 
 export default function JourneyPlanner() {
@@ -120,8 +121,8 @@ export default function JourneyPlanner() {
     <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">From your island to your doorstep</p>
     <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Your whole journey, in one place.</h1>
     <p className="mt-4 max-w-3xl leading-7 text-ocean/75">Connect your ferry, airport transfer, flight and onward ride. Start with two places, then add your flight details.</p>
-    <aside className="my-6 rounded-xl border border-coral/40 bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights are entered by you; onward taxis are estimates, not reservations. No real tickets or payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
-    <form id="search" onSubmit={search} onChange={invalidate} className="scroll-mt-4 rounded-2xl border border-ocean/15 bg-white p-5 shadow-sm sm:p-6">
+    <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights are entered by you; onward taxis are estimates, not reservations. No real tickets or payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
+    <form id="search" onSubmit={search} onChange={invalidate} className="tile scroll-mt-4 p-5 sm:p-7">
       <div className="grid gap-6 md:grid-cols-2">
         <LocationSearch id="journey-origin" label="Where are you?" places={directory.islands} value={originText} selected={origin} onChange={value => { invalidate(); setOriginText(value); setOriginId(""); }} onSelect={pickOrigin} disabled={!directory.islands.length} />
         <LocationSearch id="journey-destination" label="Where are you going?" places={destinations} value={destinationText} selected={destination} onChange={value => { invalidate(); setDestinationText(value); setDestinationId(""); }} onSelect={pickDestination} disabled={!destinations.length} />
@@ -132,7 +133,7 @@ export default function JourneyPlanner() {
         <label className="text-sm font-medium">Flight departure · Maldives time<input type="time" required value={time} onChange={event => setTime(event.target.value)} className={field} /></label>
         <label className="text-sm font-medium">Passengers<input type="number" required min={1} max={6} value={passengers} onChange={event => setPassengers(Number(event.target.value))} className={field} /></label>
       </div>
-      <details className="mt-5 rounded-xl border border-ocean/15 p-4">
+      <details className="mt-5 rounded-2xl bg-sand p-4">
         <summary className="cursor-pointer font-medium">Flight details · {directory.airports.find(place => place.id === departureAirportId)?.iata ?? "…"} → {destination?.iata ?? directory.airports.find(place => place.id === arrivalAirportId)?.iata ?? "…"} · address & arrival time</summary>
         <p className="mt-2 text-xs leading-5 text-ocean/65">These are your intended flight details, not a flight search. All times are Maldives time (UTC+5). Leave arrival blank if unknown.</p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -148,38 +149,38 @@ export default function JourneyPlanner() {
       <div className="mt-5 flex flex-wrap items-center gap-4"><button disabled={loading || !directory.islands.length || !origin || !destination} className="rounded-xl bg-lagoon px-6 py-3 font-semibold text-white disabled:opacity-50">{loading ? "Finding connections…" : "Find my journey"}</button><button type="button" onClick={demo} className="text-sm font-medium text-lagoon underline">Fill Thaa → Hulhumalé demo</button><span className="text-xs text-ocean/65">Demo flight time is illustrative; confirm your actual flight.</span></div>
     </form>
     {error && <p role="alert" className="mt-5 rounded-xl bg-rose-50 p-5 text-rose-900">{error}</p>}
-    <div className="mt-6 grid items-start gap-6 lg:grid-cols-[370px_1fr]">
-      <section id="results" aria-busy={loading} aria-label="Full itinerary" className="scroll-mt-4 rounded-2xl border border-ocean/15 bg-white p-5">
+    <div className="mt-6 grid items-stretch gap-6 lg:grid-cols-[380px_1fr]">
+      <section id="results" aria-busy={loading} aria-label="Full itinerary" className="tile flex scroll-mt-4 flex-col p-5 sm:p-6">
         <h2 className="text-2xl font-semibold">Your journey</h2>
         {loading && <p role="status" className="mt-4">Checking ferry availability and onward fare…</p>}
-        {!result && !loading && <div className="mt-5 space-y-4 text-sm leading-7 text-ocean/70"><p>Search to see every connection here, alongside its route on the map.</p><ol className="space-y-3"><li>1. Ferry to Thimarafushi</li><li>2. Taxi to the airport</li><li>3. Your flight</li><li>4. Onward ride to your destination</li></ol><p>Try Vilufushi → Hulhumalé with a future 14:00 flight.</p></div>}
+        {!result && !loading && <div className="mt-5 flex flex-1 flex-col gap-4 text-sm leading-7 text-ocean/70"><p>Search to see every connection here, alongside its route on the map.</p><ol className="mt-2"><li key="sea" className="flex gap-4"><span className="flex flex-col items-center"><ModeIcon mode="sea" /><span aria-hidden="true" className="my-1 w-0 flex-1 border-l-2 border-dashed border-ocean/20" /></span><span className="pb-14 text-ocean"><span className="block font-semibold">Ferry to Thimarafushi</span><span className="block text-xs text-ocean/65">Choose a sailing that fits your flight</span></span></li><li key="taxi" className="flex gap-4"><span className="flex flex-col items-center"><ModeIcon mode="taxi" /><span aria-hidden="true" className="my-1 w-0 flex-1 border-l-2 border-dashed border-ocean/20" /></span><span className="pb-14 text-ocean"><span className="block font-semibold">Taxi to the airport</span><span className="block text-xs text-ocean/65">Harbour to airport, quoted per vehicle</span></span></li><li key="flight" className="flex gap-4"><span className="flex flex-col items-center"><ModeIcon mode="flight" /><span aria-hidden="true" className="my-1 w-0 flex-1 border-l-2 border-dashed border-ocean/20" /></span><span className="pb-14 text-ocean"><span className="block font-semibold">Your flight</span><span className="block text-xs text-ocean/65">Enter your own flight details</span></span></li><li key="land" className="flex gap-4"><span className="flex flex-col items-center"><ModeIcon mode="land" /></span><span className="text-ocean"><span className="block font-semibold">Onward ride</span><span className="block text-xs text-ocean/65">To your final destination</span></span></li></ol><p className="mt-auto rounded-2xl bg-sand p-4 text-xs leading-6">Try Vilufushi → Hulhumalé with a future 14:00 flight.</p></div>}
         {result && <>
           <p className="mt-2 text-sm leading-6">{plan?.origin.name} → {plan?.destination.name} · {plan?.passengers} passenger(s)</p>
-          {!result.sailings.length ? <p role="status" className="mt-5 rounded-xl bg-sand p-4 text-sm leading-6">{result.coverage_message ?? "No future sailings match this flight date. Try a different date or island."} No complete route has been generated.</p> : <label className="mt-5 block text-sm font-medium">Choose your ferry<select value={sailingId} onChange={event => { setSailingId(event.target.value); setSelectedLeg(""); setReview(false); setChoice(null); }} className={field}><option value="" disabled>Select a sailing</option>{result.sailings.map(item => <option value={item.id} disabled={item.classification === "cancelled"} key={item.id}>{item.service} · {localTime(item.departure_at)} · {item.classification === "cancelled" ? "Cancelled" : canBookForParty(item, plan?.passengers ?? 1) ? "Available" : "Not bookable"}</option>)}</select></label>}
+          {!result.sailings.length ? <p role="status" className="mt-5 rounded-2xl bg-sand p-4 text-sm leading-6">{result.coverage_message ?? "No future sailings match this flight date. Try a different date or island."} No complete route has been generated.</p> : <label className="mt-5 block text-sm font-medium">Choose your ferry<select value={sailingId} onChange={event => { setSailingId(event.target.value); setSelectedLeg(""); setReview(false); setChoice(null); }} className={field}><option value="" disabled>Select a sailing</option>{result.sailings.map(item => <option value={item.id} disabled={item.classification === "cancelled"} key={item.id}>{item.service} · {localTime(item.departure_at)} · {item.classification === "cancelled" ? "Cancelled" : canBookForParty(item, plan?.passengers ?? 1) ? "Available" : "Not bookable"}</option>)}</select></label>}
           {sailing && <>
-            <p className={`mt-4 rounded-lg p-3 text-sm ${bookable ? "bg-lagoon/10" : "bg-coral/20"}`}>{labels[sailing.classification]} · {sailing.available_seats} seats left.{plan && sailing.available_seats < plan.passengers ? " Not enough seats for your party." : ""}</p>
+            <p className={`mt-4 rounded-2xl p-3 text-sm ${bookable ? "bg-lagoon/10" : "bg-coral/20"}`}>{labels[sailing.classification]} · {sailing.available_seats} seats left.{plan && sailing.available_seats < plan.passengers ? " Not enough seats for your party." : ""}</p>
             <ol className="my-5">{legs.map((leg, index) => <JourneyStep key={leg.id} mode={leg.mode} label={leg.title} last={index === legs.length - 1}>
-              <button type="button" aria-pressed={selectedLeg === leg.id} onClick={() => setSelectedLeg(current => current === leg.id ? "" : leg.id)} className={`w-full rounded-xl border border-l-4 p-4 text-left ${selectedLeg === leg.id ? "border-ocean bg-lagoon/5 ring-1 ring-ocean" : "border-ocean/15"}`} style={{ borderLeftColor: transportColors[leg.mode] }}>
+              <button type="button" aria-pressed={selectedLeg === leg.id} onClick={() => setSelectedLeg(current => current === leg.id ? "" : leg.id)} className={`w-full rounded-2xl p-3 text-left transition-colors ${selectedLeg === leg.id ? "bg-lagoon/10 ring-2 ring-lagoon" : "hover:bg-sand"}`}>
                 <span className="text-xs font-semibold uppercase" style={{ color: leg.mode === "flight" || leg.mode === "land" ? "#12343B" : transportColors[leg.mode] }}>{index + 1}. {leg.mode === "sea" ? "Ferry" : leg.mode === "land" ? "Transfer" : leg.mode}</span>
                 <span className="mt-1 block font-semibold">{leg.title}</span><span className="mt-2 block text-sm">{leg.from} → {leg.to}</span>
                 <span className="mt-2 block text-xs leading-6">{leg.departure ? localTime(leg.departure) : "Pickup time not arranged"}{leg.arrival ? ` → ${localTime(leg.arrival)}` : ""}</span>
                 {leg.mode === "flight" && !leg.arrival && <span className="block text-xs leading-6">Flight arrival time still needed</span>}
-                <span className="mt-2 block text-xs font-medium">{leg.status}</span><span className="mt-2 block text-sm font-semibold">{leg.price === null ? "Price not available" : `${money(leg.price)}${leg.mode === "taxi" ? " / vehicle · reference" : " for your party"}`}</span>
+                <span className="mt-2 block text-xs font-medium">{leg.status}</span><span className="mt-2 inline-block rounded-full bg-sand px-3 py-1 text-sm font-semibold">{leg.price === null ? "Price not available" : `${money(leg.price)}${leg.mode === "taxi" ? " / vehicle · reference" : " for your party"}`}</span>
                 {selectedLeg === leg.id && <span className="mt-3 block text-xs leading-6 text-ocean/75">{leg.detail}</span>}
               </button>
-              {leg.id === "airport-taxi" && <p className="my-3 border-l-2 border-coral pl-3 text-xs leading-6">Check-in target: {localTime(result.check_in_deadline_at)}.<br />{sailing.connection_buffer_minutes >= 0 ? `${sailing.connection_buffer_minutes} minutes before check-in` : `${Math.abs(sailing.connection_buffer_minutes)} minutes late for check-in`}. Target safety margin: {result.safety_minutes} minutes. Planning estimate only.</p>}
+              {leg.id === "airport-taxi" && <p className="my-3 rounded-2xl bg-coral/10 p-3 text-xs leading-6">Check-in target: {localTime(result.check_in_deadline_at)}.<br />{sailing.connection_buffer_minutes >= 0 ? `${sailing.connection_buffer_minutes} minutes before check-in` : `${Math.abs(sailing.connection_buffer_minutes)} minutes late for check-in`}. Target safety margin: {result.safety_minutes} minutes. Planning estimate only.</p>}
             </JourneyStep>)}</ol>
             {hasOnwardGap && <p role="status" className="mb-4 rounded-lg bg-coral/20 p-3 text-sm">The final connection is missing. This is an incomplete journey, not a through-bookable route.</p>}
             {fareMessage && <p role="status" className="mb-4 text-sm text-rose-800">{fareMessage}</p>}
-            <div className="rounded-xl bg-sand p-4"><p className="font-semibold">{knownPrices.length ? `Known price subtotal: ${money(subtotal)}` : "Total price not available yet"}</p><p className="mt-2 text-xs leading-6">{knownPrices.length ? "Includes only priced legs shown above. " : ""}Flight and unquoted transfers are excluded. Taxi matrix prices are per vehicle with unknown capacity and validity; this is not a complete trip quote.</p></div>
+            <div className="rounded-2xl bg-sand p-4"><p className="font-semibold">{knownPrices.length ? `Known price subtotal: ${money(subtotal)}` : "Total price not available yet"}</p><p className="mt-2 text-xs leading-6">{knownPrices.length ? "Includes only priced legs shown above. " : ""}Flight and unquoted transfers are excluded. Taxi matrix prices are per vehicle with unknown capacity and validity; this is not a complete trip quote.</p></div>
             <button type="button" disabled={loading} onClick={() => setReview(true)} className="mt-4 w-full rounded-xl bg-lagoon p-3 font-semibold text-white disabled:opacity-50">Review journey & booking options</button>
           </>}
           {!!result.sailings.length && !sailing && <p className="mt-4 text-sm">No usable sailing selected. Cancelled sailings cannot be added to a journey.</p>}
         </>}
       </section>
-      <div className="order-first min-w-0 lg:order-last lg:sticky lg:top-4"><JourneyMap directory={directory} origin={origin} destination={destination} legs={legs} selectedLeg={selectedLeg} onLegSelect={setSelectedLeg} onOriginSelect={pickOrigin} onDestinationSelect={pickDestination} /></div>
+      <div className="order-first flex min-w-0 flex-col lg:order-last"><JourneyMap directory={directory} origin={origin} destination={destination} legs={legs} selectedLeg={selectedLeg} onLegSelect={setSelectedLeg} onOriginSelect={pickOrigin} onDestinationSelect={pickDestination} /></div>
     </div>
-    {review && result && sailing && plan && <div ref={reviewPanel} className="mt-8 scroll-mt-5 rounded-2xl border border-ocean/15 bg-white p-5 sm:p-7">
+    {review && result && sailing && plan && <div ref={reviewPanel} className="tile mt-8 scroll-mt-5 p-5 sm:p-7">
       <h2 className="text-2xl font-semibold">Review your connections</h2><p className="mt-3 leading-7">{plan.origin.name} → Thimarafushi → {plan.arrivalAirport.name} → {plan.destination.name}</p>
       <p className="my-4 text-sm leading-7">Each service needs its own confirmation. Booking below saves the ferry, flight details, final destination and address to <Link href="/journeys" className="text-lagoon underline">My itineraries</Link>, where you can request the Thimarafushi taxi. You can review and edit the onward details there. They are private to your browser session and are not sent to ferry providers. Saving the plan does not book the flight or onward taxi.</p>
       <ul className="mb-5 list-inside list-disc space-y-2 text-sm"><li>Flight route, time and ticket: confirm with your airline.</li><li>Onward ride: arrange externally; pickup time and driver are unconfirmed.</li><li>Airport transfer: demo allowance only; request a taxi after booking.</li>{plan.passengers > 4 && <li className="text-rose-800">Your party exceeds the single demo taxi’s four-person limit. Additional transport is required.</li>}{hasOnwardGap && <li className="text-rose-800">No service currently connects the arrival airport to your final island in this planner.</li>}</ul>
