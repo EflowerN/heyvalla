@@ -93,7 +93,7 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
   const toggle = (on: boolean) => `tap inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${on ? "border-lagoon bg-lagoon/10 text-ocean" : "border-ocean/20 bg-white text-ocean/60"}`;
   const segment = (on: boolean) => `tap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${on ? "bg-lagoon text-white" : "text-ocean hover:bg-lagoon/10"}`;
 
-  return <section className="my-8 overflow-hidden rounded-2xl border border-ocean/15 bg-white shadow-sm" aria-label="Interactive Maldives transport map">
+  return <section className="mb-6 overflow-hidden rounded-2xl border border-ocean/15 bg-white shadow-sm" aria-label="Interactive Maldives transport map">
     <div className="p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div><h2 className="text-xl font-semibold">Explore the connections</h2>
@@ -111,8 +111,8 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
       </div>
     </div>
     {error && <p role="alert" className="px-5 pb-5 text-rose-800">{error} <button type="button" className="underline" onClick={() => setRetry(value => value + 1)}>Retry</button></p>}
-    {!directory && !error && <div role="status" aria-label="Loading map" className="mx-5 mb-5 h-[340px] animate-pulse rounded-xl bg-flight/20 sm:h-[460px] lg:h-[520px]" />}
-    <div ref={container} className={`relative z-0 h-[340px] bg-flight/10 sm:h-[460px] lg:h-[520px] ${directory ? "" : "hidden"}`} aria-label="Pan and zoom map of Maldives islands, airports and illustrative ferry routes" />
+    {!directory && !error && <div role="status" aria-label="Loading map" className="mx-5 mb-5 h-[340px] animate-pulse rounded-xl bg-flight/20 sm:h-[460px] lg:h-[560px]" />}
+    <div ref={container} className={`relative z-0 h-[340px] bg-flight/10 sm:h-[460px] lg:h-[560px] ${directory ? "" : "hidden"}`} aria-label="Pan and zoom map of Maldives islands, airports and illustrative ferry routes" />
     {tilesUnavailable && <p role="status" className="px-5 pt-3 text-sm text-ocean">Some background map tiles could not load. Location markers remain available.</p>}
     <div className="p-5">
       <ul aria-label="Map legend" className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-ocean/80">
