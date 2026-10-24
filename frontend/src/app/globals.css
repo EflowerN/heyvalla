@@ -1,7 +1,20 @@
 @import "tailwindcss";
 
-body {
-  background: #f8fafc;
-  color: #0f172a;
-  font-family: Arial, Helvetica, sans-serif;
+@theme {
+  --color-lagoon: #087F8C;
+  --color-sand: #FAF7F0;
+  --color-coconut: #FFFFFF;
+  --color-ocean: #12343B;
+  --color-coral: #F28C78;
+  --color-flight: #8ED6F3;
+  --color-sea: #1E3A8A;
+  --color-land: #F59E0B;
+  --color-taxi: #000000;
+  --color-bus: #15803D;
 }
+body { background: var(--color-sand); color: var(--color-ocean); font-family: Arial, Helvetica, sans-serif; }
+input, select, textarea { accent-color: var(--color-lagoon); }
+:where(button, a, input, select, textarea):focus-visible { outline: 2px solid var(--color-lagoon); outline-offset: 3px; }
+button:not(:disabled), summary { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+.leaflet-popup-content { color: var(--color-ocean); }

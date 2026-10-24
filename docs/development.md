@@ -65,3 +65,15 @@ Tests cover authorization, ownership, limits, idempotent requests, quoting/accep
 The separate `/greater-male-taxi` page reads `/api/v1/greater-male-fares` through a Next.js proxy. The organizer-provided Avas Ride matrix is stored in `backend/resources/data/greater-male-fares.json`, with six zones and all 36 directional entries. Source decimal values are converted to integer minor units. The user confirmed currency as MVR on 24 October 2026; this confirmation is recorded separately from source metadata. Validity dates remain unknown.
 
 This is a reference estimator only: no booking, waiting-time/duration prediction, surcharges, seat availability or operator acceptance is inferred. Same-zone matrix values are preserved, not replaced with zero. The estimator does not read or modify Thimarafushi taxi configuration, quotes or booking tables. Its zone allow-list rejects Thimarafushi and other unsupported locations. Changing a zone clears the old estimate; swapping zones requires a new calculation.
+
+## Updated estimator validation and roadmap
+
+Pickup and drop-off zones must now differ, enforced by both disabled UI choices and Laravel validation. The original source matrix keeps its same-zone entries for provenance, but the current zone-only product cannot establish distinct addresses within a zone and therefore does not quote such trips. A future exact-address estimator can revisit within-zone journeys using distinct verified pickup/drop-off locations. This supersedes the earlier note about offering same-zone estimates. See `docs/integrated-mobility-implementation-plan.md` for the passenger/cargo and provider-publishing roadmap.
+
+## Transport theme and RTL buses
+
+App/transport palettes are recorded in `docs/design-system.md`. `/buses` displays the verified Greater Malé RTL route snapshot through `/api/v1/rtl-buses`, with route/stop search, airport-only filter, fares, ordered stops and expandable origin departure lists. Route data is sourced separately from the synthetic organizer MTCC demand workbook. No bus booking or bus-to-flight feasibility calculation is implied by these reference screens. Fare-date/service-calendar gaps are exposed in the interface. Atoll bus routes and verified map geometries remain outside this first bus catalogue.
+
+### Atoll buses
+
+`/buses` now includes 13 atoll routes alongside the 15 Greater Malé routes. Select an area, search route/stop/area text, or filter airport connections. All seven areas listed in RTL's atoll selector were checked. Cards preserve ordered stops and the available origin departure snapshot. Unknown fares remain null and render as unavailable. No operating days or future travel-date guarantees are inferred. See `docs/data-sources.md` for coverage and limitations.

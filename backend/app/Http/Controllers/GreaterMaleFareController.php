@@ -14,7 +14,7 @@ class GreaterMaleFareController extends Controller
         $result = ['zones' => $data['zones'], 'currency' => 'MVR', 'source' => $data['source'],
             'currency_confirmed_by' => $data['currency_confirmed_by'], 'valid_from' => null, 'valid_until' => null, 'estimate' => null];
         if ($request->has('from') || $request->has('to')) {
-            $input = $request->validate(['from' => ['required', 'string', Rule::in(array_column($data['zones'], 'id'))], 'to' => ['required', 'string', Rule::in(array_column($data['zones'], 'id'))]]);
+            $input = $request->validate(['from' => ['required', 'string', Rule::in(array_column($data['zones'], 'id'))], 'to' => ['required', 'string', 'different:from', Rule::in(array_column($data['zones'], 'id'))]]);
             $result['estimate'] = ['from' => $input['from'], 'to' => $input['to'], 'amount_minor' => $data['fares_minor'][$input['from']][$input['to']],
                 'currency' => 'MVR', 'same_zone' => $input['from'] === $input['to']];
         }

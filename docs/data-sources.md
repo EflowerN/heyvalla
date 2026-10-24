@@ -79,3 +79,23 @@ ICAO's linked page is labelled country-pair traffic: treat it as a candidate for
 This supersedes the earlier note that package contents were uninspected. All three release v1.0 archives (MTCC, MACL, Avas Ride) were downloaded and all tables/CSVs profiled. Detailed findings and package hashes are in `docs/datathon-dataset-review.md`.
 
 MTCC's README states its passenger figures are randomly generated. MACL contains historical movements with anonymous route/carrier codes, not a usable current flight lookup. Avas Ride contains August–September 2026 trips around Greater Malé plus a six-zone fare matrix without currency/validity metadata. These datasets remain outside runtime application results. Raw archives and mobility records are in the task work directory, outside the app repository; only the written assessment is added to docs. No push performed.
+
+## RTL bus routes, fares and displayed origin departures
+
+- Publisher: RTL / MTCC.
+- Source: https://rtl.mv/#/busticket , reached from RTL's Travel By Bus control.
+- Retrieved: 2026-10-24 through the public browser interface. No source revision, validity dates or service calendar was supplied in the captured views.
+- Stored in: `backend/resources/data/rtl-buses.json`.
+- Used: 15 Greater Malé route cards (R1–R15), published MVR fares, 184 ordered stop entries, and displayed origin departure lists where available. Each route's stop count, origin, destination and schedule-dialog stop identity were validated against its card. The catalogue includes airport services R3, R4 and R9.
+- Transformation: display text normalized to structured route records, fare converted to integer minor units, origin times preserved in source display order and deduplicated. No vehicle identifiers or relative live arrival estimates are displayed by HeyValla. No route geometry or bus stop coordinates were imported.
+- Timetable scope: only times visible in each origin's View Schedule popup during retrieval. This may be a rolling upcoming list rather than a full daily timetable; do not infer daily operation or future service dates. Four origins showed no schedules at capture (R10, R11, R12, R15); preserve absence as unavailable rather than cancelled. Recheck these facts against the stored snapshot when refreshing.
+- Other coverage: source menus list atoll bus areas as well. Their data has not been imported into this release. Do not imply national completeness.
+- Attribution/reuse: source link shown on route cards. No booking integration, documented public API or redistribution license was established. Existing RTL ferry and organizer-dataset notes remain separate.
+
+### Atoll bus expansion — 24 October 2026
+
+The same RTL bus page was checked across all seven atoll areas in its selector. This supersedes the earlier atoll-coverage exclusion. Added 13 routes: DF01 (R.Dhuvaafaru), DH01 (Ha.Dhidhdhoo), FM01 (Fuvahmulah), HMD01/LR01/LR02 (Addu City), IK01/LF01/LG01 (Laamu), KC01/KC02 (Hdh. Kulhudhufushi), and KL01/KN01 (N.Kendhikulhudhoo). Combined catalogue: 28 routes across eight areas.
+
+The 13 additions contain 437 ordered stop entries and 62 displayed origin departures. DF01, KL01 and KN01 showed no origin schedules; absence is not cancellation. LR01, LR02, LF01 and LG01 showed no fare on their cards; stored as null and displayed as unavailable. The other nine cards showed MVR 5. All origins, destinations, stop counts and schedule-dialog origin names were checked against the public UI. Airport labels in FM01, LF01 and LG01 stop lists identify additional airport connections; no transfer timing is inferred.
+
+Storage, transformations, calendar limitations and attribution follow the RTL bus entry above. Route names and stop spellings are retained from RTL. No coordinates, route geometry, live feed or recurring timetable was inferred. This is a dated reference snapshot, not a claim of complete national coverage.
