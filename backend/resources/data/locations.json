@@ -1,0 +1,1246 @@
+{
+  "retrieved_at": "2026-10-24",
+  "island_source": "https://readme.onemap.mv/",
+  "island_dataset": "https://services7.arcgis.com/yvCbn3q8PPtPLZIM/arcgis/rest/services/island_20240509/FeatureServer/0",
+  "island_license": "https://readme.onemap.mv/pdf/Data%20Usage%20License.pdf",
+  "airport_source": "https://caa.gov.mv/attachments/RkSqFC1muGxI4GakQ992lPnwqT5gjTxwiat2m7af.pdf",
+  "airport_source_updated": "2025-07",
+  "islands": [
+    {
+      "id": "ld0474",
+      "name": "Bodufolhudhoo",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0474"
+    },
+    {
+      "id": "ld0287",
+      "name": "Feridhoo",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0287"
+    },
+    {
+      "id": "ld0874",
+      "name": "Himandhoo",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0874"
+    },
+    {
+      "id": "ld0004",
+      "name": "Maalhos",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0004"
+    },
+    {
+      "id": "ld0132",
+      "name": "Mathiveri",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0132"
+    },
+    {
+      "id": "ld0257",
+      "name": "Rasdhoo",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0257"
+    },
+    {
+      "id": "ld0501",
+      "name": "Thoddoo",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0501"
+    },
+    {
+      "id": "ld0916",
+      "name": "Ukulhas",
+      "atoll": "Alifu Alifu",
+      "source_id": "LD0916"
+    },
+    {
+      "id": "ld0273",
+      "name": "Dhan'gethi",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0273"
+    },
+    {
+      "id": "ld0459",
+      "name": "Dhidhdhoo",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0459"
+    },
+    {
+      "id": "ld1047",
+      "name": "Dhigurah",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD1047"
+    },
+    {
+      "id": "ld0513",
+      "name": "Fenfushi",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0513"
+    },
+    {
+      "id": "ld1023",
+      "name": "Hangnaameedhoo",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD1023"
+    },
+    {
+      "id": "ld0771",
+      "name": "Kun'burudhoo",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0771"
+    },
+    {
+      "id": "ld0158",
+      "name": "Maamigili",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0158"
+    },
+    {
+      "id": "ld0545",
+      "name": "Mahibadhoo",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0545"
+    },
+    {
+      "id": "ld0168",
+      "name": "Mandhoo",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0168"
+    },
+    {
+      "id": "ld0009",
+      "name": "Omadhoo",
+      "atoll": "Alifu Dhaalu",
+      "source_id": "LD0009"
+    },
+    {
+      "id": "ld0844",
+      "name": "Dharavandhoo",
+      "atoll": "Baa",
+      "source_id": "LD0844"
+    },
+    {
+      "id": "ld0348",
+      "name": "Dhonfan",
+      "atoll": "Baa",
+      "source_id": "LD0348"
+    },
+    {
+      "id": "ld0204",
+      "name": "Eydhafushi",
+      "atoll": "Baa",
+      "source_id": "LD0204"
+    },
+    {
+      "id": "ld0520",
+      "name": "Fehendhoo",
+      "atoll": "Baa",
+      "source_id": "LD0520"
+    },
+    {
+      "id": "ld0044",
+      "name": "Fulhadhoo",
+      "atoll": "Baa",
+      "source_id": "LD0044"
+    },
+    {
+      "id": "ld0931",
+      "name": "Goidhoo",
+      "atoll": "Baa",
+      "source_id": "LD0931"
+    },
+    {
+      "id": "ld1000",
+      "name": "Hithaadhoo",
+      "atoll": "Baa",
+      "source_id": "LD1000"
+    },
+    {
+      "id": "ld0518",
+      "name": "Kamadhoo",
+      "atoll": "Baa",
+      "source_id": "LD0518"
+    },
+    {
+      "id": "ld0668",
+      "name": "Kendhoo",
+      "atoll": "Baa",
+      "source_id": "LD0668"
+    },
+    {
+      "id": "ld0363",
+      "name": "Kihaadhoo",
+      "atoll": "Baa",
+      "source_id": "LD0363"
+    },
+    {
+      "id": "ld0059",
+      "name": "Kudarikilu",
+      "atoll": "Baa",
+      "source_id": "LD0059"
+    },
+    {
+      "id": "ld0637",
+      "name": "Maalhos",
+      "atoll": "Baa",
+      "source_id": "LD0637"
+    },
+    {
+      "id": "ld0677",
+      "name": "Thulhaadhoo",
+      "atoll": "Baa",
+      "source_id": "LD0677"
+    },
+    {
+      "id": "ld0066",
+      "name": "Ban'didhoo",
+      "atoll": "Dhaalu",
+      "source_id": "LD0066"
+    },
+    {
+      "id": "ld0662",
+      "name": "Hulhudheli",
+      "atoll": "Dhaalu",
+      "source_id": "LD0662"
+    },
+    {
+      "id": "ld0499",
+      "name": "Kudahuvadhoo",
+      "atoll": "Dhaalu",
+      "source_id": "LD0499"
+    },
+    {
+      "id": "ld0209",
+      "name": "Maaen'boodhoo",
+      "atoll": "Dhaalu",
+      "source_id": "LD0209"
+    },
+    {
+      "id": "ld1050",
+      "name": "Meedhoo",
+      "atoll": "Dhaalu",
+      "source_id": "LD1050"
+    },
+    {
+      "id": "ld0334",
+      "name": "Rin'budhoo",
+      "atoll": "Dhaalu",
+      "source_id": "LD0334"
+    },
+    {
+      "id": "ld0606",
+      "name": "Bileiydhoo",
+      "atoll": "Faafu",
+      "source_id": "LD0606"
+    },
+    {
+      "id": "ld0970",
+      "name": "Dharan'boodhoo",
+      "atoll": "Faafu",
+      "source_id": "LD0970"
+    },
+    {
+      "id": "ld0008",
+      "name": "Feeali",
+      "atoll": "Faafu",
+      "source_id": "LD0008"
+    },
+    {
+      "id": "ld0085",
+      "name": "Magoodhoo",
+      "atoll": "Faafu",
+      "source_id": "LD0085"
+    },
+    {
+      "id": "ld1158",
+      "name": "Nilandhoo",
+      "atoll": "Faafu",
+      "source_id": "LD1158"
+    },
+    {
+      "id": "ld0766",
+      "name": "Dhaandhoo",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD0766"
+    },
+    {
+      "id": "ld0412",
+      "name": "Dhevvadhoo",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD0412"
+    },
+    {
+      "id": "ld1182",
+      "name": "Gemanafushi",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD1182"
+    },
+    {
+      "id": "ld0856",
+      "name": "Kan'duhulhudhoo",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD0856"
+    },
+    {
+      "id": "ld0743",
+      "name": "Kolamaafushi",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD0743"
+    },
+    {
+      "id": "ld0435",
+      "name": "Kon'dey",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD0435"
+    },
+    {
+      "id": "ld1085",
+      "name": "Maamendhoo",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD1085"
+    },
+    {
+      "id": "ld1091",
+      "name": "Nilandhoo",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD1091"
+    },
+    {
+      "id": "ld0247",
+      "name": "Vilin'gili",
+      "atoll": "Gaafu Alifu",
+      "source_id": "LD0247"
+    },
+    {
+      "id": "ld0572",
+      "name": "Faresmaathodaa",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0572"
+    },
+    {
+      "id": "ld0470",
+      "name": "Fiyoaree",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0470"
+    },
+    {
+      "id": "ld0887",
+      "name": "Gadhdhoo",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0887"
+    },
+    {
+      "id": "ld0851",
+      "name": "Hoan'dehdhoo",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0851"
+    },
+    {
+      "id": "ld0557",
+      "name": "Madaveli",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0557"
+    },
+    {
+      "id": "ld0181",
+      "name": "Nadellaa",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0181"
+    },
+    {
+      "id": "ld0630",
+      "name": "Rathafandhoo",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0630"
+    },
+    {
+      "id": "ld0717",
+      "name": "Thinadhoo",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0717"
+    },
+    {
+      "id": "ld0195",
+      "name": "Vaadhoo",
+      "atoll": "Gaafu Dhaalu",
+      "source_id": "LD0195"
+    },
+    {
+      "id": "ld0726",
+      "name": "Fuvahmulah",
+      "atoll": "Gnaviyani",
+      "source_id": "LD0726"
+    },
+    {
+      "id": "ld0987",
+      "name": "Baarah",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0987"
+    },
+    {
+      "id": "ld0568",
+      "name": "Dhidhdhoo",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0568"
+    },
+    {
+      "id": "ld0993",
+      "name": "Filladhoo",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0993"
+    },
+    {
+      "id": "ld0246",
+      "name": "Hoarafushi",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0246"
+    },
+    {
+      "id": "ld0908",
+      "name": "Ihavandhoo",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0908"
+    },
+    {
+      "id": "ld0563",
+      "name": "Kelaa",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0563"
+    },
+    {
+      "id": "ld0695",
+      "name": "Maarandhoo",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0695"
+    },
+    {
+      "id": "ld0901",
+      "name": "Molhadhoo",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0901"
+    },
+    {
+      "id": "ld0701",
+      "name": "Muraidhoo",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0701"
+    },
+    {
+      "id": "ld0984",
+      "name": "Thakandhoo",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0984"
+    },
+    {
+      "id": "ld0915",
+      "name": "Thuraakunu",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0915"
+    },
+    {
+      "id": "ld0488",
+      "name": "Uligan",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0488"
+    },
+    {
+      "id": "ld0507",
+      "name": "Utheemu",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0507"
+    },
+    {
+      "id": "ld0232",
+      "name": "Vashafaru",
+      "atoll": "Haa Alifu",
+      "source_id": "LD0232"
+    },
+    {
+      "id": "ld0441",
+      "name": "Finey",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0441"
+    },
+    {
+      "id": "ld0235",
+      "name": "Hanimaadhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0235"
+    },
+    {
+      "id": "ld0199",
+      "name": "Hirimaradhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0199"
+    },
+    {
+      "id": "ld0048",
+      "name": "Kulhudhuffushi",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0048"
+    },
+    {
+      "id": "ld0541",
+      "name": "Kumundhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0541"
+    },
+    {
+      "id": "ld0852",
+      "name": "Kurin'bi",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0852"
+    },
+    {
+      "id": "ld0699",
+      "name": "Makunudhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0699"
+    },
+    {
+      "id": "ld0710",
+      "name": "Naivaadhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0710"
+    },
+    {
+      "id": "ld0698",
+      "name": "Nellaidhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0698"
+    },
+    {
+      "id": "ld0686",
+      "name": "Neykurendhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0686"
+    },
+    {
+      "id": "ld0658",
+      "name": "Nolhivaran",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0658"
+    },
+    {
+      "id": "ld0416",
+      "name": "Nolhivaranfaru",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0416"
+    },
+    {
+      "id": "ld0406",
+      "name": "Vaikaradhoo",
+      "atoll": "Haa Dhaalu",
+      "source_id": "LD0406"
+    },
+    {
+      "id": "ld0894",
+      "name": "Dhiffushi",
+      "atoll": "Kaafu",
+      "source_id": "LD0894"
+    },
+    {
+      "id": "ld0873",
+      "name": "Gaafaru",
+      "atoll": "Kaafu",
+      "source_id": "LD0873"
+    },
+    {
+      "id": "ld0577",
+      "name": "Gulhi",
+      "atoll": "Kaafu",
+      "source_id": "LD0577"
+    },
+    {
+      "id": "ld0738",
+      "name": "Guraidhoo",
+      "atoll": "Kaafu",
+      "source_id": "LD0738"
+    },
+    {
+      "id": "ld1129",
+      "name": "Hinmafushi",
+      "atoll": "Kaafu",
+      "source_id": "LD1129"
+    },
+    {
+      "id": "ld0683",
+      "name": "Huraa",
+      "atoll": "Kaafu",
+      "source_id": "LD0683"
+    },
+    {
+      "id": "ld0665",
+      "name": "Kaashidhoo",
+      "atoll": "Kaafu",
+      "source_id": "LD0665"
+    },
+    {
+      "id": "ld0069",
+      "name": "Maafushi",
+      "atoll": "Kaafu",
+      "source_id": "LD0069"
+    },
+    {
+      "id": "ld0745",
+      "name": "Thulusdhoo",
+      "atoll": "Kaafu",
+      "source_id": "LD0745"
+    },
+    {
+      "id": "ld1049",
+      "name": "Dhan'bidhoo",
+      "atoll": "Laamu",
+      "source_id": "LD1049"
+    },
+    {
+      "id": "ld1038",
+      "name": "Fonadhoo",
+      "atoll": "Laamu",
+      "source_id": "LD1038"
+    },
+    {
+      "id": "ld0152",
+      "name": "Gan",
+      "atoll": "Laamu",
+      "source_id": "LD0152"
+    },
+    {
+      "id": "ld0265",
+      "name": "Hithadhoo",
+      "atoll": "Laamu",
+      "source_id": "LD0265"
+    },
+    {
+      "id": "ld1070",
+      "name": "Isdhoo",
+      "atoll": "Laamu",
+      "source_id": "LD1070"
+    },
+    {
+      "id": "ld1473",
+      "name": "Kalaidhoo",
+      "atoll": "Laamu",
+      "source_id": "LD1473"
+    },
+    {
+      "id": "ld0323",
+      "name": "Kunahandhoo",
+      "atoll": "Laamu",
+      "source_id": "LD0323"
+    },
+    {
+      "id": "ld1053",
+      "name": "Maabaidhoo",
+      "atoll": "Laamu",
+      "source_id": "LD1053"
+    },
+    {
+      "id": "ld0484",
+      "name": "Maamendhoo",
+      "atoll": "Laamu",
+      "source_id": "LD0484"
+    },
+    {
+      "id": "ld0938",
+      "name": "Maavah",
+      "atoll": "Laamu",
+      "source_id": "LD0938"
+    },
+    {
+      "id": "ld0102",
+      "name": "Mundoo",
+      "atoll": "Laamu",
+      "source_id": "LD0102"
+    },
+    {
+      "id": "ld0340",
+      "name": "Hinnavaru",
+      "atoll": "Lhaviyani",
+      "source_id": "LD0340"
+    },
+    {
+      "id": "ld0510",
+      "name": "Kurendhoo",
+      "atoll": "Lhaviyani",
+      "source_id": "LD0510"
+    },
+    {
+      "id": "ld0020",
+      "name": "Naifaru",
+      "atoll": "Lhaviyani",
+      "source_id": "LD0020"
+    },
+    {
+      "id": "ld0517",
+      "name": "Olhuvelifushi",
+      "atoll": "Lhaviyani",
+      "source_id": "LD0517"
+    },
+    {
+      "id": "ld0591",
+      "name": "Hulhumalé",
+      "atoll": "MLE",
+      "source_id": "LD0591"
+    },
+    {
+      "id": "ld0442",
+      "name": "Malé",
+      "atoll": "MLE",
+      "source_id": "LD0442"
+    },
+    {
+      "id": "ld0268",
+      "name": "Vilin'gili",
+      "atoll": "MLE",
+      "source_id": "LD0268"
+    },
+    {
+      "id": "ld0179",
+      "name": "Dhiggaru",
+      "atoll": "Meemu",
+      "source_id": "LD0179"
+    },
+    {
+      "id": "ld0061",
+      "name": "Kolhufushi",
+      "atoll": "Meemu",
+      "source_id": "LD0061"
+    },
+    {
+      "id": "ld1166",
+      "name": "Maduvvari",
+      "atoll": "Meemu",
+      "source_id": "LD1166"
+    },
+    {
+      "id": "ld0531",
+      "name": "Mulah",
+      "atoll": "Meemu",
+      "source_id": "LD0531"
+    },
+    {
+      "id": "ld0446",
+      "name": "Muli",
+      "atoll": "Meemu",
+      "source_id": "LD0446"
+    },
+    {
+      "id": "ld0793",
+      "name": "Naalaafushi",
+      "atoll": "Meemu",
+      "source_id": "LD0793"
+    },
+    {
+      "id": "ld0786",
+      "name": "Raiymandhoo",
+      "atoll": "Meemu",
+      "source_id": "LD0786"
+    },
+    {
+      "id": "ld1167",
+      "name": "Veyvah",
+      "atoll": "Meemu",
+      "source_id": "LD1167"
+    },
+    {
+      "id": "ld0332",
+      "name": "Fodhdhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0332"
+    },
+    {
+      "id": "ld0962",
+      "name": "Hen'badhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0962"
+    },
+    {
+      "id": "ld0455",
+      "name": "Holhudhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0455"
+    },
+    {
+      "id": "ld0866",
+      "name": "Ken'dhikulhudhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0866"
+    },
+    {
+      "id": "ld0391",
+      "name": "Kudafari",
+      "atoll": "Noonu",
+      "source_id": "LD0391"
+    },
+    {
+      "id": "ld0191",
+      "name": "Landhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0191"
+    },
+    {
+      "id": "ld0500",
+      "name": "Lhohi",
+      "atoll": "Noonu",
+      "source_id": "LD0500"
+    },
+    {
+      "id": "ld0560",
+      "name": "Maafaru",
+      "atoll": "Noonu",
+      "source_id": "LD0560"
+    },
+    {
+      "id": "ld0203",
+      "name": "Maalhendhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0203"
+    },
+    {
+      "id": "ld0907",
+      "name": "Magoodhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0907"
+    },
+    {
+      "id": "ld0392",
+      "name": "Manadhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0392"
+    },
+    {
+      "id": "ld1068",
+      "name": "Miladhoo",
+      "atoll": "Noonu",
+      "source_id": "LD1068"
+    },
+    {
+      "id": "ld0497",
+      "name": "Velidhoo",
+      "atoll": "Noonu",
+      "source_id": "LD0497"
+    },
+    {
+      "id": "ld0588",
+      "name": "Alifushi",
+      "atoll": "Raa",
+      "source_id": "LD0588"
+    },
+    {
+      "id": "ld0281",
+      "name": "An'golhitheemu",
+      "atoll": "Raa",
+      "source_id": "LD0281"
+    },
+    {
+      "id": "ld0790",
+      "name": "Dhuvaafaru",
+      "atoll": "Raa",
+      "source_id": "LD0790"
+    },
+    {
+      "id": "ld0924",
+      "name": "Fainu",
+      "atoll": "Raa",
+      "source_id": "LD0924"
+    },
+    {
+      "id": "ld0600",
+      "name": "Hulhudhuffaaru",
+      "atoll": "Raa",
+      "source_id": "LD0600"
+    },
+    {
+      "id": "ld1121",
+      "name": "In'guraidhoo",
+      "atoll": "Raa",
+      "source_id": "LD1121"
+    },
+    {
+      "id": "ld0564",
+      "name": "Innamaadhoo",
+      "atoll": "Raa",
+      "source_id": "LD0564"
+    },
+    {
+      "id": "ld0194",
+      "name": "Kinolhas",
+      "atoll": "Raa",
+      "source_id": "LD0194"
+    },
+    {
+      "id": "ld0180",
+      "name": "Maakurathu",
+      "atoll": "Raa",
+      "source_id": "LD0180"
+    },
+    {
+      "id": "ld0573",
+      "name": "Maduvvari",
+      "atoll": "Raa",
+      "source_id": "LD0573"
+    },
+    {
+      "id": "ld0605",
+      "name": "Meedhoo",
+      "atoll": "Raa",
+      "source_id": "LD0605"
+    },
+    {
+      "id": "ld0178",
+      "name": "Rasgetheemu",
+      "atoll": "Raa",
+      "source_id": "LD0178"
+    },
+    {
+      "id": "ld0423",
+      "name": "Rasmaadhoo",
+      "atoll": "Raa",
+      "source_id": "LD0423"
+    },
+    {
+      "id": "ld1175",
+      "name": "Un'goofaaru",
+      "atoll": "Raa",
+      "source_id": "LD1175"
+    },
+    {
+      "id": "ld0609",
+      "name": "Vaadhoo",
+      "atoll": "Raa",
+      "source_id": "LD0609"
+    },
+    {
+      "id": "ld0299",
+      "name": "Addu Hulhudhoo",
+      "atoll": "Seenu",
+      "source_id": "LD0299"
+    },
+    {
+      "id": "ld0272",
+      "name": "Addu Meedhoo",
+      "atoll": "Seenu",
+      "source_id": "LD0272"
+    },
+    {
+      "id": "ld0947",
+      "name": "Feydhoo",
+      "atoll": "Seenu",
+      "source_id": "LD0947"
+    },
+    {
+      "id": "ld1004",
+      "name": "Hithadhoo",
+      "atoll": "Seenu",
+      "source_id": "LD1004"
+    },
+    {
+      "id": "ld0288",
+      "name": "Maradhoo",
+      "atoll": "Seenu",
+      "source_id": "LD0288"
+    },
+    {
+      "id": "ld0081",
+      "name": "Maradhoofeydhoo",
+      "atoll": "Seenu",
+      "source_id": "LD0081"
+    },
+    {
+      "id": "ld1064",
+      "name": "Bileiyfahi",
+      "atoll": "Shaviyani",
+      "source_id": "LD1064"
+    },
+    {
+      "id": "ld1149",
+      "name": "Feevah",
+      "atoll": "Shaviyani",
+      "source_id": "LD1149"
+    },
+    {
+      "id": "ld1100",
+      "name": "Feydhoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD1100"
+    },
+    {
+      "id": "ld0646",
+      "name": "Foakaidhoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD0646"
+    },
+    {
+      "id": "ld0863",
+      "name": "Funadhoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD0863"
+    },
+    {
+      "id": "ld0836",
+      "name": "Goidhoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD0836"
+    },
+    {
+      "id": "ld1092",
+      "name": "Kan'ditheemu",
+      "atoll": "Shaviyani",
+      "source_id": "LD1092"
+    },
+    {
+      "id": "ld1058",
+      "name": "Komandoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD1058"
+    },
+    {
+      "id": "ld0978",
+      "name": "Lhaimagu",
+      "atoll": "Shaviyani",
+      "source_id": "LD0978"
+    },
+    {
+      "id": "ld0016",
+      "name": "Maaun'goodhoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD0016"
+    },
+    {
+      "id": "ld1144",
+      "name": "Maroshi",
+      "atoll": "Shaviyani",
+      "source_id": "LD1144"
+    },
+    {
+      "id": "ld0525",
+      "name": "Milandhoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD0525"
+    },
+    {
+      "id": "ld0551",
+      "name": "Narudhoo",
+      "atoll": "Shaviyani",
+      "source_id": "LD0551"
+    },
+    {
+      "id": "ld0985",
+      "name": "Noomaraa",
+      "atoll": "Shaviyani",
+      "source_id": "LD0985"
+    },
+    {
+      "id": "ld0254",
+      "name": "Buruni",
+      "atoll": "Thaa",
+      "source_id": "LD0254"
+    },
+    {
+      "id": "ld0200",
+      "name": "Dhiyamigili",
+      "atoll": "Thaa",
+      "source_id": "LD0200"
+    },
+    {
+      "id": "ld0427",
+      "name": "Gaadhiffushi",
+      "atoll": "Thaa",
+      "source_id": "LD0427"
+    },
+    {
+      "id": "ld1163",
+      "name": "Guraidhoo",
+      "atoll": "Thaa",
+      "source_id": "LD1163"
+    },
+    {
+      "id": "ld0350",
+      "name": "Hirilandhoo",
+      "atoll": "Thaa",
+      "source_id": "LD0350"
+    },
+    {
+      "id": "ld0504",
+      "name": "Kan'doodhoo",
+      "atoll": "Thaa",
+      "source_id": "LD0504"
+    },
+    {
+      "id": "ld0422",
+      "name": "Kin'bidhoo",
+      "atoll": "Thaa",
+      "source_id": "LD0422"
+    },
+    {
+      "id": "ld0627",
+      "name": "Madifushi",
+      "atoll": "Thaa",
+      "source_id": "LD0627"
+    },
+    {
+      "id": "ld0783",
+      "name": "Omadhoo",
+      "atoll": "Thaa",
+      "source_id": "LD0783"
+    },
+    {
+      "id": "ld0082",
+      "name": "Thimarafushi",
+      "atoll": "Thaa",
+      "source_id": "LD0082"
+    },
+    {
+      "id": "ld0859",
+      "name": "Vandhoo",
+      "atoll": "Thaa",
+      "source_id": "LD0859"
+    },
+    {
+      "id": "ld0694",
+      "name": "Veymandoo",
+      "atoll": "Thaa",
+      "source_id": "LD0694"
+    },
+    {
+      "id": "ld0205",
+      "name": "Vilufushi",
+      "atoll": "Thaa",
+      "source_id": "LD0205"
+    },
+    {
+      "id": "ld0075",
+      "name": "Felidhoo",
+      "atoll": "Vaavu",
+      "source_id": "LD0075"
+    },
+    {
+      "id": "ld0182",
+      "name": "Fulidhoo",
+      "atoll": "Vaavu",
+      "source_id": "LD0182"
+    },
+    {
+      "id": "ld0260",
+      "name": "Keyodhoo",
+      "atoll": "Vaavu",
+      "source_id": "LD0260"
+    },
+    {
+      "id": "ld0420",
+      "name": "Rakeedhoo",
+      "atoll": "Vaavu",
+      "source_id": "LD0420"
+    },
+    {
+      "id": "ld1079",
+      "name": "Thinadhoo",
+      "atoll": "Vaavu",
+      "source_id": "LD1079"
+    }
+  ],
+  "airports": [
+    {
+      "id": "VRMU",
+      "name": "Dhaalu Airport",
+      "iata": "DDD"
+    },
+    {
+      "id": "VRMD",
+      "name": "Dharavandhoo Airport",
+      "iata": "DRV"
+    },
+    {
+      "id": "VRQF",
+      "name": "Faresmaathodaa Airport",
+      "iata": "FMT"
+    },
+    {
+      "id": "VRCF",
+      "name": "Funadhoo Airport",
+      "iata": "FND"
+    },
+    {
+      "id": "VRMR",
+      "name": "Fuvahmulah Airport",
+      "iata": "FVM"
+    },
+    {
+      "id": "VRMG",
+      "name": "Gan International Airport",
+      "iata": "GAN"
+    },
+    {
+      "id": "VRMH",
+      "name": "Hanimaadhoo International Airport",
+      "iata": "HAQ"
+    },
+    {
+      "id": "VRAH",
+      "name": "Hoarafushi Airport",
+      "iata": "HRF"
+    },
+    {
+      "id": "VREI",
+      "name": "Ifuru Airport",
+      "iata": "IFU"
+    },
+    {
+      "id": "VRMT",
+      "name": "Kaadedhdhoo Airport",
+      "iata": "KDM"
+    },
+    {
+      "id": "VRMK",
+      "name": "Kadhdhoo Airport",
+      "iata": "KDO"
+    },
+    {
+      "id": "VRMO",
+      "name": "Kooddoo Airport",
+      "iata": "GKK"
+    },
+    {
+      "id": "VRBK",
+      "name": "Kulhudhuffushi Airport",
+      "iata": "HDK"
+    },
+    {
+      "id": "VRDA",
+      "name": "Maafaru International Airport",
+      "iata": "NMF"
+    },
+    {
+      "id": "VRQM",
+      "name": "Maavarulu Airport",
+      "iata": "RUL"
+    },
+    {
+      "id": "VRGD",
+      "name": "Madivaru Airport",
+      "iata": "LMV"
+    },
+    {
+      "id": "VRKM",
+      "name": "Muli Airport",
+      "iata": "MUM"
+    },
+    {
+      "id": "VRNT",
+      "name": "Thimarafushi Airport",
+      "iata": "TMF"
+    },
+    {
+      "id": "VRMM",
+      "name": "Velana International Airport",
+      "iata": "MLE"
+    },
+    {
+      "id": "VRMV",
+      "name": "Villa International Airport Maamigili",
+      "iata": "VAM"
+    }
+  ]
+}

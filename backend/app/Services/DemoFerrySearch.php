@@ -6,7 +6,7 @@ use Carbon\CarbonImmutable;
 
 class DemoFerrySearch
 {
-    /** @param array{island: string, flight_date: string, flight_time: string, check_in_minutes: int|string} $input */
+    /** @param array{island: string, airport: string, flight_date: string, flight_time: string, check_in_minutes: int|string} $input */
     public function search(array $input): array
     {
         $timezone = config('demo_ferries.timezone');
@@ -15,9 +15,12 @@ class DemoFerrySearch
         $transfer = config('demo_ferries.transfer_minutes');
         $safety = config('demo_ferries.safety_minutes');
         $results = [];
+        $origin = collect(config('locations.islands'))->firstWhere('id', $input['island']);
+        $airport = collect(config('locations.airports'))->firstWhere('id', $input['airport']);
+        $covered = $airport['id'] === 'VRNT' && in_array($input['island'], array_column(config('demo_ferries.sailings'), 'island'), true);
 
         foreach (config('demo_ferries.sailings') as $sailing) {
-            if ($sailing['island'] !== $input['island']) {
+            if (! $covered || $sailing['island'] !== $input['island']) {
                 continue;
             }
 
@@ -52,11 +55,14 @@ class DemoFerrySearch
         return [
             'demo' => true,
             'timezone' => $timezone,
-            'origin' => config('demo_ferries.islands')[$input['island']],
-            'destination' => 'Thimarafushi Airport',
+            'origin' => $origin['name'].' · '.$origin['atoll'],
+            'destination' => $airport['name'],
+            'destination_code' => $airport['iata'],
+            'schedule_coverage' => $covered,
+            'coverage_message' => $covered ? null : 'No demo schedules are available for this island and airport pair. This does not mean no real transport exists.',
             'flight_at' => $flight->toIso8601String(),
             'check_in_deadline_at' => $deadline->toIso8601String(),
-            'transfer_minutes' => $transfer,
+            'transfer_minutes' => $covered ? $transfer : null,
             'safety_minutes' => $safety,
             'sailings' => $results,
         ];

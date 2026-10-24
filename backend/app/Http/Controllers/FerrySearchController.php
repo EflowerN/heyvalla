@@ -10,8 +10,11 @@ class FerrySearchController extends Controller
 {
     public function islands(): JsonResponse
     {
-        return response()->json(['islands' => collect(config('demo_ferries.islands'))
-            ->map(fn (string $name, string $id): array => ['id' => $id, 'name' => $name])->values()]);
+        return response()->json([
+            'islands' => config('locations.islands'),
+            'airports' => config('locations.airports'),
+            'retrieved_at' => config('locations.retrieved_at'),
+        ]);
     }
 
     public function search(FerrySearchRequest $request, DemoFerrySearch $search): JsonResponse

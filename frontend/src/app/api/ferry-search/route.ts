@@ -1,7 +1,7 @@
 export async function GET(request: Request) {
   const query = new URL(request.url).searchParams;
   const params = new URLSearchParams();
-  for (const key of ["island", "flight_date", "flight_time", "check_in_minutes"]) {
+  for (const key of ["island", "airport", "flight_date", "flight_time", "check_in_minutes"]) {
     const value = query.get(key);
     if (value !== null) params.set(key, value);
   }

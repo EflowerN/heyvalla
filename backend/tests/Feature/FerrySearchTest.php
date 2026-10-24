@@ -10,7 +10,7 @@ class FerrySearchTest extends TestCase
     private function search(array $overrides = []): TestResponse
     {
         return $this->getJson('/api/v1/ferry-search?'.http_build_query(array_merge([
-            'island' => 'vilufushi', 'flight_date' => '2026-11-10', 'flight_time' => '14:00', 'check_in_minutes' => 60,
+            'island' => 'ld0205', 'airport' => 'VRNT', 'flight_date' => '2026-11-10', 'flight_time' => '14:00', 'check_in_minutes' => 60,
         ], $overrides)));
     }
 
@@ -37,7 +37,7 @@ class FerrySearchTest extends TestCase
 
     public function test_overnight_ferry_uses_previous_day_and_maldives_timezone(): void
     {
-        $this->search(['island' => 'guraidhoo', 'flight_time' => '02:00'])
+        $this->search(['island' => 'ld1163', 'flight_time' => '02:00'])
             ->assertJsonPath('sailings.0.departure_at', '2026-11-09T22:30:00+05:00')
             ->assertJsonPath('sailings.0.airport_arrival_at', '2026-11-10T00:50:00+05:00')
             ->assertJsonPath('sailings.0.connection_buffer_minutes', 10)
@@ -47,7 +47,7 @@ class FerrySearchTest extends TestCase
 
     public function test_invalid_inputs_are_rejected(): void
     {
-        foreach ([['island' => 'unknown'], ['flight_date' => '2026-02-30'], ['flight_time' => '25:00'], ['check_in_minutes' => -5], ['island' => ['vilufushi']]] as $invalid) {
+        foreach ([['island' => 'unknown'], ['flight_date' => '2026-02-30'], ['flight_time' => '25:00'], ['check_in_minutes' => -5], ['island' => ['ld0205']]] as $invalid) {
             $this->search($invalid)->assertUnprocessable();
         }
         $this->getJson('/api/v1/ferry-search')->assertUnprocessable();
@@ -55,8 +55,33 @@ class FerrySearchTest extends TestCase
 
     public function test_islands_and_empty_results(): void
     {
-        $this->getJson('/api/v1/islands')->assertOk()->assertJsonCount(3, 'islands');
+        $this->getJson('/api/v1/islands')->assertOk()->assertJsonCount(189, 'islands')->assertJsonCount(20, 'airports');
         config(['demo_ferries.sailings' => []]);
         $this->search()->assertOk()->assertJsonCount(0, 'sailings');
+    }
+
+    public function test_uncovered_locations_return_no_invented_sailings(): void
+    {
+        $this->search(['airport' => 'VRMM'])->assertOk()
+            ->assertJsonPath('destination', 'Velana International Airport')
+            ->assertJsonPath('schedule_coverage', false)
+            ->assertJsonPath('transfer_minutes', null)
+            ->assertJsonCount(0, 'sailings');
+        $other = collect(config('locations.islands'))->firstWhere('atoll', 'Baa');
+        $this->search(['island' => $other['id']])->assertOk()
+            ->assertJsonPath('schedule_coverage', false)->assertJsonCount(0, 'sailings');
+        $this->search(['airport' => 'unknown'])->assertUnprocessable();
+    }
+
+    public function test_directory_ids_are_unique_and_duplicate_names_are_distinguished(): void
+    {
+        $islands = collect(config('locations.islands'));
+        $this->assertCount($islands->count(), $islands->pluck('id')->unique());
+        $guraidhoo = $islands->where('name', 'Guraidhoo');
+        $this->assertGreaterThan(1, $guraidhoo->count());
+        $this->assertCount($guraidhoo->count(), $guraidhoo->pluck('atoll')->unique());
+        $airports = collect(config('locations.airports'));
+        $this->assertCount(20, $airports->pluck('id')->unique());
+        $this->assertContains('VRMK', $airports->pluck('id')->all());
     }
 }
