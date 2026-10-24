@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { transportColors } from "@/lib/transport-colors";
+import { addIslandBasemap } from "@/lib/island-basemap";
 import SlideSwitch from "./SlideSwitch";
 import type * as Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -14,7 +15,7 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
   const map = useRef<Leaflet.Map | null>(null);
   const [directory, setDirectory] = useState<Directory | null>(null);
   const [error, setError] = useState("");
-  const [tilesUnavailable, setTilesUnavailable] = useState(false);
+  const [outlinesUnavailable, setOutlinesUnavailable] = useState(false);
   const [showIslands, setShowIslands] = useState(true);
   const [showResorts, setShowResorts] = useState(true);
   const viewport = useRef<{ center: Leaflet.LatLng; zoom: number } | null>(null);
@@ -37,14 +38,13 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
   useEffect(() => {
     if (!directory || !container.current) return;
     let disposed = false;
+    const controller = new AbortController();
     import("leaflet").then(L => {
       if (disposed || !container.current) return;
       const instance = L.map(container.current, { scrollWheelZoom: false, minZoom: 5, maxZoom: 18 });
       map.current = instance;
-      setTilesUnavailable(false);
-      L.tileLayer(process.env.NEXT_PUBLIC_MAP_TILE_URL ?? "https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).on("tileerror", () => { if (!disposed) setTilesUnavailable(true); }).addTo(instance);
+      setOutlinesUnavailable(false);
+      addIslandBasemap(L, instance, controller.signal).catch(() => { if (!disposed) setOutlinesUnavailable(true); });
       const popup = (place: Place, kind: string) => {
         const content = document.createElement("div");
         const heading = document.createElement("strong"); heading.textContent = place.name;
@@ -87,7 +87,7 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
       const observer = new ResizeObserver(() => instance.invalidateSize()); observer.observe(container.current);
       instance.on("unload", () => observer.disconnect());
     }).catch(() => { if (!disposed) setError("The map could not start. Try again."); });
-    return () => { disposed = true; if (map.current) { viewport.current = { center: map.current.getCenter(), zoom: map.current.getZoom() }; map.current.remove(); } map.current = null; };
+    return () => { disposed = true; controller.abort(); if (map.current) { viewport.current = { center: map.current.getCenter(), zoom: map.current.getZoom() }; map.current.remove(); } map.current = null; };
   }, [directory, island, airport, showIslands, showAirports, showRoutes, showResorts, view, fitVersion, retry, onIslandSelect, onAirportSelect]);
 
   const inhabited = directory ? directory.islands.filter(item => item.category !== "resort").length : 0;
@@ -111,8 +111,8 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
     </div>
     {error && <p role="alert" className="px-5 pb-5 text-rose-800">{error} <button type="button" className="underline" onClick={() => setRetry(value => value + 1)}>Retry</button></p>}
     {!directory && !error && <div role="status" aria-label="Loading map" className="mx-5 mb-5 h-[340px] animate-pulse rounded-xl bg-flight/20 sm:h-[460px] lg:h-[560px]" />}
-    <div ref={container} className={`relative z-0 h-[340px] bg-flight/10 sm:h-[460px] lg:h-[560px] ${directory ? "" : "hidden"}`} aria-label="Pan and zoom map of Maldives islands, airports and illustrative ferry routes" />
-    {tilesUnavailable && <p role="status" className="px-5 pt-3 text-sm text-ocean">Some background map tiles could not load. Location markers remain available.</p>}
+    <div style={{ backgroundColor: "#E4F2F3" }} ref={container} className={`relative z-0 h-[340px] bg-flight/10 sm:h-[460px] lg:h-[560px] ${directory ? "" : "hidden"}`} aria-label="Pan and zoom map of Maldives islands, airports and illustrative ferry routes" />
+    {outlinesUnavailable && <p role="status" className="px-5 pt-3 text-sm text-ocean">Some island, reef or lagoon outlines could not load. Location markers remain available.</p>}
     <div className="p-5">
       <ul aria-label="Map legend" className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-ocean/80">
         <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />Residential island</li>
@@ -124,7 +124,7 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
       <p className="mt-3 text-xs leading-5 text-ocean/70">Tap a dot to choose your departure island, or a plane to choose the airport. Coordinates: OneMap (Geomatics Department) and Maldives CAA (July 2025).</p>
       <details className="mt-2 text-xs leading-5 text-ocean/70">
         <summary className="inline-block rounded font-medium text-lagoon">About this map</summary>
-        <p className="mt-2">Resort islands are not verified operating resorts, and labels use geographic island names, not necessarily resort brand names. Dashed lines are fictional ferry connections; they are not navigation paths or live vessel positions. Click any island dot to set your departure island, or an airport marker to set your destination in the form below. Island coordinates: OneMap, Geomatics Department. Airport coordinates: Maldives CAA (July 2025). The background map requires internet access.</p>
+        <p className="mt-2">Resort islands are not verified operating resorts, and labels use geographic island names, not necessarily resort brand names. Dashed lines are fictional ferry connections; they are not navigation paths or live vessel positions. Click any island dot to set your departure island, or an airport marker to set your destination in the form below. Island coordinates: OneMap, Geomatics Department. Airport coordinates: Maldives CAA (July 2025). Island, reef and lagoon outlines are bundled from OneMap. Turquoise shading shows natural geography, not water depths or safe navigation areas. The map does not show roads or administrative atoll borders.</p>
       </details>
     </div>
   </section>;

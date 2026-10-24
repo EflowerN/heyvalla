@@ -28,7 +28,9 @@ The embedded Leaflet map displays all directory islands and airports, plus three
 
 Layer toggles control islands, airports, and demo lines. Country and selected-journey controls fit the map bounds; the form's origin and airport drive the selected-journey view. Existing text search/results remain available outside the map. Popups use text nodes for source names. Map data comes from the Laravel directory endpoint; Leaflet loads only in the browser.
 
-OpenStreetMap background tiles load directly in the browser with visible attribution and normal browser caching. No offline tile prefetch is implemented. `NEXT_PUBLIC_MAP_TILE_URL` can select a compatible tile endpoint at build time; the current attribution is for OpenStreetMap, so update it if changing provider. Review tile-provider usage terms and capacity before public deployment. The map reports tile failures while retaining reference markers.
+Both maps use bundled OneMap island, reef and lagoon layers on a pale ocean background. Lagoons render first in pale turquoise, reefs above them with stronger edges, then islands, markers and route overlays. Natural geography uses Canvas rendering to avoid thousands of decorative SVG nodes. Atoll/maritime boundary grids are absent; island polygons remain visible when zooming in. The journey map shows residential, tourism/resort and airport markers by default, with names on hover and permanent labels at zoom 12+. Route lines and icons remain separate, illustrative overlays. No third-party basemap tile requests or API keys are needed. `NEXT_PUBLIC_MAP_TILE_URL` is no longer used by these maps. If the local geometry file fails to load, markers and routes remain available with a warning.
+
+Refresh the coastline snapshot with `python3 scripts/import-island-outlines.py`; this validates the source count, pagination uniqueness, geometry types and coordinate bounds before replacing the local file. Source and transformation details are in `docs/data-sources.md`. The island-outline layer includes uninhabited islands, without making them selectable booking locations. It does not provide street maps or route geometry.
 
 ## Resort islands and map selection
 
@@ -125,3 +127,14 @@ Migrations do not run on deploy. Run them from a workstation with the same `DB_*
 The serverless backend has no per-minute scheduler. Pending provider requests still expire whenever journeys are read (`ProviderLifecycle::expirePending`).
 
 Frontend (Vercel, root directory `frontend`): set `LARAVEL_API_URL` to the backend's Vercel URL without a trailing slash, the same `DEMO_OPERATOR_TOKEN`, and a new `DEMO_OPERATOR_PASSWORD` (not the local `heyvalla-demo`). Redeploy after changing environment variables. The operator login attempt limit is in-process, so it does not hold across serverless instances.
+
+
+## Refreshing natural reef and lagoon outlines
+
+Download `Reefs.rar` and `Lagoons.rar` from the OneMap catalogue linked in `docs/data-sources.md`, extract them with a RAR-compatible tool such as `bsdtar`, and retain the `.shp`, `.shx`, `.dbf` and `.prj` sidecars together. In a separate Python virtual environment install `pyshp==3.1.6 pyproj==3.6.1 shapely==2.0.7`, then run:
+
+```sh
+python scripts/import-reef-lagoon-outlines.py --reef /path/to/Reef.shp --lagoon /path/to/Lagoon.shp
+```
+
+The script derives coordinate systems from the provided projection files and fails before replacing the output if records are missing, coordinates fall outside Maldives bounds, or converted polygons are invalid. Source counts and any repairs are printed and retained in snapshot metadata. Update the source register when refreshing. The client loads island and reef/lagoon files independently; a failed layer displays a warning while other available geometry and journey overlays remain usable. No marine-navigation claims are made by these visual layers.

@@ -10,7 +10,6 @@ const items = [
   { href: "/sailings", label: "Sailings" },
   { href: "/greater-male-taxi", label: "Taxi fares" },
   { href: "/buses", label: "RTL buses" },
-  { href: "/providers", label: "Providers" },
 ];
 
 export default function TopBar() {
