@@ -33,7 +33,7 @@ class DemoBookings
 
                 $result = app(DemoFerrySearch::class)->search($input);
                 $sailing = collect($result['sailings'])->firstWhere('id', $input['sailing_id']);
-                if (! $sailing || $sailing['classification'] !== 'recommended' || CarbonImmutable::parse($sailing['departure_at'])->isPast()) {
+                if (! $sailing || $sailing['source'] !== 'legacy' || $sailing['classification'] !== 'recommended' || CarbonImmutable::parse($sailing['departure_at'])->isPast()) {
                     throw ValidationException::withMessages(['sailing_id' => 'Choose a future sailing that meets the recommended airport arrival target.']);
                 }
 
@@ -53,7 +53,10 @@ class DemoBookings
                     'created_at' => now(),
                 ]);
 
-                return $this->present(DB::table('demo_bookings')->find($id));
+                $booking = DB::table('demo_bookings')->find($id);
+                TravelJourneys::ensure($booking, false, json_decode($booking->journey, true));
+
+                return $this->present($booking);
             }, 5);
         } catch (UniqueConstraintViolationException $exception) {
             $existing = DB::table('demo_bookings')->where('guest_hash', $hash)->where('request_id', $input['request_id'])->first();
@@ -68,6 +71,24 @@ class DemoBookings
         }
     }
 
+    public function cancel(string $reference, int $version, string $guest): array
+    {
+        return DB::transaction(function () use ($reference, $version, $guest): array {
+            $booking = DB::table('demo_bookings')->where('reference', $reference)->where('guest_hash', hash('sha256', $guest))->lockForUpdate()->first();
+            abort_unless($booking, 404);
+            if ($booking->status === 'cancelled' && $booking->version === $version + 1) {
+                return $this->present($booking);
+            }
+            abort_unless($booking->status === 'demo_confirmed' && $booking->version === $version && CarbonImmutable::parse(json_decode($booking->journey, true)['departure_at'])->isFuture(), 409, 'Booking changed or departure passed.');
+            $changed = DB::table('demo_inventories')->where('sailing_id', $booking->sailing_id)->where('reserved', '>=', $booking->seats)->decrement('reserved', $booking->seats);
+            abort_unless($changed === 1, 409, 'Inventory needs review before cancellation.');
+            DB::table('demo_bookings')->where('id', $booking->id)->update(['status' => 'cancelled', 'version' => $booking->version + 1]);
+            ProviderLifecycle::cancelTaxi('demo_booking_id', $booking->id, 'Ferry booking cancelled by passenger.');
+
+            return $this->present(DB::table('demo_bookings')->find($booking->id));
+        }, 5);
+    }
+
     public function list(string $guest): array
     {
         return DB::table('demo_bookings')->where('guest_hash', hash('sha256', $guest))->orderByDesc('id')->limit(50)
@@ -80,6 +101,6 @@ class DemoBookings
 
         return ['taxi' => $taxi ? DemoTaxiController::present($taxi, json_decode($booking->journey, true)) : null, 'reference' => $booking->reference, 'passenger_name' => $booking->passenger_name,
             'seats' => $booking->seats, 'journey' => json_decode($booking->journey, true),
-            'status' => 'demo_confirmed', 'demo' => true];
+            'status' => $booking->status, 'version' => $booking->version, 'demo' => true];
     }
 }

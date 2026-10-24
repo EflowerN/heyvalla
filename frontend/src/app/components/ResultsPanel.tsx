@@ -1,3 +1,4 @@
+import { SeatRequestForm } from "./ProviderSeatRequests";
 import type { BookingChoice } from "./BookingDesk";
 import {
   formatDuration, labels, localClock, localDay, localTime, minutesBetween, pillStyles, symbols,
@@ -68,7 +69,7 @@ function BufferMeter({ sailing, safety }: { sailing: Sailing; safety: number }) 
 }
 
 export default function ResultsPanel({ result, error, loading, onBook }: { result: Result | null; error: string; loading: boolean; onBook: (choice: BookingChoice) => void }) {
-  const meetsTarget = result ? result.sailings.filter(s => s.classification === "recommended").length : 0;
+  const meetsTarget = result ? result.sailings.filter(s => s.bookable).length : 0;
 
   return (
     <section aria-live="polite" aria-busy={loading}>
@@ -89,14 +90,14 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
           <p className="mt-2 text-sm leading-6 text-ocean/80">
             <span className="rounded-full bg-flight px-2 py-1 text-xs font-semibold text-ocean">Flight</span> {localTime(result.flight_at)} · Check-in target: {localTime(result.check_in_deadline_at)}<br />
             {result.schedule_coverage
-              ? `${meetsTarget} ferry ${meetsTarget === 1 ? "connection meets" : "connections meet"} the target with the ${result.safety_minutes}-minute safety margin.`
+              ? `${meetsTarget} ferry ${meetsTarget === 1 ? "connection meets" : "connections meet"} the target and ${meetsTarget === 1 ? "is" : "are"} accepting demo bookings with the ${result.safety_minutes}-minute safety margin.`
               : "Schedule coverage is not available for this route yet."}
           </p>
         </div>
 
         {!result.sailings.length && <p className="card p-6">{result.coverage_message ?? "No demo sailings arrive on this flight date. Try another island or date."}</p>}
         {!!result.sailings.length && !meetsTarget && (
-          <p className="mb-5 rounded-2xl bg-coral/10 p-4 text-ocean">No ferry meets the recommended arrival target. Consider travelling earlier or arranging another service; this demo does not provide a confirmed alternative.</p>
+          <p className="mb-5 rounded-2xl bg-coral/10 p-4 text-ocean">No bookable ferry meets the recommended arrival target. Consider travelling earlier or arranging another service; this demo does not provide a confirmed alternative.</p>
         )}
 
         <div className="space-y-4">
@@ -114,16 +115,22 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
                 : <BufferMeter sailing={sailing} safety={result.safety_minutes} />}
 
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                <span className="text-sm text-ocean/80">{sailing.available_seats} demo seats remaining</span>
-                <button
+                <span className="text-sm text-ocean/80">{sailing.available_seats} demo seats remaining · {sailing.source === "provider" ? "Provider approval required" : "Built-in demo"}</span>
+                {sailing.source !== "provider" && <button
                   type="button"
                   disabled={!sailing.bookable}
                   onClick={() => onBook({ sailing_id: sailing.id, service: sailing.service, available_seats: sailing.available_seats, search: result.search })}
                   className="tap rounded-xl bg-lagoon px-4 py-2 text-sm font-semibold text-white hover:bg-lagoon/90 disabled:bg-ocean/10 disabled:text-ocean/80"
                 >
                   {sailing.bookable ? "Book demo seats" : sailing.available_seats === 0 && sailing.classification !== "cancelled" ? "Sold out" : "Not bookable for this flight"}
-                </button>
+                </button>}
               </div>
+              {sailing.source === "provider" && <>
+                <p className="mt-3 text-sm">{sailing.operator} · {sailing.fare_minor == null ? "Fare unavailable" : `${(sailing.fare_minor / 100).toFixed(2)} MVR per seat`} · Unverified demo provider</p>
+                {sailing.bookable
+                  ? <SeatRequestForm sailing={{ id: sailing.provider_sailing_id!, version: sailing.version!, fare_minor: sailing.fare_minor ?? null, remaining_seats: sailing.available_seats }} flightContext={result.search} onSaved={() => {}} />
+                  : <p className="mt-2 text-sm">Not accepting requests for this flight connection.</p>}
+              </>}
             </article>
           ))}
         </div>

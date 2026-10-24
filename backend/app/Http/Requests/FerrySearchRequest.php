@@ -2,14 +2,29 @@
 
 namespace App\Http\Requests;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class FerrySearchRequest extends FormRequest
 {
     public function authorize(): bool
     {
         return true;
+    }
+
+    public function after(): array
+    {
+        return [function (Validator $validator): void {
+            if ($validator->errors()->isNotEmpty()) {
+                return;
+            }
+            $flight = CarbonImmutable::createFromFormat('!Y-m-d H:i', $this->input('flight_date').' '.$this->input('flight_time'), 'Indian/Maldives');
+            if (! $flight->isFuture()) {
+                $validator->errors()->add('flight_date', 'Choose a future flight date and time.');
+            }
+        }];
     }
 
     public function rules(): array

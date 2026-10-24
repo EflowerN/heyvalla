@@ -17,6 +17,7 @@ const TransportMap = dynamic(() => import("./components/TransportMap"), {
 });
 
 export default function Home() {
+  const searchRequest = useRef<AbortController|null>(null);
   const [islands, setIslands] = useState<Island[]>([]);
   const [airports, setAirports] = useState<Airport[]>([]);
   const [island, setIsland] = useState("ld0205");
@@ -50,9 +51,11 @@ export default function Home() {
   }, [result, error]);
 
   const selectIsland = useCallback((id: string) => {
+    searchRequest.current?.abort(); setLoading(false);
     setIsland(id); setIslandFilter(""); setResult(null); setBookingChoice(null); setError("");
   }, []);
   const selectAirport = useCallback((id: string) => {
+    searchRequest.current?.abort(); setLoading(false);
     setAirport(id); setResult(null); setBookingChoice(null); setError("");
   }, []);
 
@@ -61,15 +64,16 @@ export default function Home() {
     const data = new FormData(event.currentTarget);
     const query = new URLSearchParams();
     data.forEach((value, key) => query.set(key, String(value)));
+    searchRequest.current?.abort(); const controller = new AbortController(); searchRequest.current = controller;
     setLoading(true); setError(""); setResult(null); setBookingChoice(null);
     try {
-      const response = await fetch(`/api/ferry-search?${query}`);
+      const response = await fetch(`/api/ferry-search?${query}`, {signal: controller.signal});
       const body = await response.json();
       if (!response.ok) throw new Error(body.errors ? Object.values(body.errors).flat().join(" ") : body.message);
-      setResult(body);
+      if (!controller.signal.aborted) setResult(body);
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Could not search. Please try again.");
-    } finally { setLoading(false); }
+      if (!controller.signal.aborted) setError(error instanceof Error ? error.message : "Could not search. Please try again.");
+    } finally { if (!controller.signal.aborted) setLoading(false); }
   }
 
   return (
@@ -106,7 +110,7 @@ export default function Home() {
         resorts={islands.filter(item => item.category === "resort").length}
         airports={airports.length}
       />
-      <MobileNav resultCount={result ? result.sailings.filter(s => s.classification === "recommended").length : null} />
+      <MobileNav resultCount={result ? result.sailings.filter(s => s.bookable).length : null} />
     </main>
   );
 }

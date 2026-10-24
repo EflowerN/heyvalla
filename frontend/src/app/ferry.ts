@@ -4,6 +4,10 @@ export type Airport = { id: string; name: string; iata: string };
 export type Classification = "recommended" | "tight" | "too_late" | "cancelled";
 
 export type Sailing = {
+  source: "legacy" | "provider";
+  provider_sailing_id?: number;
+  version?: number;
+  fare_minor?: number | null;
   available_seats: number;
   bookable: boolean;
   id: string;

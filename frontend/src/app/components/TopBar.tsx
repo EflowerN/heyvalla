@@ -6,6 +6,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const items = [
   { href: "/", label: "Planner" },
+  { href: "/journeys", label: "My itineraries" },
+  { href: "/sailings", label: "Sailings" },
   { href: "/greater-male-taxi", label: "Taxi fares" },
   { href: "/buses", label: "RTL buses" },
   { href: "/operator", label: "Operator" },
@@ -13,7 +15,7 @@ const items = [
 
 export default function TopBar() {
   const pathname = usePathname();
-  const activeIndex = Math.max(0, items.findIndex(item => item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)));
+  const activeIndex = Math.max(0, items.findIndex(item => item.href === "/" ? pathname === "/" : (pathname.startsWith(item.href) || (item.href === "/operator" && pathname.startsWith("/providers")))));
   const nav = useRef<HTMLElement>(null);
   const links = useRef<(HTMLAnchorElement | null)[]>([]);
   const [box, setBox] = useState<{ left: number; width: number } | null>(null);
@@ -38,7 +40,7 @@ export default function TopBar() {
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-b border-ocean/15 pb-5">
         <Link href="/" className="text-xl font-bold tracking-tight text-ocean">heyvalla<span className="text-coral">.</span></Link>
         <span className="rounded-full bg-lagoon/10 px-3 py-1 text-xs font-semibold text-ocean sm:order-last">Maldives · Demo</span>
-        <nav ref={nav} aria-label="Sections" className="relative flex w-full rounded-full border border-ocean/15 bg-white p-1 shadow-sm sm:w-auto">
+        <nav ref={nav} aria-label="Sections" className="relative flex w-full overflow-x-auto rounded-full border border-ocean/15 bg-white p-1 shadow-sm sm:w-auto">
           <span
             aria-hidden="true"
             className={`absolute bottom-1 top-1 rounded-full bg-lagoon ${animate ? "transition-[left,width] duration-300 ease-out" : ""}`}
@@ -52,7 +54,7 @@ export default function TopBar() {
                 href={item.href}
                 ref={element => { links.current[index] = element; }}
                 aria-current={active ? "page" : undefined}
-                className={`relative z-10 inline-flex min-h-10 flex-1 items-center justify-center whitespace-nowrap rounded-full px-3 text-sm font-medium transition-colors duration-300 sm:flex-none sm:px-5 ${active ? "text-white" : "text-ocean hover:text-lagoon"} ${active && !box ? "bg-lagoon" : ""}`}
+                className={`relative z-10 inline-flex min-h-10 shrink-0 flex-1 items-center justify-center whitespace-nowrap rounded-full px-3 text-sm font-medium transition-colors duration-300 sm:flex-none sm:px-5 ${active ? "text-white" : "text-ocean hover:text-lagoon"} ${active && !box ? "bg-lagoon" : ""}`}
               >{item.label}</Link>
             );
           })}

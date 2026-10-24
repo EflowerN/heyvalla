@@ -22,6 +22,7 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
   const [showAirports, setShowAirports] = useState(true);
   const [showRoutes, setShowRoutes] = useState(true);
   const [view, setView] = useState<"country" | "selection">("country");
+  const [fitVersion, setFitVersion] = useState(0);
   const [retry, setRetry] = useState(0);
 
   useEffect(() => {
@@ -76,17 +77,18 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
         }).bindPopup(popup(place, "Land airport")).on("click", () => onAirportSelect(place.id)).addTo(instance);
       });
       const places = view === "selection" ? [selectedIsland, selectedAirport].filter((item): item is Place => !!item) : [...directory.islands, ...directory.airports];
-      if (viewport.current && lastView.current === view) {
+      const fitKey = `${view}:${fitVersion}:${view === "selection" ? `${island}:${airport}` : ""}`;
+      if (viewport.current && lastView.current === fitKey) {
         instance.setView(viewport.current.center, viewport.current.zoom);
       } else {
         instance.fitBounds(L.latLngBounds(places.map(item => [item.latitude, item.longitude])), { padding: [35, 35], maxZoom: 11 });
       }
-      lastView.current = view;
+      lastView.current = fitKey;
       const observer = new ResizeObserver(() => instance.invalidateSize()); observer.observe(container.current);
       instance.on("unload", () => observer.disconnect());
     }).catch(() => { if (!disposed) setError("The map could not start. Try again."); });
     return () => { disposed = true; if (map.current) { viewport.current = { center: map.current.getCenter(), zoom: map.current.getZoom() }; map.current.remove(); } map.current = null; };
-  }, [directory, island, airport, showIslands, showAirports, showRoutes, showResorts, view, retry, onIslandSelect, onAirportSelect]);
+  }, [directory, island, airport, showIslands, showAirports, showRoutes, showResorts, view, fitVersion, retry, onIslandSelect, onAirportSelect]);
 
   const inhabited = directory ? directory.islands.filter(item => item.category !== "resort").length : 0;
   const resorts = directory ? directory.islands.filter(item => item.category === "resort").length : 0;
@@ -98,7 +100,7 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div><h2 className="text-xl font-semibold">Explore the connections</h2>
           <p className="mt-1 text-sm text-ocean/70">{directory ? `${inhabited} inhabited ${inhabited === 1 ? "island" : "islands"} · ${resorts} resort ${resorts === 1 ? "island" : "islands"} · ${airportCount} ${airportCount === 1 ? "airport" : "airports"}` : "Loading locations…"}</p></div>
-        <SlideSwitch label="Map view" value={view} onChange={next => setView(next as "country" | "selection")} options={[{ value: "country", label: "All Maldives" }, { value: "selection", label: "Selected journey" }]} />
+        <SlideSwitch label="Map view" value={view} onChange={next => { setView(next as "country" | "selection"); setFitVersion(v => v + 1); }} options={[{ value: "country", label: "All Maldives" }, { value: "selection", label: "Selected journey" }]} />
       </div>
       <div role="group" aria-label="Map layers" className="mt-4 flex flex-wrap gap-2">
         <button type="button" aria-pressed={showIslands} onClick={() => setShowIslands(value => !value)} className={toggle(showIslands)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />Islands</button>

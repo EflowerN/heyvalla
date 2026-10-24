@@ -31,4 +31,11 @@ class DemoBookingController extends Controller
 
         return response()->json(['booking' => $bookings->create($input, $guest)], 201)->header('Cache-Control', 'no-store');
     }
+
+    public function cancel(Request $request, DemoBookings $bookings): JsonResponse
+    {
+        $input = $request->validate(['reference' => ['required', 'string'], 'version' => ['required', 'integer']]);
+
+        return response()->json(['booking' => $bookings->cancel($input['reference'], (int) $input['version'], $this->guest($request))]);
+    }
 }
