@@ -5,3 +5,6 @@
 /storage/logs
 /env example
 .env
+.env.local
+/.vercel
+/supabase

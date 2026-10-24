@@ -28,3 +28,7 @@ Thumbs.db
 
 # Local copy of .env with secrets
 /env example
+/.vercel
+/supabase/.temp
+.vercel
+.env*
