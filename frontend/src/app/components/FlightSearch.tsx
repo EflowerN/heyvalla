@@ -44,7 +44,7 @@ export default function FlightSearch({ from, to, date, passengers, selected, onS
     <p className="mt-2 text-xs leading-5">Limited website snapshot, not a live search. In-app checkout is simulated. Real travel and final availability must be confirmed with Maldivian.</p>
     {selected && <div className="mt-4"><FlightReference offer={selected} /><button type="button" onClick={onClear} className="mt-2 text-sm text-lagoon underline">Use manual flight details instead</button></div>}
     <div className="mt-4 flex flex-wrap items-end gap-3"><label className="text-sm">Reference fare category<select value={profile} onChange={event => { request.current?.abort(); setBusy(false); setResult(null); setError(""); setProfile(event.target.value); onClear(); }} className="mt-1 block rounded-lg border border-ocean/25 bg-white p-2"><option value="maldivian_adult">Maldivian adult</option><option value="other">Other traveller / mixed party</option></select></label><button type="button" disabled={busy} onClick={() => void search()} className="rounded-lg bg-lagoon px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{busy ? "Loading checked flights…" : "Find flights & nearby dates"}</button></div>
-    {passengers > 1 && <p className="mt-3 text-xs leading-5">These fares were checked for one adult, not your {passengers}-person party. They are not multiplied into the trip total. Maldivian must price and confirm your whole party.</p>}
+    {passengers > 1 && <p className="mt-3 text-xs leading-5">These fares were checked for one adult. The demo planning total uses a per-person multiplication for your {passengers}-person party; this is an assumed group estimate. The airline must confirm the actual party fare.</p>}
     {error && <p role="alert" className="mt-3 text-sm text-rose-800">{error}</p>}
     {result && <div aria-live="polite" className="mt-4">
       <p className="text-xs leading-5">{result.coverage} Checked {flightTime(result.checked_at)} (UTC+5).</p>
@@ -53,6 +53,5 @@ export default function FlightSearch({ from, to, date, passengers, selected, onS
       <h3 className="mt-4 font-semibold">Closest checked dates</h3>
       {result.nearby.length ? options(result.nearby) : <p className="mt-2 text-sm">No checked alternatives within 14 days. Check Maldivian for its current calendar, or enter a flight you already know.</p>}
     </div>}
-    <a href="https://maldivian.aero/" target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-sm font-semibold text-lagoon underline">Search current availability on Maldivian ↗</a>
   </section>;
 }

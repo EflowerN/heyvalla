@@ -12,7 +12,7 @@ export const transportPaths: Record<TransportKind, string> = {
   bus: "M5 18V5c0-2 14-2 14 0v13H5ZM5 7h14M5 13h14M8 16h1m6 0h1M7 18v3m10-3v3M9 5h6",
   land: "M4 12h16m-6-6 6 6-6 6",
 };
-export const transportLabels: Record<TransportKind, string> = { ferry: "Ferry", launch: "Launch", flight: "Flight", taxi: "Taxi", bus: "Bus", land: "Unresolved transfer" };
+export const transportLabels: Record<TransportKind, string> = { ferry: "Ferry", launch: "Launch", flight: "Flight", taxi: "Taxi", bus: "Bus", land: "Taxi to destination" };
 export function transportKind(mode: TransportMode, label = ""): TransportKind {
   // Only use the launch icon when the service itself is explicitly labelled launch.
   return mode === "sea" ? (/\blaunch\b/i.test(label) ? "launch" : "ferry") : mode;

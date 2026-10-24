@@ -98,7 +98,7 @@ export default function JourneyPlanner() {
       if (controller.signal.aborted) return;
       const next = body as Result;
       activePlan.current = input;
-      setResult(next); setPlan(input); setFare(fareResult); setFareMessage(zone && !fareResult ? "The onward taxi estimate is unavailable. Retry the journey search; the ferry results are still usable." : "");
+      setResult(next); setPlan(input); setFare(fareResult); setFareMessage(zone && !fareResult ? "The fare reference could not load. An assumed demo taxi estimate is shown instead." : "");
       if (!refresh) setSailingId((next.sailings.find(s => canBookForParty(s, input.passengers)) ?? next.sailings.find(s => s.classification !== "cancelled"))?.id ?? "");
     } catch (error) { if (!controller.signal.aborted) { setError(error instanceof Error ? error.message : "Could not search. Please retry."); if (refresh) { setResult(null); setReview(false); setChoice(null); } } }
     finally { if (!controller.signal.aborted) setLoading(false); }
@@ -131,8 +131,7 @@ export default function JourneyPlanner() {
   const sailing = result?.sailings.find(item => item.id === sailingId) ?? null;
   const legs = useMemo(() => plan && result && sailing ? buildJourney(plan, result, sailing, directory, fare) : [], [plan, result, sailing, directory, fare]);
   const bookable = !!(sailing && plan && canBookForParty(sailing, plan.passengers));
-  const knownPrices = legs.filter(leg => leg.price !== null);
-  const subtotal = knownPrices.reduce((sum, leg) => sum + (leg.price ?? 0), 0);
+  const subtotal = legs.reduce((sum, leg) => sum + (leg.priceEstimate?.amount ?? 0), 0);
   const hasOnwardGap = legs.some(leg => leg.id === "destination" && !leg.points.length);
 
   const modeSwitch = <div className="mb-6"><SlideSwitch label="Journey type" variant="journey" value={travelMode} options={[{ value: "flight", label: "With a flight" }, { value: "sea", label: "Ferries & launches" }, { value: "taxi", label: "Taxi" }]} onChange={mode => { invalidate(); setTravelMode(mode as "flight" | "sea" | "taxi"); }} /></div>;
@@ -188,7 +187,7 @@ export default function JourneyPlanner() {
                 <span className="mt-1 block font-semibold">{leg.title}</span><span className="mt-2 block text-sm">{leg.from} → {leg.to}</span>
                 <span className="mt-2 block text-xs leading-6">{leg.departure ? localTime(leg.departure) : "Pickup time not arranged"}{leg.arrival ? ` → ${localTime(leg.arrival)}` : ""}</span>
                 {leg.mode === "flight" && !leg.arrival && <span className="block text-xs leading-6">Flight arrival time still needed</span>}
-                <span className="mt-2 block text-xs font-medium">{leg.status}</span><span className="mt-2 inline-block rounded-full bg-sand px-3 py-1 text-sm font-semibold">{leg.price === null ? (leg.mode === "flight" && plan?.selectedFlight ? "Confirm final fare with Maldivian" : "Price not available") : `${money(leg.price)}${leg.mode === "taxi" ? " / vehicle · reference" : " for your party"}`}</span>
+                <span className="mt-2 block text-xs font-medium">{leg.status}</span><span className="mt-2 inline-block rounded-full bg-sand px-3 py-1 text-sm font-semibold">{money(leg.priceEstimate?.amount ?? 0)} for your party</span><span className="mt-2 block text-xs text-ocean/70">{leg.priceEstimate?.basis}</span>
                 {selectedLeg === leg.id && <span className="mt-3 block text-xs leading-6 text-ocean/75">{leg.detail}</span>}
               </button>
               {leg.mode === "flight" && plan?.selectedFlight && <div className="mt-3"><FlightReference offer={plan.selectedFlight} /></div>}
@@ -196,7 +195,7 @@ export default function JourneyPlanner() {
             </JourneyStep>)}</ol>
             {hasOnwardGap && <p role="status" className="mb-4 rounded-lg bg-coral/20 p-3 text-sm">The final connection is missing. This is an incomplete journey, not a through-bookable route.</p>}
             {fareMessage && <p role="status" className="mb-4 text-sm text-rose-800">{fareMessage}</p>}
-            <div className="rounded-2xl bg-sand p-4"><p className="font-semibold">{knownPrices.length ? `Known price subtotal: ${money(subtotal)}` : "Total price not available yet"}</p><p className="mt-2 text-xs leading-6">{knownPrices.length ? "Includes only priced legs shown above. " : ""}Flight and unquoted transfers are excluded. Taxi matrix prices are per vehicle with unknown capacity and validity; this is not a complete trip quote.</p></div>
+            <div className="rounded-2xl bg-sand p-4"><p className="font-semibold">Planning total: {money(subtotal)}</p><p className="mt-2 text-xs leading-6">Includes every displayed leg for your party. Assumed amounts are labelled demo estimates, not confirmed quotes. Taxi estimates assume four seats per vehicle; unsupported connections remain unverified.</p></div>
             <button type="button" disabled={loading} onClick={() => setReview(true)} className="mt-4 w-full rounded-xl bg-lagoon p-3 font-semibold text-white disabled:opacity-50">Review journey & booking options</button>
           </>}
           {!!result.sailings.length && !sailing && <p className="mt-4 text-sm">No usable sailing selected. Cancelled sailings cannot be added to a journey.</p>}

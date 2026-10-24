@@ -2,7 +2,7 @@ import test from 'node:test';
 import { matchingFlight } from '../src/lib/flights.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { journeyDetailsInput, buildJourney, canBookForParty, matchesLocation, taxiDestinationZone, validatePlan } from '../src/lib/journey-plan.ts';
+import { planningPrice, journeyDetailsInput, buildJourney, canBookForParty, matchesLocation, taxiDestinationZone, validatePlan } from '../src/lib/journey-plan.ts';
 
 const directory = JSON.parse(readFileSync(new URL('../../backend/resources/data/locations.json', import.meta.url)));
 const island = id => directory.islands.find(p => p.id === id);
@@ -81,4 +81,30 @@ test('editing airports or flight times drops a mismatched airline selection', ()
   assert.equal(leg.title, 'Maldivian Q2 183');
   assert.equal(leg.price, null);
   assert.match(leg.status, /demo booking available/);
+});
+
+
+test('planning prices cover all legs, label assumptions and preserve booking prices', () => {
+  const legs = buildJourney(input, result, { ...sailing, source: 'legacy', fare_minor: undefined }, directory, fare);
+  assert.deepEqual(legs.map(l => l.priceEstimate.amount), [30000, 8000, 292800, 9000]);
+  assert.equal(legs.reduce((sum, leg) => sum + leg.priceEstimate.amount, 0), 339800);
+  assert.match(legs[0].priceEstimate.basis, /Assumed demo/);
+  assert.match(legs[3].priceEstimate.basis, /Reference/);
+  assert.equal(legs[0].price, null);
+  assert.equal(legs[1].price, null);
+  assert.equal(legs[2].price, null);
+  const unsupported = buildJourney({ ...input, destination: island('ld0268') }, result, sailing, directory, null)[3];
+  assert.equal(unsupported.priceEstimate.amount, 20000);
+  assert.match(unsupported.priceEstimate.basis, /connection unverified/);
+  assert.deepEqual(unsupported.points, []);
+});
+
+test('planning estimates respect zero/listed prices, party size, vehicle count and selected fares', () => {
+  assert.equal(planningPrice({mode:'taxi', passengers:5, listed:0}).amount, 0);
+  assert.equal(planningPrice({mode:'taxi', passengers:5, listed:12300}).amount, 12300);
+  assert.equal(planningPrice({mode:'taxi', passengers:5, reference:9000}).amount, 18000);
+  assert.equal(planningPrice({mode:'taxi', passengers:5, airportTransfer:true}).amount, 16000);
+  assert.equal(planningPrice({mode:'flight', passengers:3, flightFare:170000}).amount, 510000);
+  assert.match(planningPrice({mode:'flight', passengers:3, flightFare:170000}).basis, /Reference-based demo/);
+  assert.equal(planningPrice({mode:'bus', passengers:2}).amount, 2000);
 });

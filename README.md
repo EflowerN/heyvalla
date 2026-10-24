@@ -21,7 +21,7 @@ The project began with a Thaa Atoll pilot: helping passengers reach Thimarafushi
 | Boat-owner tools | Manage vessels and dated sailings, enable seat requests, approve passengers, cancel sailings with reasons, and post cargo loading windows, fully-loaded/last-call messages and optional manually reported positions. |
 | Greater Malé taxi fares | Estimate trips between distinct supported zones using the Avas Ride fare matrix in MVR, with a separate simulated taxi checkout. |
 | RTL bus reference | Browse Greater Malé and atoll routes, stops, fares and departure snapshots, with simulated bus checkout. |
-| Flight reference | View a limited checked Maldivian fare/departure snapshot, nearby-date options where recorded, and an airline checkout link alongside the demo booking flow. |
+| Flight reference | View a limited checked Maldivian fare/departure snapshot, nearby-date options where recorded, and in-app simulated checkout. |
 
 The directory covers more places than the available schedules. Selecting an island does **not** imply a service exists there. Missing coverage returns an empty result rather than an invented route.
 
@@ -144,6 +144,8 @@ The [source register](docs/data-sources.md) records provenance, snapshot dates, 
 - **Road transport:** Avas Ride's Greater Malé fare matrix and RTL bus route/schedule snapshots. These are references, not live dispatch, service-calendar or seat-availability guarantees. Greater Malé fares are kept separate from Thimarafushi transfer assumptions.
 - **Flights:** a limited checked Maldivian reference snapshot, not a live fare feed. Nearby-date results are limited to recorded departures. Manual-flight demo pricing is explicitly fictional.
 - **Sea travel:** built-in fictional schedules and owner-published sailings. Public RTL references do not constitute a nationwide routable or bookable ferry feed.
+
+Each journey leg displays a planning price. Listed fares and quotes take priority; missing prices use labelled demo assumptions. The planning total includes all displayed legs, while recorded booking subtotals remain separate. See [visible planning prices](docs/demo-plan.md#visible-planning-prices) for the allowances.
 
 Current limits:
 

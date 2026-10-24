@@ -102,7 +102,7 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
                 <span className={`pill ${pillStyles[sailing.classification]}`}><span aria-hidden="true">{symbols[sailing.classification]}</span>{labels[sailing.classification]}</span>
               </div>
 
-              <Timeline sailing={sailing} result={result} />
+              <p className="mt-3 inline-block rounded-full bg-sand px-3 py-1 text-sm font-semibold">{((sailing.fare_minor ?? 15000) / 100).toFixed(2)} MVR per seat · {sailing.fare_minor == null ? "Assumed demo estimate" : "Provider fare"}</p><Timeline sailing={sailing} result={result} />
 
               {sailing.classification === "cancelled"
                 ? <p className="border-t border-ocean/10 pt-4 text-sm text-ocean/80">This simulated sailing is cancelled and cannot be used.</p>
@@ -120,7 +120,7 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
                 </button>}
               </div>
               {sailing.source === "provider" && <>
-                <p className="mt-3 text-sm">{sailing.operator} · {sailing.fare_minor == null ? "Fare unavailable" : `${(sailing.fare_minor / 100).toFixed(2)} MVR per seat`} · Unverified demo provider</p>
+                <p className="mt-3 text-sm">{sailing.operator} · {sailing.fare_minor == null ? "150.00 MVR per seat · assumed demo estimate" : `${(sailing.fare_minor / 100).toFixed(2)} MVR per seat`} · Unverified demo provider</p>
                 {sailing.bookable
                   ? <SeatRequestForm sailing={{ id: sailing.provider_sailing_id!, version: sailing.version!, fare_minor: sailing.fare_minor ?? null, remaining_seats: sailing.available_seats }} flightContext={result.search} onSaved={() => {}} />
                   : <p className="mt-2 text-sm">Not accepting requests for this flight connection.</p>}

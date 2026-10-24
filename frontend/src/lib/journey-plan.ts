@@ -4,9 +4,22 @@ import type { Result, Sailing } from "../app/ferry";
 export type Place = { id: string; name: string; latitude: number; longitude: number; atoll?: string; category?: string; iata?: string };
 export type Directory = { islands: Place[]; airports: Place[] };
 export type PlanInput = { selectedFlight?: FlightOption | null; origin: Place; destination: Place; departureAirport: Place; arrivalAirport: Place; flightArrival: string; address: string; passengers: number; taxiZone: string };
-export type JourneyLeg = { id: string; mode: "sea" | "taxi" | "flight" | "land"; title: string; from: string; to: string; status: string; detail: string; departure: string | null; arrival: string | null; price: number | null; points: Place[] };
+export type PlanningPrice = { amount: number; basis: string };
+export type JourneyLeg = { id: string; mode: "sea" | "taxi" | "flight" | "land"; title: string; from: string; to: string; status: string; detail: string; departure: string | null; arrival: string | null; price: number | null; priceEstimate?: PlanningPrice; points: Place[] };
 export type FareEstimate = { amount_minor: number; currency: string; from: string; to: string };
 export type JourneyDetailsInput = { arrival_airport_id: string; destination_id: string; flight_arrival_at: string | null; address: string | null; taxi_zone: string | null; flight_offer_id?: string };
+
+// Display-only planning allowances. Never submit these as an operator quote or charge.
+export function planningPrice({ mode, passengers = 1, listed, reference, flightFare, airportTransfer = false }: { mode: "sea" | "taxi" | "flight" | "land" | "bus"; passengers?: number; listed?: number | null; reference?: number | null; flightFare?: number | null; airportTransfer?: boolean }): PlanningPrice {
+  if (listed != null) return { amount: listed, basis: "Listed / demo price" };
+  if (mode === "taxi") {
+    const vehicles = Math.ceil(passengers / 4);
+    return { amount: (reference ?? (airportTransfer ? 8000 : 9000)) * vehicles, basis: `${reference != null ? "Reference" : "Assumed demo"} estimate · ${vehicles} vehicle(s), four seats each` };
+  }
+  if (mode === "flight") return { amount: (flightFare ?? 146400) * passengers, basis: flightFare != null ? "Reference-based demo estimate · per-person fare × party" : "Assumed demo estimate · MVR 1,464 per passenger" };
+  const perPerson = mode === "sea" ? 15000 : mode === "bus" ? 1000 : 10000;
+  return { amount: perPerson * passengers, basis: `Assumed demo estimate · MVR ${perPerson / 100} per passenger${mode === "land" ? " · connection unverified" : ""}` };
+}
 
 export function journeyDetailsInput(plan: PlanInput): JourneyDetailsInput {
   return { ...(plan.selectedFlight ? { flight_offer_id: plan.selectedFlight.id } : {}), arrival_airport_id: plan.arrivalAirport.id, destination_id: plan.destination.id,
@@ -73,10 +86,13 @@ export function buildJourney(input: PlanInput, result: Result, sailing: Sailing,
     legs.push({ id: "destination", mode: zone ? "taxi" : "land", title: zone ? "Taxi to your destination" : "Onward connection needed",
       from: input.arrivalAirport.name, to: input.address ? `${input.address}, ${input.destination.name}` : input.destination.name,
       status: zone ? "Reference estimate · taxi or bus demo checkout" : "No connected service in this demo",
-      detail: zone ? "Avas Ride matrix: domestic terminal to selected zone, per vehicle; validity, capacity and surcharges unknown. No driver is booked. Address is a note; map ends at the island reference point, not your doorstep. Pickup time needs flight arrival, baggage collection and a driver quote." : "We cannot assume a road or ferry connection to this island. Arrange and verify this leg separately; no route line or fare is invented.",
+      detail: zone ? "Avas Ride matrix: domestic terminal to selected zone, per vehicle; validity, capacity and surcharges unknown. No driver is booked. Address is a note; map ends at the island reference point, not your doorstep. Pickup time needs flight arrival, baggage collection and a driver quote." : "We cannot assume a road or ferry connection to this island. Arrange and verify this leg separately. The assumed planning allowance does not establish a service or a route.",
       departure: null, arrival: null, price: usableFare?.amount_minor ?? null,
       points: zone ? [input.arrivalAirport, input.destination] : [],
     });
   }
-  return legs;
+  return legs.map(leg => ({ ...leg, priceEstimate: planningPrice({ mode: leg.mode, passengers: input.passengers,
+    listed: leg.mode === "taxi" && leg.id === "destination" ? null : leg.price,
+    reference: leg.id === "destination" ? leg.price : null,
+    flightFare: input.selectedFlight?.fare_minor, airportTransfer: leg.id === "airport-taxi" }) }));
 }
