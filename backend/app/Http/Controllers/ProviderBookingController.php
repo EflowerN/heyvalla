@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\JourneyDetails;
 use App\Services\ProviderLifecycle;
 use App\Services\TravelJourneys;
 use Carbon\CarbonImmutable;
@@ -44,7 +45,7 @@ class ProviderBookingController extends Controller
     public function store(Request $request): JsonResponse
     {
         $guest = $this->guest($request);
-        $input = $request->validate(['sailing_id' => ['required', 'integer'], 'sailing_version' => ['required', 'integer'], 'fare_minor' => ['required', 'integer', 'min:1'], 'seats' => ['required', 'integer', 'min:1', 'max:20'], 'passenger_name' => ['required', 'string', 'max:100'], 'terms_accepted' => ['required', 'accepted'], 'idempotency_key' => ['required', 'uuid']]);
+        $input = $request->validate(['sailing_id' => ['required', 'integer'], 'sailing_version' => ['required', 'integer'], 'fare_minor' => ['required', 'integer', 'min:1'], 'seats' => ['required', 'integer', 'min:1', 'max:20'], 'passenger_name' => ['required', 'string', 'max:100'], 'terms_accepted' => ['required', 'accepted'], 'idempotency_key' => ['required', 'uuid'], ...JourneyDetails::rules()]);
 
         $flightInput = $request->hasAny(['flight_date', 'flight_time', 'check_in_minutes', 'airport']) ? $request->validate(TravelJourneys::flightRules()) : null;
 
@@ -60,7 +61,8 @@ class ProviderBookingController extends Controller
                 abort_unless($existing->provider_sailing_id === $sailing->id && $existing->seats === $input['seats'] && $existing->passenger_name === $input['passenger_name'] && $existing->total_minor === $input['fare_minor'] * $input['seats'], 409, 'Retry details changed. Refresh before submitting another request.');
 
                 abort_unless((json_decode($existing->journey, true)['flight_input'] ?? null) == $flightInput, 409, 'This retry has a different flight target. Refresh your itinerary.');
-                TravelJourneys::ensure($existing, true);
+                $savedJourney = TravelJourneys::ensure($existing, true);
+                abort_unless($savedJourney->details_booking_hash === JourneyDetails::fingerprint($input['journey_details'] ?? null), 409, 'This retry has different journey details. Refresh your itinerary.');
 
                 return response()->json(['booking' => self::present($existing)]);
             }
@@ -71,12 +73,14 @@ class ProviderBookingController extends Controller
             $provider = DB::table('provider_accounts')->find($sailing->provider_account_id);
             $journey = ['origin_id' => $sailing->origin_id, 'destination_id' => $sailing->destination_id, 'sailing_id' => $sailing->id, 'origin' => $sailing->origin, 'destination' => $sailing->destination, 'departure_at' => CarbonImmutable::parse($sailing->departure_at, 'UTC')->toIso8601String(), 'arrival_at' => CarbonImmutable::parse($sailing->arrival_at, 'UTC')->toIso8601String(), 'provider_name' => $provider->organization_name, 'vessel_name' => $vessel->name, 'fare_minor' => $sailing->fare_minor, 'terms' => 'Demo request only. Seats are not held until operator confirmation. No payment is collected. Passenger may cancel before departure. Provider is unverified.'];
             $flight = $flightInput ? TravelJourneys::flightPlan($flightInput, $journey['arrival_at'], $journey['departure_at'], $sailing->destination_id) : null;
+            $details = isset($input['journey_details']) ? JourneyDetails::snapshot($input['journey_details'], $flight, $sailing->origin_id) : null;
             $journey['flight_input'] = $flightInput;
             DB::table('provider_seat_requests')->insertOrIgnore(['provider_sailing_id' => $sailing->id, 'reference' => 'PV-'.strtoupper(Str::random(12)), 'guest_hash' => $guest, 'idempotency_key' => $input['idempotency_key'], 'passenger_name' => $input['passenger_name'], 'seats' => $input['seats'], 'total_minor' => $input['fare_minor'] * $input['seats'], 'journey' => json_encode($journey), 'status' => 'requested', 'version' => 1, 'events' => json_encode([['status' => 'requested', 'actor' => 'passenger', 'at' => now()->toIso8601String(), 'reason' => 'Seat request submitted; awaiting operator approval.']]), 'created_at' => now(), 'updated_at' => now()]);
             $booking = DB::table('provider_seat_requests')->where('guest_hash', $guest)->where('idempotency_key', $input['idempotency_key'])->first();
             abort_unless($booking && $booking->provider_sailing_id === $sailing->id && $booking->seats === $input['seats'] && $booking->passenger_name === $input['passenger_name'] && $booking->total_minor === $input['fare_minor'] * $input['seats'], 409, 'Duplicate request details differ. Refresh before retrying.');
 
-            TravelJourneys::ensure($booking, true, $flight);
+            $savedJourney = TravelJourneys::ensure($booking, true, $flight, $details, JourneyDetails::fingerprint($input['journey_details'] ?? null));
+            abort_unless($savedJourney->details_booking_hash === JourneyDetails::fingerprint($input['journey_details'] ?? null) && (json_decode($booking->journey, true)['flight_input'] ?? null) == $flightInput, 409, 'Duplicate request has different journey details.');
 
             return response()->json(['booking' => self::present($booking)], 201);
         }, 5);

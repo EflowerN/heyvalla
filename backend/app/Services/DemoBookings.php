@@ -49,12 +49,14 @@ class DemoBookings
                     'request_id' => $input['request_id'], 'payload_hash' => $payloadHash,
                     'sailing_id' => $sailing['id'], 'passenger_name' => $input['passenger_name'],
                     'email' => $input['email'], 'seats' => $input['seats'],
-                    'journey' => json_encode(['origin' => $result['origin'], 'destination' => $result['destination'], 'departure_at' => $sailing['departure_at'], 'airport_arrival_at' => $sailing['airport_arrival_at'], 'flight_at' => $result['flight_at'], 'harbour_arrival_at' => $sailing['harbour_arrival_at'], 'check_in_deadline_at' => $result['check_in_deadline_at']]),
+                    'journey' => json_encode(['origin_id' => $input['island'], 'origin' => $result['origin'], 'destination' => $result['destination'], 'departure_at' => $sailing['departure_at'], 'airport_arrival_at' => $sailing['airport_arrival_at'], 'flight_at' => $result['flight_at'], 'harbour_arrival_at' => $sailing['harbour_arrival_at'], 'check_in_deadline_at' => $result['check_in_deadline_at']]),
                     'created_at' => now(),
                 ]);
 
                 $booking = DB::table('demo_bookings')->find($id);
-                TravelJourneys::ensure($booking, false, json_decode($booking->journey, true));
+                $flight = json_decode($booking->journey, true);
+                $details = isset($input['journey_details']) ? JourneyDetails::snapshot($input['journey_details'], $flight, $input['island']) : null;
+                TravelJourneys::ensure($booking, false, $flight, $details, JourneyDetails::fingerprint($input['journey_details'] ?? null));
 
                 return $this->present($booking);
             }, 5);

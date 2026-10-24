@@ -12,6 +12,7 @@ Route::middleware('throttle:60,1')->group(function (): void {
     Route::post('/v1/demo-taxis', [DemoTaxiController::class, 'store']);
     Route::get('/v1/journeys', [JourneyController::class, 'index']);
     Route::post('/v1/journeys', [JourneyController::class, 'flight']);
+    Route::patch('/v1/journeys', [JourneyController::class, 'details']);
     Route::post('/v1/demo-bookings/cancel', [DemoBookingController::class, 'cancel']);
     Route::post('/v1/demo-taxis/cancel', [DemoTaxiController::class, 'cancel']);
     Route::post('/v1/demo-taxis/accept', [DemoTaxiController::class, 'accept']);

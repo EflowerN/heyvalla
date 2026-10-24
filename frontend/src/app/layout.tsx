@@ -3,8 +3,8 @@ import "./globals.css";
 import TopBar from "./components/TopBar";
 
 export const metadata: Metadata = {
-  title: "HeyValla | Airport ferry connections",
-  description: "A Thaa Atoll ferry-to-airport planning demonstration.",
+  title: "HeyValla | Your whole journey",
+  description: "Plan ferry, airport transfer, flight and onward taxi connections in one Maldives journey preview.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
