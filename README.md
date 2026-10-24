@@ -52,4 +52,10 @@ cd backend
 php artisan test
 ```
 
-See [the demo plan](docs/demo-plan.md) and [RTL schedule strategy](docs/rtl-schedules.md). Authentication, search, booking, and the operator dashboard are planned features, not implemented in this foundation.
+See [the demo plan](docs/demo-plan.md) and [RTL schedule strategy](docs/rtl-schedules.md). Ferry search, the interactive map, and guest demo seat bookings are implemented. Authentication and the operator dashboard remain planned. Run migrations before using bookings; only future sailings meeting the recommended connection target are bookable. No money is collected or real ticket issued.
+
+## Demo taxi add-on
+
+Open a ferry booking under **My demo bookings** and choose **Request airport taxi**. Quotes are reviewed and accepted there after the demo operator responds. Use **Refresh bookings & taxi quotes** to retrieve updates.
+
+The operator dashboard is at `/operator`. Configure `DEMO_OPERATOR_PASSWORD` in frontend `.env.local` and a matching random `DEMO_OPERATOR_TOKEN` (32+ characters) in frontend `.env.local` and backend `.env`. The checked-in environment examples leave both blank, so operator access fails closed until configured. Restart Next.js after changing these settings. See `docs/development.md` for local demo details and `docs/transport-expansion-plan.md` for the taxi/private-vessel roadmap.

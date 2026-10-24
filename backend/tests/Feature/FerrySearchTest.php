@@ -2,11 +2,14 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class FerrySearchTest extends TestCase
 {
+    use RefreshDatabase;
+
     private function search(array $overrides = []): TestResponse
     {
         return $this->getJson('/api/v1/ferry-search?'.http_build_query(array_merge([

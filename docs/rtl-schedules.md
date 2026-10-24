@@ -24,3 +24,13 @@ Import to a staging/review step: validate times, stop mapping, service dates and
 ## Questions for RTL/MTCC
 
 Is there an approved schedule feed/API or GTFS export? Does it cover Thaa and Thimarafushi? What reuse/attribution terms apply? How are service exceptions and cancellations published? Is third-party booking supported, with inventory, confirmation, cancellation, and refund workflows?
+
+## Retrieved schedule snapshot — 24 October 2026
+
+The official page at https://rtl.mv/#/schedule-details was accessible through the browser. All 27 displayed ferry route cards were expanded and their timetables captured. The normalized snapshot is `backend/resources/data/rtl-schedules.json`: 27 route codes and 238 time/island entries. Every extracted island label was checked against its route card's listed stops. It is a snapshot of this page's displayed cards, not a claim that all RTL routes nationwide are present.
+
+The records preserve displayed stop order, including return journeys, rather than guessing trip identifiers or service calendars. Operating weekdays, validity dates, live cancellation information, and seat inventory were not supplied in these extracted cards. Keep `service_days`, `valid_from`, and `valid_until` unknown. Do not generate daily dated sailings or enable RTL bookings from this snapshot alone.
+
+Relevant Thaa routes include Z4R1 (Buruni–Veymandoo through Vilufushi, Madifushi, Dhiyamigili and Guraidhoo), Z4R2 (Kandoodhoo–Veymandoo), Z4R3 (Gaadhiffushi–Veymandoo through Thimarafushi), Z4R4 (Veymandoo–Thimarafushi), and Z4R5 (Veymandoo–Gaadhiffushi). Z4R4 shows Veymandoo 08:35 → Thimarafushi 08:45 and the return Thimarafushi 10:30 → Veymandoo 10:40. Z4R3 shows Gaadhiffushi 08:25 → Thimarafushi 08:40 → Veymandoo 08:55, then Veymandoo 13:25 → Thimarafushi 13:35 → Gaadhiffushi 13:55. These are displayed local times, not a confirmed service for a selected date.
+
+The fictional HV-series schedules and booking tables are unchanged by this retrieval. Next integration work must confirm service calendars and timetable validity, map RTL stop labels to the island/harbour directory, identify distinct trips, and validate transfer feasibility before using this source in flight-connection results. No documented public API or third-party ticketing access has been established by reading the page.

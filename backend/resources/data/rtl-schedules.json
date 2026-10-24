@@ -1,0 +1,1701 @@
+{
+  "source": "https://rtl.mv/#/schedule-details",
+  "publisher": "RTL / MTCC",
+  "retrieved_at": "2026-10-24",
+  "timezone": "Indian/Maldives",
+  "route_count": 27,
+  "limitations": [
+    "Snapshot of the 27 route cards displayed on the source page; not a complete network or live feed.",
+    "Operating days, validity dates, trip IDs, seat availability and disruptions were not provided in the extracted timetable cards.",
+    "Times retain the page display order, including return journeys. Separate trips have not been inferred.",
+    "Reference data only; no RTL ticketing or capacity integration. Demo bookings remain separate."
+  ],
+  "routes": [
+    {
+      "route_code": "Z2R3",
+      "title": "N.Kudafari - N.Manadhoo(Z2R3)",
+      "zone": 2,
+      "listed_islands": [
+        "N.Kudafari",
+        "N.Lhohi",
+        "N.Miladhoo",
+        "N.Manadhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:00:00",
+          "island_label": "N.Kudafari"
+        },
+        {
+          "sequence": 2,
+          "time": "07:15:00",
+          "island_label": "N.Lhohi"
+        },
+        {
+          "sequence": 3,
+          "time": "07:30:00",
+          "island_label": "N.Miladhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "07:45:00",
+          "island_label": "N.Manadhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "14:00:00",
+          "island_label": "N.Manadhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "14:10:00",
+          "island_label": "N.Miladhoo"
+        },
+        {
+          "sequence": 7,
+          "time": "14:25:00",
+          "island_label": "N.Lhohi"
+        },
+        {
+          "sequence": 8,
+          "time": "14:45:00",
+          "island_label": "N.Kudafari"
+        }
+      ],
+      "displayed_timetable": "07:00:00 N.Kudafari 15 mins 07:15:00 N.Lhohi 15 mins 07:30:00 N.Miladhoo 15 mins 07:45:00 N.Manadhoo 14:00:00 N.Manadhoo 10 mins 14:10:00 N.Miladhoo 15 mins 14:25:00 N.Lhohi 20 mins 14:45:00 N.Kudafari"
+    },
+    {
+      "route_code": "Z4R4",
+      "title": "Th. Veymandoo - Th. Thimarafushi(Z4R4)",
+      "zone": 4,
+      "listed_islands": [
+        "Th.Veymandoo",
+        "Th.Thimarafushi"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "08:35:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 2,
+          "time": "08:45:00",
+          "island_label": "Th.Thimarafushi"
+        },
+        {
+          "sequence": 3,
+          "time": "10:30:00",
+          "island_label": "Th.Thimarafushi"
+        },
+        {
+          "sequence": 4,
+          "time": "10:40:00",
+          "island_label": "Th.Veymandoo"
+        }
+      ],
+      "displayed_timetable": "08:35:00 Th.Veymandoo 10 mins 08:45:00 Th.Thimarafushi 10:30:00 Th.Thimarafushi 10 mins 10:40:00 Th.Veymandoo"
+    },
+    {
+      "route_code": "Z2R9",
+      "title": "LH.Naifaru - LH.Hinnavaru(Z2R9)",
+      "zone": 2,
+      "listed_islands": [
+        "Lh.Naifaru",
+        "Lh.Madivaru",
+        "Lh.Felivaru",
+        "Lh.Hinnavaru"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "16:10:00",
+          "island_label": "Lh.Naifaru"
+        },
+        {
+          "sequence": 2,
+          "time": "16:15:00",
+          "island_label": "Lh.Madivaru"
+        },
+        {
+          "sequence": 3,
+          "time": "16:25:00",
+          "island_label": "Lh.Felivaru"
+        },
+        {
+          "sequence": 4,
+          "time": "16:35:00",
+          "island_label": "Lh.Hinnavaru"
+        }
+      ],
+      "displayed_timetable": "16:10:00 Lh.Naifaru 5 mins 16:15:00 Lh.Madivaru 10 mins 16:25:00 Lh.Felivaru 10 mins 16:35:00 Lh.Hinnavaru"
+    },
+    {
+      "route_code": "Z4R3",
+      "title": "Th. Gaadhiffushi - Th. Veymandoo(Z4R3)",
+      "zone": 4,
+      "listed_islands": [
+        "Th.Gaadhiffushi",
+        "Th.Thimarafushi",
+        "Th.Veymandoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "08:25:00",
+          "island_label": "Th.Gaadhiffushi"
+        },
+        {
+          "sequence": 2,
+          "time": "08:40:00",
+          "island_label": "Th.Thimarafushi"
+        },
+        {
+          "sequence": 3,
+          "time": "08:55:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 4,
+          "time": "13:25:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 5,
+          "time": "13:35:00",
+          "island_label": "Th.Thimarafushi"
+        },
+        {
+          "sequence": 6,
+          "time": "13:55:00",
+          "island_label": "Th.Gaadhiffushi"
+        }
+      ],
+      "displayed_timetable": "08:25:00 Th.Gaadhiffushi 15 mins 08:40:00 Th.Thimarafushi 15 mins 08:55:00 Th.Veymandoo 13:25:00 Th.Veymandoo 10 mins 13:35:00 Th.Thimarafushi 20 mins 13:55:00 Th.Gaadhiffushi"
+    },
+    {
+      "route_code": "Z2R4",
+      "title": "N.Manadhoo - N.Maafaru(Z2R4)",
+      "zone": 2,
+      "listed_islands": [
+        "N.Manadhoo",
+        "N.Maafaru"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "11:15:00",
+          "island_label": "N.Manadhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "11:30:00",
+          "island_label": "N.Maafaru"
+        },
+        {
+          "sequence": 3,
+          "time": "13:30:00",
+          "island_label": "N.Maafaru"
+        },
+        {
+          "sequence": 4,
+          "time": "13:45:00",
+          "island_label": "N.Manadhoo"
+        }
+      ],
+      "displayed_timetable": "11:15:00 N.Manadhoo 15 mins 11:30:00 N.Maafaru 13:30:00 N.Maafaru 15 mins 13:45:00 N.Manadhoo"
+    },
+    {
+      "route_code": "Z5R9",
+      "title": "Ga.Villingili - Ga.Kolamaafushi(Z5R9)",
+      "zone": 5,
+      "listed_islands": [
+        "Ga.Villingili",
+        "Ga.Kooddoo",
+        "Ga.Kolamaafushi"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:30:00",
+          "island_label": "Ga.Kolamaafushi"
+        },
+        {
+          "sequence": 2,
+          "time": "07:25:00",
+          "island_label": "Ga.Kooddoo"
+        },
+        {
+          "sequence": 3,
+          "time": "07:40:00",
+          "island_label": "Ga.Villingili"
+        },
+        {
+          "sequence": 4,
+          "time": "16:50:00",
+          "island_label": "Ga.Villingili"
+        },
+        {
+          "sequence": 5,
+          "time": "17:00:00",
+          "island_label": "Ga.Kooddoo"
+        },
+        {
+          "sequence": 6,
+          "time": "18:00:00",
+          "island_label": "Ga.Kolamaafushi"
+        }
+      ],
+      "displayed_timetable": "06:30:00 Ga.Kolamaafushi 55 mins 07:25:00 Ga.Kooddoo 15 mins 07:40:00 Ga.Villingili 16:50:00 Ga.Villingili 10 mins 17:00:00 Ga.Kooddoo 60 mins 18:00:00 Ga.Kolamaafushi"
+    },
+    {
+      "route_code": "Z2R6",
+      "title": "LH.Olhuvelifushi - LH.Hinnavaru(Z2R6)",
+      "zone": 2,
+      "listed_islands": [
+        "Lh.Olhuvelifushi",
+        "Lh.Kurendhoo",
+        "Lh.Naifaru",
+        "Lh.Madivaru",
+        "Lh.Hinnavaru"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:30:00",
+          "island_label": "Lh.Olhuvelifushi"
+        },
+        {
+          "sequence": 2,
+          "time": "06:55:00",
+          "island_label": "Lh.Kurendhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "07:25:00",
+          "island_label": "Lh.Naifaru"
+        },
+        {
+          "sequence": 4,
+          "time": "07:35:00",
+          "island_label": "Lh.Madivaru"
+        },
+        {
+          "sequence": 5,
+          "time": "07:50:00",
+          "island_label": "Lh.Hinnavaru"
+        }
+      ],
+      "displayed_timetable": "06:30:00 Lh.Olhuvelifushi 25 mins 06:55:00 Lh.Kurendhoo 30 mins 07:25:00 Lh.Naifaru 10 mins 07:35:00 Lh.Madivaru 15 mins 07:50:00 Lh.Hinnavaru"
+    },
+    {
+      "route_code": "Z4R5",
+      "title": "Th. Veymandoo - Th. Gaadhiffushi(Z4R5)",
+      "zone": 4,
+      "listed_islands": [
+        "Th.Veymandoo",
+        "Th.Gaadhiffushi"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:55:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 2,
+          "time": "08:20:00",
+          "island_label": "Th.Gaadhiffushi"
+        },
+        {
+          "sequence": 3,
+          "time": "14:00:00",
+          "island_label": "Th.Gaadhiffushi"
+        },
+        {
+          "sequence": 4,
+          "time": "14:15:00",
+          "island_label": "Th.Veymandoo"
+        }
+      ],
+      "displayed_timetable": "07:55:00 Th.Veymandoo 25 mins 08:20:00 Th.Gaadhiffushi 14:00:00 Th.Gaadhiffushi 15 mins 14:15:00 Th.Veymandoo"
+    },
+    {
+      "route_code": "Z5R1",
+      "title": "Gdh.Thinadhoo - Ga.Villingili(Z5R1)",
+      "zone": 5,
+      "listed_islands": [
+        "Gdh.Thinadhoo",
+        "Ga.Dhevvadhoo",
+        "Ga.Villingili"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "08:00:00",
+          "island_label": "Ga.Villingili"
+        },
+        {
+          "sequence": 2,
+          "time": "08:50:00",
+          "island_label": "Ga.Dhevvadhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "09:35:00",
+          "island_label": "Gdh.Thinadhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "15:00:00",
+          "island_label": "Gdh.Thinadhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "15:40:00",
+          "island_label": "Ga.Dhevvadhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "16:35:00",
+          "island_label": "Ga.Villingili"
+        }
+      ],
+      "displayed_timetable": "08:00:00 Ga.Villingili 50 mins 08:50:00 Ga.Dhevvadhoo 45 mins 09:35:00 Gdh.Thinadhoo 15:00:00 Gdh.Thinadhoo 40 mins 15:40:00 Ga.Dhevvadhoo 55 mins 16:35:00 Ga.Villingili"
+    },
+    {
+      "route_code": "Z5R8",
+      "title": "Ga.Villingili - Ga.Kooddoo(Z5R8)",
+      "zone": 5,
+      "listed_islands": [
+        "Ga.Villingili",
+        "Ga.Kooddoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "08:00:00",
+          "island_label": "Ga.Villingili"
+        },
+        {
+          "sequence": 2,
+          "time": "08:10:00",
+          "island_label": "Ga.Kooddoo"
+        },
+        {
+          "sequence": 3,
+          "time": "09:30:00",
+          "island_label": "Ga.Kooddoo"
+        },
+        {
+          "sequence": 4,
+          "time": "09:40:00",
+          "island_label": "Ga.Villingili"
+        }
+      ],
+      "displayed_timetable": "08:00:00 Ga.Villingili 10 mins 08:10:00 Ga.Kooddoo 09:30:00 Ga.Kooddoo 10 mins 09:40:00 Ga.Villingili"
+    },
+    {
+      "route_code": "Z4R8A",
+      "title": "Dh. Meedhoo - Dh. Kudahuvadhoo(Z4R8A)",
+      "zone": 4,
+      "listed_islands": [
+        "Dh.Meedhoo",
+        "Dh.Bandidhoo",
+        "Dh.Rinbudhoo",
+        "Dh.Hulhudheli",
+        "Dh.Maaenboodhoo",
+        "Dh.Kudahuvadhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "08:10:00",
+          "island_label": "Dh.Meedhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "08:30:00",
+          "island_label": "Dh.Bandidhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "08:45:00",
+          "island_label": "Dh.Rinbudhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "09:05:00",
+          "island_label": "Dh.Hulhudheli"
+        },
+        {
+          "sequence": 5,
+          "time": "09:45:00",
+          "island_label": "Dh.Maaenboodhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "10:05:00",
+          "island_label": "Dh.Kudahuvadhoo"
+        },
+        {
+          "sequence": 7,
+          "time": "14:05:00",
+          "island_label": "Dh.Kudahuvadhoo"
+        },
+        {
+          "sequence": 8,
+          "time": "14:20:00",
+          "island_label": "Dh.Maaenboodhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "15:00:00",
+          "island_label": "Dh.Hulhudheli"
+        },
+        {
+          "sequence": 10,
+          "time": "15:20:00",
+          "island_label": "Dh.Rinbudhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "15:40:00",
+          "island_label": "Dh.Bandidhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "16:00:00",
+          "island_label": "Dh.Meedhoo"
+        }
+      ],
+      "displayed_timetable": "08:10:00 Dh.Meedhoo 20 mins 08:30:00 Dh.Bandidhoo 15 mins 08:45:00 Dh.Rinbudhoo 20 mins 09:05:00 Dh.Hulhudheli 40 mins 09:45:00 Dh.Maaenboodhoo 20 mins 10:05:00 Dh.Kudahuvadhoo 14:05:00 Dh.Kudahuvadhoo 15 mins 14:20:00 Dh.Maaenboodhoo 40 mins 15:00:00 Dh.Hulhudheli 20 mins 15:20:00 Dh.Rinbudhoo 20 mins 15:40:00 Dh.Bandidhoo 20 mins 16:00:00 Dh.Meedhoo"
+    },
+    {
+      "route_code": "Z4H1",
+      "title": "Dh. Meedhoo - F. Nilandhoo(Z4H1)",
+      "zone": 4,
+      "listed_islands": [
+        "Dh.Meedhoo",
+        "F.Nilandhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:40:00",
+          "island_label": "F.Nilandhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "08:05:00",
+          "island_label": "Dh.Meedhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "16:05:00",
+          "island_label": "Dh.Meedhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "16:30:00",
+          "island_label": "F.Nilandhoo"
+        }
+      ],
+      "displayed_timetable": "07:40:00 F.Nilandhoo 25 mins 08:05:00 Dh.Meedhoo 16:05:00 Dh.Meedhoo 25 mins 16:30:00 F.Nilandhoo"
+    },
+    {
+      "route_code": "Z4R16",
+      "title": "L. Isdhoo - L. Fonadhoo(Z4R16)",
+      "zone": 4,
+      "listed_islands": [
+        "L.Isdhoo",
+        "L.Kalaidhoo",
+        "L.Dhanbidhoo",
+        "L.Maabaidhoo",
+        "L.Mundoo",
+        "L.Gan",
+        "L.Fonadhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:00:00",
+          "island_label": "L.Isdhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "07:05:00",
+          "island_label": "L.Kalaidhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "07:15:00",
+          "island_label": "L.Dhanbidhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "07:30:00",
+          "island_label": "L.Maabaidhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "07:40:00",
+          "island_label": "L.Mundoo"
+        },
+        {
+          "sequence": 6,
+          "time": "08:00:00",
+          "island_label": "L.Gan"
+        },
+        {
+          "sequence": 7,
+          "time": "08:25:00",
+          "island_label": "L.Fonadhoo"
+        },
+        {
+          "sequence": 8,
+          "time": "15:00:00",
+          "island_label": "L.Fonadhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "15:20:00",
+          "island_label": "L.Gan"
+        },
+        {
+          "sequence": 10,
+          "time": "15:40:00",
+          "island_label": "L.Mundoo"
+        },
+        {
+          "sequence": 11,
+          "time": "15:50:00",
+          "island_label": "L.Maabaidhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "16:05:00",
+          "island_label": "L.Dhanbidhoo"
+        },
+        {
+          "sequence": 13,
+          "time": "16:15:00",
+          "island_label": "L.Kalaidhoo"
+        },
+        {
+          "sequence": 14,
+          "time": "16:25:00",
+          "island_label": "L.Isdhoo"
+        }
+      ],
+      "displayed_timetable": "07:00:00 L.Isdhoo 5 mins 07:05:00 L.Kalaidhoo 10 mins 07:15:00 L.Dhanbidhoo 15 mins 07:30:00 L.Maabaidhoo 10 mins 07:40:00 L.Mundoo 20 mins 08:00:00 L.Gan 25 mins 08:25:00 L.Fonadhoo 15:00:00 L.Fonadhoo 20 mins 15:20:00 L.Gan 20 mins 15:40:00 L.Mundoo 10 mins 15:50:00 L.Maabaidhoo 15 mins 16:05:00 L.Dhanbidhoo 10 mins 16:15:00 L.Kalaidhoo 10 mins 16:25:00 L.Isdhoo"
+    },
+    {
+      "route_code": "Z2R8",
+      "title": "LH.Hinnavaru - LH.Naifaru(Z2R8)",
+      "zone": 2,
+      "listed_islands": [
+        "Lh.Hinnavaru",
+        "Lh.Madivaru",
+        "Lh.Naifaru"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:45:00",
+          "island_label": "Lh.Hinnavaru"
+        },
+        {
+          "sequence": 2,
+          "time": "07:55:00",
+          "island_label": "Lh.Madivaru"
+        },
+        {
+          "sequence": 3,
+          "time": "08:05:00",
+          "island_label": "Lh.Naifaru"
+        },
+        {
+          "sequence": 4,
+          "time": "11:15:00",
+          "island_label": "Lh.Naifaru"
+        },
+        {
+          "sequence": 5,
+          "time": "11:20:00",
+          "island_label": "Lh.Madivaru"
+        },
+        {
+          "sequence": 6,
+          "time": "11:35:00",
+          "island_label": "Lh.Hinnavaru"
+        },
+        {
+          "sequence": 7,
+          "time": "11:40:00",
+          "island_label": "Lh.Hinnavaru"
+        },
+        {
+          "sequence": 8,
+          "time": "11:50:00",
+          "island_label": "Lh.Madivaru"
+        },
+        {
+          "sequence": 9,
+          "time": "12:00:00",
+          "island_label": "Lh.Naifaru"
+        }
+      ],
+      "displayed_timetable": "07:45:00 Lh.Hinnavaru 10 mins 07:55:00 Lh.Madivaru 10 mins 08:05:00 Lh.Naifaru 11:15:00 Lh.Naifaru 5 mins 11:20:00 Lh.Madivaru 15 mins 11:35:00 Lh.Hinnavaru 11:40:00 Lh.Hinnavaru 10 mins 11:50:00 Lh.Madivaru 10 mins 12:00:00 Lh.Naifaru"
+    },
+    {
+      "route_code": "Z4R7",
+      "title": "F. Nilandhoo - F. Feeali(Z4R7)",
+      "zone": 4,
+      "listed_islands": [
+        "F.Nilandhoo",
+        "F.Dharanboodhoo",
+        "F.Magoodhoo",
+        "F.Bilehdhoo",
+        "F.Feeali"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:30:00",
+          "island_label": "F.Feeali"
+        },
+        {
+          "sequence": 2,
+          "time": "06:55:00",
+          "island_label": "F.Bilehdhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "07:10:00",
+          "island_label": "F.Magoodhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "07:25:00",
+          "island_label": "F.Dharanboodhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "07:35:00",
+          "island_label": "F.Nilandhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "16:35:00",
+          "island_label": "F.Nilandhoo"
+        },
+        {
+          "sequence": 7,
+          "time": "16:40:00",
+          "island_label": "F.Dharanboodhoo"
+        },
+        {
+          "sequence": 8,
+          "time": "16:55:00",
+          "island_label": "F.Magoodhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "17:10:00",
+          "island_label": "F.Bilehdhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "17:40:00",
+          "island_label": "F.Feeali"
+        }
+      ],
+      "displayed_timetable": "06:30:00 F.Feeali 25 mins 06:55:00 F.Bilehdhoo 15 mins 07:10:00 F.Magoodhoo 15 mins 07:25:00 F.Dharanboodhoo 10 mins 07:35:00 F.Nilandhoo 16:35:00 F.Nilandhoo 5 mins 16:40:00 F.Dharanboodhoo 15 mins 16:55:00 F.Magoodhoo 15 mins 17:10:00 F.Bilehdhoo 30 mins 17:40:00 F.Feeali"
+    },
+    {
+      "route_code": "Z4R1",
+      "title": "Th. Buruni - Th. Veymandoo(Z4R1)",
+      "zone": 4,
+      "listed_islands": [
+        "Th.Buruni",
+        "Th.Vilufushi",
+        "Th.Madifushi",
+        "Th.Dhiyamigili",
+        "Th.Guraidhoo",
+        "Th.Veymandoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:15:00",
+          "island_label": "Th.Buruni"
+        },
+        {
+          "sequence": 2,
+          "time": "06:50:00",
+          "island_label": "Th.Vilufushi"
+        },
+        {
+          "sequence": 3,
+          "time": "07:20:00",
+          "island_label": "Th.Madifushi"
+        },
+        {
+          "sequence": 4,
+          "time": "07:30:00",
+          "island_label": "Th.Dhiyamigili"
+        },
+        {
+          "sequence": 5,
+          "time": "07:40:00",
+          "island_label": "Th.Guraidhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "08:30:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 7,
+          "time": "14:30:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 8,
+          "time": "15:15:00",
+          "island_label": "Th.Guraidhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "15:25:00",
+          "island_label": "Th.Dhiyamigili"
+        },
+        {
+          "sequence": 10,
+          "time": "15:35:00",
+          "island_label": "Th.Madifushi"
+        },
+        {
+          "sequence": 11,
+          "time": "16:05:00",
+          "island_label": "Th.Vilufushi"
+        },
+        {
+          "sequence": 12,
+          "time": "16:45:00",
+          "island_label": "Th.Buruni"
+        }
+      ],
+      "displayed_timetable": "06:15:00 Th.Buruni 35 mins 06:50:00 Th.Vilufushi 30 mins 07:20:00 Th.Madifushi 10 mins 07:30:00 Th.Dhiyamigili 10 mins 07:40:00 Th.Guraidhoo 50 mins 08:30:00 Th.Veymandoo 14:30:00 Th.Veymandoo 45 mins 15:15:00 Th.Guraidhoo 10 mins 15:25:00 Th.Dhiyamigili 10 mins 15:35:00 Th.Madifushi 30 mins 16:05:00 Th.Vilufushi 40 mins 16:45:00 Th.Buruni"
+    },
+    {
+      "route_code": "Z2R1",
+      "title": "N.Manadhoo - N.Henbadhoo(Z2R1)",
+      "zone": 2,
+      "listed_islands": [
+        "N.Manadhoo",
+        "N.Maafaru",
+        "N.Landhoo",
+        "N.Maalhendhoo",
+        "N.Kendhikulhudhoo",
+        "N.Henbadhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:00:00",
+          "island_label": "N.Henbadhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "07:10:00",
+          "island_label": "N.Kendhikulhudhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "07:25:00",
+          "island_label": "N.Maalhendhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "07:35:00",
+          "island_label": "N.Landhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "07:55:00",
+          "island_label": "N.Maafaru"
+        },
+        {
+          "sequence": 6,
+          "time": "08:15:00",
+          "island_label": "N.Manadhoo"
+        },
+        {
+          "sequence": 7,
+          "time": "14:00:00",
+          "island_label": "N.Manadhoo"
+        },
+        {
+          "sequence": 8,
+          "time": "14:15:00",
+          "island_label": "N.Maafaru"
+        },
+        {
+          "sequence": 9,
+          "time": "14:35:00",
+          "island_label": "N.Landhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "14:45:00",
+          "island_label": "N.Maalhendhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "15:00:00",
+          "island_label": "N.Kendhikulhudhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "15:15:00",
+          "island_label": "N.Henbadhoo"
+        }
+      ],
+      "displayed_timetable": "07:00:00 N.Henbadhoo 10 mins 07:10:00 N.Kendhikulhudhoo 15 mins 07:25:00 N.Maalhendhoo 10 mins 07:35:00 N.Landhoo 20 mins 07:55:00 N.Maafaru 20 mins 08:15:00 N.Manadhoo 14:00:00 N.Manadhoo 15 mins 14:15:00 N.Maafaru 20 mins 14:35:00 N.Landhoo 10 mins 14:45:00 N.Maalhendhoo 15 mins 15:00:00 N.Kendhikulhudhoo 15 mins 15:15:00 N.Henbadhoo"
+    },
+    {
+      "route_code": "Z5R6",
+      "title": "Gdh.Vaadhoo - Gdh.Thinadhoo(Z5R6)",
+      "zone": 5,
+      "listed_islands": [
+        "Value: 3",
+        "Gdh.Vaadhoo",
+        "Gdh.Faresmaathoda",
+        "Gdh.Fiyori",
+        "Gdh.Rathafandhoo",
+        "Gdh.Nadella",
+        "Gdh.Hon'dehdhoo",
+        "Gdh.Madaveli",
+        "Gdh.Kaadehdhoo",
+        "Gdh.Thinadhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:20:00",
+          "island_label": "Gdh.Vaadhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "06:40:00",
+          "island_label": "Gdh.Faresmaathoda"
+        },
+        {
+          "sequence": 3,
+          "time": "07:00:00",
+          "island_label": "Gdh.Fiyori"
+        },
+        {
+          "sequence": 4,
+          "time": "07:20:00",
+          "island_label": "Gdh.Rathafandhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "07:45:00",
+          "island_label": "Gdh.Nadella"
+        },
+        {
+          "sequence": 6,
+          "time": "08:20:00",
+          "island_label": "Gdh.Hon'dehdhoo"
+        },
+        {
+          "sequence": 7,
+          "time": "08:35:00",
+          "island_label": "Gdh.Madaveli"
+        },
+        {
+          "sequence": 8,
+          "time": "08:50:00",
+          "island_label": "Gdh.Kaadehdhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "09:10:00",
+          "island_label": "Gdh.Thinadhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "15:15:00",
+          "island_label": "Gdh.Thinadhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "15:30:00",
+          "island_label": "Gdh.Kaadehdhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "15:45:00",
+          "island_label": "Gdh.Madaveli"
+        },
+        {
+          "sequence": 13,
+          "time": "16:00:00",
+          "island_label": "Gdh.Hon'dehdhoo"
+        },
+        {
+          "sequence": 14,
+          "time": "16:35:00",
+          "island_label": "Gdh.Nadella"
+        },
+        {
+          "sequence": 15,
+          "time": "17:00:00",
+          "island_label": "Gdh.Rathafandhoo"
+        },
+        {
+          "sequence": 16,
+          "time": "17:20:00",
+          "island_label": "Gdh.Fiyori"
+        },
+        {
+          "sequence": 17,
+          "time": "17:40:00",
+          "island_label": "Gdh.Faresmaathoda"
+        },
+        {
+          "sequence": 18,
+          "time": "18:05:00",
+          "island_label": "Gdh.Vaadhoo"
+        }
+      ],
+      "displayed_timetable": "06:20:00 Gdh.Vaadhoo 20 mins 06:40:00 Gdh.Faresmaathoda 20 mins 07:00:00 Gdh.Fiyori 20 mins 07:20:00 Gdh.Rathafandhoo 25 mins 07:45:00 Gdh.Nadella 35 mins 08:20:00 Gdh.Hon'dehdhoo 15 mins 08:35:00 Gdh.Madaveli 15 mins 08:50:00 Gdh.Kaadehdhoo 20 mins 09:10:00 Gdh.Thinadhoo 15:15:00 Gdh.Thinadhoo 15 mins 15:30:00 Gdh.Kaadehdhoo 15 mins 15:45:00 Gdh.Madaveli 15 mins 16:00:00 Gdh.Hon'dehdhoo 35 mins 16:35:00 Gdh.Nadella 25 mins 17:00:00 Gdh.Rathafandhoo 20 mins 17:20:00 Gdh.Fiyori 20 mins 17:40:00 Gdh.Faresmaathoda 25 mins 18:05:00 Gdh.Vaadhoo"
+    },
+    {
+      "route_code": "Z2R7",
+      "title": "LH.Hinnavaru - LH.Olhuvelifushi(Z2R7)",
+      "zone": 2,
+      "listed_islands": [
+        "Lh.Hinnavaru",
+        "Lh.Felivaru",
+        "Lh.Madivaru",
+        "Lh.Naifaru",
+        "Lh.Kurendhoo",
+        "Lh.Olhuvelifushi"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "16:30:00",
+          "island_label": "Lh.Hinnavaru"
+        },
+        {
+          "sequence": 2,
+          "time": "16:35:00",
+          "island_label": "Lh.Felivaru"
+        },
+        {
+          "sequence": 3,
+          "time": "16:45:00",
+          "island_label": "Lh.Madivaru"
+        },
+        {
+          "sequence": 4,
+          "time": "16:55:00",
+          "island_label": "Lh.Naifaru"
+        },
+        {
+          "sequence": 5,
+          "time": "17:25:00",
+          "island_label": "Lh.Kurendhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "17:55:00",
+          "island_label": "Lh.Olhuvelifushi"
+        }
+      ],
+      "displayed_timetable": "16:30:00 Lh.Hinnavaru 5 mins 16:35:00 Lh.Felivaru 10 mins 16:45:00 Lh.Madivaru 10 mins 16:55:00 Lh.Naifaru 30 mins 17:25:00 Lh.Kurendhoo 30 mins 17:55:00 Lh.Olhuvelifushi"
+    },
+    {
+      "route_code": "Z4R17",
+      "title": "L. Maavah - L. Gan(Z4R17)",
+      "zone": 4,
+      "listed_islands": [
+        "L.Maavah",
+        "L.Kunahandhoo",
+        "L.Hithadhoo",
+        "L.Maamendhoo",
+        "L.Fonadhoo",
+        "L.Gan"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:00:00",
+          "island_label": "L.Maavah"
+        },
+        {
+          "sequence": 2,
+          "time": "07:25:00",
+          "island_label": "L.Kunahandhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "07:35:00",
+          "island_label": "L.Hithadhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "07:45:00",
+          "island_label": "L.Maamendhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "08:15:00",
+          "island_label": "L.Fonadhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "08:40:00",
+          "island_label": "L.Gan"
+        },
+        {
+          "sequence": 7,
+          "time": "15:10:00",
+          "island_label": "L.Gan"
+        },
+        {
+          "sequence": 8,
+          "time": "15:30:00",
+          "island_label": "L.Fonadhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "16:00:00",
+          "island_label": "L.Maamendhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "16:10:00",
+          "island_label": "L.Hithadhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "16:20:00",
+          "island_label": "L.Kunahandhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "16:50:00",
+          "island_label": "L.Maavah"
+        }
+      ],
+      "displayed_timetable": "07:00:00 L.Maavah 25 mins 07:25:00 L.Kunahandhoo 10 mins 07:35:00 L.Hithadhoo 10 mins 07:45:00 L.Maamendhoo 30 mins 08:15:00 L.Fonadhoo 25 mins 08:40:00 L.Gan 15:10:00 L.Gan 20 mins 15:30:00 L.Fonadhoo 30 mins 16:00:00 L.Maamendhoo 10 mins 16:10:00 L.Hithadhoo 10 mins 16:20:00 L.Kunahandhoo 30 mins 16:50:00 L.Maavah"
+    },
+    {
+      "route_code": "Z2R18",
+      "title": "B.Eydhafushi - B.Dharavandhoo(Z2R18)",
+      "zone": 2,
+      "listed_islands": [
+        "B.Eydhafushi",
+        "B.Maalhos",
+        "B.Dharavandhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "08:10:00",
+          "island_label": "B.Eydhafushi"
+        },
+        {
+          "sequence": 2,
+          "time": "08:20:00",
+          "island_label": "B.Maalhos"
+        },
+        {
+          "sequence": 3,
+          "time": "08:35:00",
+          "island_label": "B.Dharavandhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "08:40:00",
+          "island_label": "B.Dharavandhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "08:50:00",
+          "island_label": "B.Maalhos"
+        },
+        {
+          "sequence": 6,
+          "time": "09:05:00",
+          "island_label": "B.Eydhafushi"
+        },
+        {
+          "sequence": 7,
+          "time": "10:30:00",
+          "island_label": "B.Eydhafushi"
+        },
+        {
+          "sequence": 8,
+          "time": "10:40:00",
+          "island_label": "B.Maalhos"
+        },
+        {
+          "sequence": 9,
+          "time": "10:55:00",
+          "island_label": "B.Dharavandhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "15:05:00",
+          "island_label": "B.Dharavandhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "15:15:00",
+          "island_label": "B.Maalhos"
+        },
+        {
+          "sequence": 12,
+          "time": "15:30:00",
+          "island_label": "B.Eydhafushi"
+        }
+      ],
+      "displayed_timetable": "08:10:00 B.Eydhafushi 10 mins 08:20:00 B.Maalhos 15 mins 08:35:00 B.Dharavandhoo 08:40:00 B.Dharavandhoo 10 mins 08:50:00 B.Maalhos 15 mins 09:05:00 B.Eydhafushi 10:30:00 B.Eydhafushi 10 mins 10:40:00 B.Maalhos 15 mins 10:55:00 B.Dharavandhoo 15:05:00 B.Dharavandhoo 10 mins 15:15:00 B.Maalhos 15 mins 15:30:00 B.Eydhafushi"
+    },
+    {
+      "route_code": "Z5R7",
+      "title": "Gdh.Thinadhoo - Gdh.Kaadehdhoo(Z5R7)",
+      "zone": 5,
+      "listed_islands": [
+        "Gdh.Thinadhoo",
+        "Gdh.Kaadehdhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "11:30:00",
+          "island_label": "Gdh.Thinadhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "11:45:00",
+          "island_label": "Gdh.Kaadehdhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "13:30:00",
+          "island_label": "Gdh.Kaadehdhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "13:45:00",
+          "island_label": "Gdh.Thinadhoo"
+        }
+      ],
+      "displayed_timetable": "11:30:00 Gdh.Thinadhoo 15 mins 11:45:00 Gdh.Kaadehdhoo 13:30:00 Gdh.Kaadehdhoo 15 mins 13:45:00 Gdh.Thinadhoo"
+    },
+    {
+      "route_code": "Z5R3",
+      "title": "Ga.Kanduhulhudhoo - Ga.Villingili(Z5R3)",
+      "zone": 5,
+      "listed_islands": [
+        "Ga.Kanduhulhudhoo",
+        "Ga.Gemanafushi",
+        "Ga.Kondey",
+        "Ga.Kooddoo",
+        "Ga.Villingili"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:00:00",
+          "island_label": "Ga.Kanduhulhudhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "06:20:00",
+          "island_label": "Ga.Gemanafushi"
+        },
+        {
+          "sequence": 3,
+          "time": "06:40:00",
+          "island_label": "Ga.Kondey"
+        },
+        {
+          "sequence": 4,
+          "time": "07:35:00",
+          "island_label": "Ga.Kooddoo"
+        },
+        {
+          "sequence": 5,
+          "time": "07:50:00",
+          "island_label": "Ga.Villingili"
+        },
+        {
+          "sequence": 6,
+          "time": "16:45:00",
+          "island_label": "Ga.Villingili"
+        },
+        {
+          "sequence": 7,
+          "time": "16:55:00",
+          "island_label": "Ga.Kooddoo"
+        },
+        {
+          "sequence": 8,
+          "time": "17:50:00",
+          "island_label": "Ga.Kondey"
+        },
+        {
+          "sequence": 9,
+          "time": "18:10:00",
+          "island_label": "Ga.Gemanafushi"
+        },
+        {
+          "sequence": 10,
+          "time": "18:35:00",
+          "island_label": "Ga.Kanduhulhudhoo"
+        }
+      ],
+      "displayed_timetable": "06:00:00 Ga.Kanduhulhudhoo 20 mins 06:20:00 Ga.Gemanafushi 20 mins 06:40:00 Ga.Kondey 55 mins 07:35:00 Ga.Kooddoo 15 mins 07:50:00 Ga.Villingili 16:45:00 Ga.Villingili 10 mins 16:55:00 Ga.Kooddoo 55 mins 17:50:00 Ga.Kondey 20 mins 18:10:00 Ga.Gemanafushi 25 mins 18:35:00 Ga.Kanduhulhudhoo"
+    },
+    {
+      "route_code": "Z5R10",
+      "title": "Gn.Fuvahmulah - Gdh.Vaadhoo(Z5R10)",
+      "zone": 5,
+      "listed_islands": [
+        "Gn.Fuvahmulah",
+        "Gdh.Faresmaathoda",
+        "Gdh.Vaadhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:00:00",
+          "island_label": "Gn.Fuvahmulah"
+        },
+        {
+          "sequence": 2,
+          "time": "07:25:00",
+          "island_label": "Gdh.Faresmaathoda"
+        },
+        {
+          "sequence": 3,
+          "time": "07:55:00",
+          "island_label": "Gdh.Vaadhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "08:10:00",
+          "island_label": "Gdh.Vaadhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "08:30:00",
+          "island_label": "Gdh.Faresmaathoda"
+        },
+        {
+          "sequence": 6,
+          "time": "10:10:00",
+          "island_label": "Gn.Fuvahmulah"
+        },
+        {
+          "sequence": 7,
+          "time": "14:00:00",
+          "island_label": "Gn.Fuvahmulah"
+        },
+        {
+          "sequence": 8,
+          "time": "15:25:00",
+          "island_label": "Gdh.Faresmaathoda"
+        },
+        {
+          "sequence": 9,
+          "time": "15:55:00",
+          "island_label": "Gdh.Vaadhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "16:10:00",
+          "island_label": "Gdh.Vaadhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "16:30:00",
+          "island_label": "Gdh.Faresmaathoda"
+        },
+        {
+          "sequence": 12,
+          "time": "18:10:00",
+          "island_label": "Gn.Fuvahmulah"
+        }
+      ],
+      "displayed_timetable": "06:00:00 Gn.Fuvahmulah 85 mins 07:25:00 Gdh.Faresmaathoda 30 mins 07:55:00 Gdh.Vaadhoo 08:10:00 Gdh.Vaadhoo 20 mins 08:30:00 Gdh.Faresmaathoda 100 mins 10:10:00 Gn.Fuvahmulah 14:00:00 Gn.Fuvahmulah 85 mins 15:25:00 Gdh.Faresmaathoda 30 mins 15:55:00 Gdh.Vaadhoo 16:10:00 Gdh.Vaadhoo 20 mins 16:30:00 Gdh.Faresmaathoda 100 mins 18:10:00 Gn.Fuvahmulah"
+    },
+    {
+      "route_code": "Z6R2",
+      "title": "Gn.Fuvahmulah - S.Feydhoo(Z6R2)",
+      "zone": 6,
+      "listed_islands": [
+        "Gn.Fuvahmulah",
+        "S.Hulhumeedhoo",
+        "S.Feydhoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "07:00:00",
+          "island_label": "Gn.Fuvahmulah"
+        },
+        {
+          "sequence": 2,
+          "time": "08:00:00",
+          "island_label": "S.Hulhumeedhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "08:25:00",
+          "island_label": "S.Feydhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "10:00:00",
+          "island_label": "S.Feydhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "10:20:00",
+          "island_label": "S.Hulhumeedhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "11:25:00",
+          "island_label": "Gn.Fuvahmulah"
+        },
+        {
+          "sequence": 7,
+          "time": "11:00:00",
+          "island_label": "Gn.Fuvahmulah"
+        },
+        {
+          "sequence": 8,
+          "time": "12:00:00",
+          "island_label": "S.Hulhumeedhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "12:25:00",
+          "island_label": "S.Feydhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "16:00:00",
+          "island_label": "S.Feydhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "16:20:00",
+          "island_label": "S.Hulhumeedhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "17:25:00",
+          "island_label": "Gn.Fuvahmulah"
+        }
+      ],
+      "displayed_timetable": "07:00:00 Gn.Fuvahmulah 60 mins 08:00:00 S.Hulhumeedhoo 25 mins 08:25:00 S.Feydhoo 10:00:00 S.Feydhoo 20 mins 10:20:00 S.Hulhumeedhoo 65 mins 11:25:00 Gn.Fuvahmulah 11:00:00 Gn.Fuvahmulah 60 mins 12:00:00 S.Hulhumeedhoo 25 mins 12:25:00 S.Feydhoo 16:00:00 S.Feydhoo 20 mins 16:20:00 S.Hulhumeedhoo 65 mins 17:25:00 Gn.Fuvahmulah"
+    },
+    {
+      "route_code": "Z2R16",
+      "title": "B.Kendhoo - B.Eydhafushi(Z2R16)",
+      "zone": 2,
+      "listed_islands": [
+        "Value: 3",
+        "B.Kendhoo",
+        "B.Kudarikilu",
+        "B.Kamadhoo",
+        "B.Kihaadhoo",
+        "B.Dhonfanu",
+        "B.Dharavandhoo",
+        "B.Maalhos",
+        "B.Eydhafushi"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:15:00",
+          "island_label": "B.Kendhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "06:25:00",
+          "island_label": "B.Kudarikilu"
+        },
+        {
+          "sequence": 3,
+          "time": "06:45:00",
+          "island_label": "B.Kamadhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "07:05:00",
+          "island_label": "B.Kihaadhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "07:15:00",
+          "island_label": "B.Dhonfanu"
+        },
+        {
+          "sequence": 6,
+          "time": "07:30:00",
+          "island_label": "B.Dharavandhoo"
+        },
+        {
+          "sequence": 7,
+          "time": "07:45:00",
+          "island_label": "B.Maalhos"
+        },
+        {
+          "sequence": 8,
+          "time": "08:00:00",
+          "island_label": "B.Eydhafushi"
+        },
+        {
+          "sequence": 9,
+          "time": "15:45:00",
+          "island_label": "B.Eydhafushi"
+        },
+        {
+          "sequence": 10,
+          "time": "15:55:00",
+          "island_label": "B.Maalhos"
+        },
+        {
+          "sequence": 11,
+          "time": "16:10:00",
+          "island_label": "B.Dharavandhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "16:25:00",
+          "island_label": "B.Dhonfanu"
+        },
+        {
+          "sequence": 13,
+          "time": "16:35:00",
+          "island_label": "B.Kihaadhoo"
+        },
+        {
+          "sequence": 14,
+          "time": "16:55:00",
+          "island_label": "B.Kamadhoo"
+        },
+        {
+          "sequence": 15,
+          "time": "17:15:00",
+          "island_label": "B.Kudarikilu"
+        },
+        {
+          "sequence": 16,
+          "time": "17:30:00",
+          "island_label": "B.Kendhoo"
+        }
+      ],
+      "displayed_timetable": "06:15:00 B.Kendhoo 10 mins 06:25:00 B.Kudarikilu 20 mins 06:45:00 B.Kamadhoo 20 mins 07:05:00 B.Kihaadhoo 10 mins 07:15:00 B.Dhonfanu 15 mins 07:30:00 B.Dharavandhoo 15 mins 07:45:00 B.Maalhos 15 mins 08:00:00 B.Eydhafushi 15:45:00 B.Eydhafushi 10 mins 15:55:00 B.Maalhos 15 mins 16:10:00 B.Dharavandhoo 15 mins 16:25:00 B.Dhonfanu 10 mins 16:35:00 B.Kihaadhoo 20 mins 16:55:00 B.Kamadhoo 20 mins 17:15:00 B.Kudarikilu 15 mins 17:30:00 B.Kendhoo"
+    },
+    {
+      "route_code": "Z4R2",
+      "title": "Th. Kandoodhoo - Th. Veymandoo(Z4R2)",
+      "zone": 4,
+      "listed_islands": [
+        "Th.Kandoodhoo",
+        "Th.Vandhoo",
+        "Th.Hirilandhoo",
+        "Th.Omadhoo",
+        "Th.Kinbidhoo",
+        "Th.Veymandoo"
+      ],
+      "service_days": null,
+      "valid_from": null,
+      "valid_until": null,
+      "bookable_in_heyvalla": false,
+      "stop_times_display_order": [
+        {
+          "sequence": 1,
+          "time": "06:30:00",
+          "island_label": "Th.Kandoodhoo"
+        },
+        {
+          "sequence": 2,
+          "time": "06:40:00",
+          "island_label": "Th.Vandhoo"
+        },
+        {
+          "sequence": 3,
+          "time": "06:55:00",
+          "island_label": "Th.Hirilandhoo"
+        },
+        {
+          "sequence": 4,
+          "time": "07:25:00",
+          "island_label": "Th.Omadhoo"
+        },
+        {
+          "sequence": 5,
+          "time": "07:40:00",
+          "island_label": "Th.Kinbidhoo"
+        },
+        {
+          "sequence": 6,
+          "time": "07:50:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 7,
+          "time": "14:35:00",
+          "island_label": "Th.Veymandoo"
+        },
+        {
+          "sequence": 8,
+          "time": "14:40:00",
+          "island_label": "Th.Kinbidhoo"
+        },
+        {
+          "sequence": 9,
+          "time": "14:55:00",
+          "island_label": "Th.Omadhoo"
+        },
+        {
+          "sequence": 10,
+          "time": "15:25:00",
+          "island_label": "Th.Hirilandhoo"
+        },
+        {
+          "sequence": 11,
+          "time": "15:40:00",
+          "island_label": "Th.Vandhoo"
+        },
+        {
+          "sequence": 12,
+          "time": "15:55:00",
+          "island_label": "Th.Kandoodhoo"
+        }
+      ],
+      "displayed_timetable": "06:30:00 Th.Kandoodhoo 10 mins 06:40:00 Th.Vandhoo 15 mins 06:55:00 Th.Hirilandhoo 30 mins 07:25:00 Th.Omadhoo 15 mins 07:40:00 Th.Kinbidhoo 10 mins 07:50:00 Th.Veymandoo 14:35:00 Th.Veymandoo 5 mins 14:40:00 Th.Kinbidhoo 15 mins 14:55:00 Th.Omadhoo 30 mins 15:25:00 Th.Hirilandhoo 15 mins 15:40:00 Th.Vandhoo 15 mins 15:55:00 Th.Kandoodhoo"
+    }
+  ]
+}

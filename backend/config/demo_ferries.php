@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'capacity' => 12,
     'timezone' => 'Indian/Maldives',
     'transfer_minutes' => 20,
     'safety_minutes' => 30,

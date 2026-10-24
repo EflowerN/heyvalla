@@ -1,12 +1,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import BookingDesk, { type BookingChoice } from "./components/BookingDesk";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 
 const TransportMap = dynamic(() => import("./components/TransportMap"), { ssr: false, loading: () => <p className="py-6">Loading interactive map…</p> });
 
-type Sailing = { id: string; service: string; operator: string; departure_at: string; harbour_arrival_at: string; airport_arrival_at: string; connection_buffer_minutes: number; classification: "recommended" | "tight" | "too_late" | "cancelled" };
-type Result = { destination: string; destination_code: string; schedule_coverage: boolean; coverage_message: string | null; origin: string; flight_at: string; check_in_deadline_at: string; transfer_minutes: number | null; safety_minutes: number; sailings: Sailing[] };
+type Sailing = { available_seats: number; bookable: boolean; id: string; service: string; operator: string; departure_at: string; harbour_arrival_at: string; airport_arrival_at: string; connection_buffer_minutes: number; classification: "recommended" | "tight" | "too_late" | "cancelled" };
+type Result = { search: Record<string, string | number>; destination: string; destination_code: string; schedule_coverage: boolean; coverage_message: string | null; origin: string; flight_at: string; check_in_deadline_at: string; transfer_minutes: number | null; safety_minutes: number; sailings: Sailing[] };
 const labels = { recommended: "Meets arrival target", tight: "Tight connection", too_late: "Too late for check-in", cancelled: "Cancelled · unavailable" };
 const colors = { recommended: "bg-teal-100 text-teal-900", tight: "bg-amber-100 text-amber-900", too_late: "bg-rose-100 text-rose-900", cancelled: "bg-slate-200 text-slate-700" };
 function localTime(value: string) {
@@ -19,8 +21,12 @@ export default function Home() {
   const [island, setIsland] = useState("ld0205");
   const [islandFilter, setIslandFilter] = useState("");
   const [airport, setAirport] = useState("VRNT");
-  const filteredIslands = islands.filter(item => `${item.name} ${item.atoll}`.toLowerCase().includes(islandFilter.toLowerCase()));
-  const visibleIslands = filteredIslands.some(item => item.id === island) ? filteredIslands : [...islands.filter(item => item.id === island), ...filteredIslands];
+  const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/['’‘.]/g, "").trim();
+  const searchTerms = normalizeSearch(islandFilter).split(/\s+/).filter(Boolean);
+  const exactAtoll = islands.some(item => normalizeSearch(item.atoll) === normalizeSearch(islandFilter));
+  const filteredIslands = islands.filter(item => exactAtoll ? normalizeSearch(item.atoll) === normalizeSearch(islandFilter) : searchTerms.every(term => normalizeSearch(`${item.name} ${item.atoll} ${item.atoll === "MLE" ? "Male City" : "Atoll"} ${item.category === "resort" ? "resort tourism" : "inhabited"}`).includes(term)));
+  const visibleIslands = islands;
+  const [bookingChoice, setBookingChoice] = useState<BookingChoice | null>(null);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,18 +41,18 @@ export default function Home() {
   }, []);
 
   const selectIsland = useCallback((id: string) => {
-    setIsland(id); setIslandFilter(""); setResult(null); setError("");
-  }, []);
+    setIsland(id); setIslandFilter(""); setResult(null); setBookingChoice(null); setError("");
+  }, [setResult, setBookingChoice]);
   const selectAirport = useCallback((id: string) => {
-    setAirport(id); setResult(null); setError("");
-  }, []);
+    setAirport(id); setResult(null); setBookingChoice(null); setError("");
+  }, [setResult, setBookingChoice]);
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const query = new URLSearchParams();
     data.forEach((value, key) => query.set(key, String(value)));
-    setLoading(true); setError(""); setResult(null);
+    setLoading(true); setError(""); setResult(null); setBookingChoice(null);
     try {
       const response = await fetch(`/api/ferry-search?${query}`);
       const body = await response.json();
@@ -61,6 +67,8 @@ export default function Home() {
     <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-16">
       <header className="mb-10 flex items-center justify-between border-b border-slate-200 pb-6">
         <span className="text-xl font-bold tracking-tight text-teal-900">heyvalla<span className="text-teal-500">.</span></span>
+        <Link href="/greater-male-taxi" className="text-sm font-medium text-teal-800 underline">Greater Malé taxi fares</Link>
+        <Link href="/operator" className="text-sm font-medium text-teal-800 underline">Operator dashboard</Link>
         <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-900">Maldives · Demo</span>
       </header>
       <div className="mb-9 max-w-2xl"><p className="text-sm font-semibold uppercase tracking-widest text-teal-700">From your island to your flight</p>
@@ -74,14 +82,19 @@ export default function Home() {
           <h2 className="mb-5 text-xl font-semibold">Plan your connection</h2>
           <p aria-live="polite" className="mb-4 text-sm text-teal-800">Selected: {islands.find(item => item.id === island)?.name ?? "Loading…"} → {airports.find(item => item.id === airport)?.name ?? "Loading…"}</p>
           <label className="mb-4 block text-sm font-medium">Find an island or atoll
-            <input type="search" value={islandFilter} onChange={event => setIslandFilter(event.target.value)} placeholder="e.g. Guraidhoo or Thaa" className="mt-2 block w-full rounded-lg border border-slate-300 p-3" />
+            <input type="search" value={islandFilter} onChange={event => setIslandFilter(event.target.value)} placeholder="e.g. Guraidhoo or Thaa" autoComplete="off" aria-describedby="island-search-help" className="mt-2 block w-full rounded-lg border border-slate-300 p-3" />
           </label>
+          <div id="island-search-help" className="mb-4">
+            {islandFilter.trim() ? <>
+              <p role="status" className="mb-2 text-sm text-slate-600">{filteredIslands.length} matching islands. Select one below.</p>
+              {filteredIslands.length ? <ul aria-label="Matching islands" className="max-h-64 overflow-y-auto rounded-lg border border-slate-200 bg-white">{filteredIslands.map(item => <li key={item.id}><button type="button" disabled={loading} onClick={() => selectIsland(item.id)} className="block w-full border-b border-slate-100 px-3 py-3 text-left text-sm hover:bg-teal-50 focus:bg-teal-50"><span className="font-semibold">{item.name}</span><span className="ml-2 text-slate-500">{item.atoll === "MLE" ? "Malé City" : `${item.atoll} Atoll`}{item.category === "resort" ? " · Resort island" : " · Inhabited island"}</span></button></li>)}</ul> : <p className="text-sm text-slate-500">No islands found. Try a shorter name or an atoll name.</p>}
+            </> : <p className="text-xs text-slate-500">Type a name, then select a matching island. You can also choose from the full list below.</p>}
+          </div>
           <label className="mb-4 block text-sm font-medium">Departure island
             <select name="island" value={island} onChange={event => selectIsland(event.target.value)} required disabled={!islands.length || loading} className="mt-2 block w-full rounded-lg border border-slate-300 bg-white p-3">
               {!islands.length && <option value="">Loading islands…</option>}
               {[...new Set(visibleIslands.map(item => item.atoll))].sort().map(atoll => <optgroup key={atoll} label={atoll === "MLE" ? "Malé City" : `${atoll} Atoll`}>{visibleIslands.filter(item => item.atoll === atoll).map(item => <option key={item.id} value={item.id}>{item.name} · {item.atoll}{item.category === "resort" ? " · Resort island" : ""}</option>)}</optgroup>)}
             </select>
-            {islandFilter && <span className="mt-2 block text-xs font-normal text-slate-500">{filteredIslands.length} matches. Your current selection stays available.</span>}
           </label>
           {islandError && <p role="alert" className="mb-4 text-sm text-rose-800">{islandError}</p>}
           <label className="mb-4 block text-sm font-medium">Destination airport
@@ -97,6 +110,9 @@ export default function Home() {
           <button disabled={loading || !islands.length || !airports.length} className="w-full rounded-lg bg-teal-800 px-4 py-3 font-semibold text-white hover:bg-teal-900 disabled:opacity-50">{loading ? "Finding connections…" : "Find ferries"}</button>
         </form>
         <section aria-live="polite" aria-busy={loading}>
+          <BookingDesk choice={bookingChoice} onClose={() => setBookingChoice(null)} onBooked={() => {
+            if (result) fetch(`/api/ferry-search?${new URLSearchParams(Object.entries(result.search).map(([key, value]) => [key, String(value)]))}`).then(response => response.ok ? response.json() : null).then(data => { if (data) setResult(data); }).catch(() => {});
+          }} />
           {error && <p role="alert" className="rounded-xl border border-rose-200 bg-rose-50 p-5 text-rose-900">{error}</p>}
           {!result && !error && <div className="rounded-2xl border border-dashed border-slate-300 p-10 text-center"><h2 className="text-xl font-semibold">Your journey starts here</h2><p className="mt-3 leading-7 text-slate-500">Choose a flight date and search to compare demo ferries. Try Vilufushi (Thaa) to Thimarafushi with a 14:00 flight to see suitable, tight, late, and cancelled options.</p></div>}
           {result && <>
@@ -107,6 +123,7 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-semibold">{sailing.service} <span className="font-normal text-slate-500">· Demo ferry</span></h3><span className={`rounded-full px-3 py-1 text-xs font-semibold ${colors[sailing.classification]}`}>{labels[sailing.classification]}</span></div>
               <dl className="my-5 grid gap-4 text-sm sm:grid-cols-3">{[["Departs island", sailing.departure_at], ["Arrives harbour", sailing.harbour_arrival_at], ["Reaches airport", sailing.airport_arrival_at]].map(([label, value]) => <div key={label}><dt className="text-slate-500">{label}</dt><dd className="mt-1 font-semibold">{localTime(value)}</dd></div>)}</dl>
               <p className="border-t border-slate-100 pt-3 text-sm text-slate-600">{sailing.classification === "cancelled" ? "This simulated sailing is cancelled and cannot be used." : sailing.connection_buffer_minutes < 0 ? `Arrives ${Math.abs(sailing.connection_buffer_minutes)} minutes after your check-in target.` : `${sailing.connection_buffer_minutes} minutes before your check-in target.${sailing.classification === "tight" ? " Below the recommended safety margin." : " Includes the recommended safety margin."}`}</p>
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3"><span className="text-sm text-slate-600">{sailing.available_seats} demo seats remaining</span><button type="button" disabled={!sailing.bookable} onClick={() => setBookingChoice({ sailing_id: sailing.id, service: sailing.service, available_seats: sailing.available_seats, search: result.search })} className="rounded-lg bg-teal-800 px-4 py-2 text-sm font-semibold text-white disabled:bg-slate-200 disabled:text-slate-600">{sailing.bookable ? "Book demo seats" : sailing.available_seats === 0 && sailing.classification !== "cancelled" ? "Sold out" : "Not bookable for this flight"}</button></div>
             </article>)}</div>
             <p className="mt-5 text-xs leading-6 text-slate-500">Planning estimates only, not guaranteed connections. Search includes sailings arriving on the flight date, including departures the previous evening. Earlier-day arrival options are outside this demo search.</p>
           </>}

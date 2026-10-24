@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\DB;
 
 class DemoFerrySearch
 {
@@ -36,7 +37,12 @@ class DemoFerrySearch
                 $buffer = (int) $airportArrival->diffInMinutes($deadline, false);
                 $classification = $sailing['status'] === 'cancelled' ? 'cancelled'
                     : ($buffer < 0 ? 'too_late' : ($buffer < $safety ? 'tight' : 'recommended'));
+                $sailingId = $sailing['id'].'-'.$departure->toDateString();
+                $inventory = DB::table('demo_inventories')->where('sailing_id', $sailingId)->first();
+                $available = $inventory ? $inventory->capacity - $inventory->reserved : config('demo_ferries.capacity');
                 $results[] = [
+                    'available_seats' => $sailing['status'] === 'cancelled' ? 0 : $available,
+                    'bookable' => $classification === 'recommended' && $available > 0 && $departure->isFuture(),
                     'id' => $sailing['id'].'-'.$departure->toDateString(),
                     'service' => $sailing['id'],
                     'operator' => 'HeyValla Demo Ferries',
@@ -54,6 +60,7 @@ class DemoFerrySearch
 
         return [
             'demo' => true,
+            'search' => $input,
             'timezone' => $timezone,
             'origin' => $origin['name'].' · '.$origin['atoll'],
             'destination' => $airport['name'],

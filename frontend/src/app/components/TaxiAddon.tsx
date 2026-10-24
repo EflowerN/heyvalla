@@ -1,0 +1,23 @@
+"use client";
+import { useEffect, useState, type FormEvent } from "react";
+export type Taxi = { reference: string; status: string; version: number; passengers: number; bags: number; pickup_at: string; airport_arrival_at: string; price_minor: number | null; currency: string; quote_expires_at: string | null; operator_note: string | null; check_in_deadline_at: string | null };
+export function taxiTime(value: string) { return new Intl.DateTimeFormat("en-GB", { timeZone: "Indian/Maldives", dateStyle: "medium", timeStyle: "short" }).format(new Date(value)); }
+export default function TaxiAddon({ reference, seats, taxi, onUpdate }: { reference: string; seats: number; taxi: Taxi | null; onUpdate: () => void }) {
+  const [open, setOpen] = useState(false); const [busy, setBusy] = useState(false); const [error, setError] = useState("");
+  async function submit(event?: FormEvent<HTMLFormElement>) {
+    event?.preventDefault(); const fields = event ? new FormData(event.currentTarget) : null;
+    setBusy(true); setError("");
+    try {
+      const response = await fetch("/api/demo-taxis", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(taxi ? { action: "accept", reference: taxi.reference, version: taxi.version } : { booking_reference: reference, passengers: Number(fields?.get("passengers")), bags: Number(fields?.get("bags")) }) });
+      const data = await response.json(); if (!response.ok) throw new Error(data.errors ? Object.values(data.errors).flat().join(" ") : data.message);
+      setOpen(false); onUpdate();
+    } catch (error) { setError(error instanceof Error ? error.message : "Could not update taxi request."); } finally { setBusy(false); }
+  }
+  const [clock, setClock] = useState(() => Date.now());
+  useEffect(() => { const timer = setInterval(() => setClock(Date.now()), 1000); return () => clearInterval(timer); }, []);
+  const expired = taxi?.quote_expires_at ? new Date(taxi.quote_expires_at).getTime() <= clock : false;
+  return <section className="mt-4 border-t border-slate-200 pt-4"><h4 className="font-semibold">Airport taxi add-on · Demo</h4><p className="mt-1 text-xs leading-5 text-slate-500">Thimarafushi harbour → airport. One taxi, up to 4 passengers and 4 bags. Pickup assumes 5 minutes to disembark and a 15-minute drive.</p>
+    {error && <p role="alert" className="mt-2 text-rose-800">{error}</p>}
+    {taxi ? <div className="mt-3 space-y-2"><p className="font-medium">{taxi.reference} · {taxi.status === "confirmed" ? "Demo confirmed" : taxi.status === "quoted" && expired ? "Quote expired — ask operator to re-quote" : taxi.status === "requested" ? "Awaiting operator quote" : taxi.status}</p><p>{taxi.passengers} passengers · {taxi.bags} bags</p><p>Pickup: {taxiTime(taxi.pickup_at)} Maldives time<br />Estimated airport arrival: {taxiTime(taxi.airport_arrival_at)}</p>{!taxi.check_in_deadline_at && <p className="text-amber-900">Older booking: check-in target unavailable. Verify timing separately.</p>}{taxi.price_minor !== null && taxi.status !== "declined" && <p className="font-semibold">Demo quote: {(taxi.price_minor / 100).toFixed(2)} {taxi.currency}</p>}{taxi.operator_note && <p>Operator: {taxi.operator_note}</p>}{taxi.status === "quoted" && <><p className="text-xs">Quote expires {taxiTime(taxi.quote_expires_at!)} Maldives time. No money will be collected.</p><button disabled={busy || expired} onClick={() => submit()} className="rounded-lg bg-teal-800 px-4 py-2 font-medium text-white disabled:opacity-50">{busy ? "Confirming…" : "Accept quote — demo only"}</button></>}{taxi.status === "confirmed" && <p className="text-xs text-teal-800">Simulated operator confirmation only; no real driver assigned or payment taken.</p>}</div> : <><button onClick={() => setOpen(!open)} className="mt-3 font-semibold text-teal-800 underline">{open ? "Close taxi request" : "Request airport taxi"}</button>{open && <form onSubmit={submit} className="mt-3 space-y-3"><label className="block">Passengers<input name="passengers" type="number" min={1} max={Math.min(4, seats)} defaultValue={Math.min(4, seats)} required disabled={busy} className="mt-1 block w-full rounded border p-2" /></label><label className="block">Bags<input name="bags" type="number" min={0} max={4} defaultValue={1} required disabled={busy} className="mt-1 block w-full rounded border p-2" /></label><button disabled={busy} className="rounded-lg bg-teal-800 px-4 py-2 text-white disabled:opacity-50">{busy ? "Requesting…" : "Send demo taxi request"}</button><p className="text-xs text-slate-500">A request is not a confirmed taxi. Review the operator quote before accepting.</p></form>}</>}
+  </section>;
+}

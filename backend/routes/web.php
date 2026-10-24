@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FerrySearchController;
+use App\Http\Controllers\GreaterMaleFareController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,5 @@ Route::get('/api/health', function (): JsonResponse {
 
 Route::get('/api/v1/islands', [FerrySearchController::class, 'islands'])->name('api.islands');
 Route::get('/api/v1/ferry-search', [FerrySearchController::class, 'search'])->name('api.ferry-search');
+
+Route::get('/api/v1/greater-male-fares', [GreaterMaleFareController::class, 'index'])->name('api.greater-male-fares');

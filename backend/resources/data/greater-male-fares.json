@@ -1,0 +1,83 @@
+{
+  "source": "Organizer-provided Avas Ride release v1.0 / car_fare_matrix.csv",
+  "currency": "MVR",
+  "currency_confirmed_by": "User, 2026-10-24",
+  "valid_from": null,
+  "valid_until": null,
+  "zones": [
+    {
+      "id": "male",
+      "name": "Male"
+    },
+    {
+      "id": "hulhumale-phase-1",
+      "name": "Hulhumale Phase 1"
+    },
+    {
+      "id": "velana-airport",
+      "name": "Velana International Airport"
+    },
+    {
+      "id": "hulhumale-phase-2",
+      "name": "Hulhumale Phase 2"
+    },
+    {
+      "id": "seaplane",
+      "name": "Sea Plane"
+    },
+    {
+      "id": "domestic-terminal",
+      "name": "Domestic Terminal"
+    }
+  ],
+  "fares_minor": {
+    "male": {
+      "male": 3000,
+      "hulhumale-phase-1": 8500,
+      "velana-airport": 7000,
+      "hulhumale-phase-2": 10000,
+      "seaplane": 11000,
+      "domestic-terminal": 8000
+    },
+    "hulhumale-phase-1": {
+      "male": 8500,
+      "hulhumale-phase-1": 3000,
+      "velana-airport": 8000,
+      "hulhumale-phase-2": 4000,
+      "seaplane": 11000,
+      "domestic-terminal": 9000
+    },
+    "velana-airport": {
+      "male": 7000,
+      "hulhumale-phase-1": 8000,
+      "velana-airport": 3000,
+      "hulhumale-phase-2": 8500,
+      "seaplane": 6000,
+      "domestic-terminal": 3000
+    },
+    "hulhumale-phase-2": {
+      "male": 10000,
+      "hulhumale-phase-1": 4000,
+      "velana-airport": 8500,
+      "hulhumale-phase-2": 3000,
+      "seaplane": 12000,
+      "domestic-terminal": 9500
+    },
+    "seaplane": {
+      "male": 11000,
+      "hulhumale-phase-1": 11000,
+      "velana-airport": 6000,
+      "hulhumale-phase-2": 12000,
+      "seaplane": 3000,
+      "domestic-terminal": 7000
+    },
+    "domestic-terminal": {
+      "male": 8000,
+      "hulhumale-phase-1": 9000,
+      "velana-airport": 3000,
+      "hulhumale-phase-2": 9500,
+      "seaplane": 7000,
+      "domestic-terminal": 3000
+    }
+  }
+}
