@@ -1,14 +1,15 @@
+import type { FlightOption } from "./flights";
 import type { Result, Sailing } from "../app/ferry";
 
 export type Place = { id: string; name: string; latitude: number; longitude: number; atoll?: string; category?: string; iata?: string };
 export type Directory = { islands: Place[]; airports: Place[] };
-export type PlanInput = { origin: Place; destination: Place; departureAirport: Place; arrivalAirport: Place; flightArrival: string; address: string; passengers: number; taxiZone: string };
+export type PlanInput = { selectedFlight?: FlightOption | null; origin: Place; destination: Place; departureAirport: Place; arrivalAirport: Place; flightArrival: string; address: string; passengers: number; taxiZone: string };
 export type JourneyLeg = { id: string; mode: "sea" | "taxi" | "flight" | "land"; title: string; from: string; to: string; status: string; detail: string; departure: string | null; arrival: string | null; price: number | null; points: Place[] };
 export type FareEstimate = { amount_minor: number; currency: string; from: string; to: string };
-export type JourneyDetailsInput = { arrival_airport_id: string; destination_id: string; flight_arrival_at: string | null; address: string | null; taxi_zone: string | null };
+export type JourneyDetailsInput = { arrival_airport_id: string; destination_id: string; flight_arrival_at: string | null; address: string | null; taxi_zone: string | null; flight_offer_id?: string };
 
 export function journeyDetailsInput(plan: PlanInput): JourneyDetailsInput {
-  return { arrival_airport_id: plan.arrivalAirport.id, destination_id: plan.destination.id,
+  return { ...(plan.selectedFlight ? { flight_offer_id: plan.selectedFlight.id } : {}), arrival_airport_id: plan.arrivalAirport.id, destination_id: plan.destination.id,
     flight_arrival_at: plan.flightArrival || null, address: plan.address.trim() || null,
     taxi_zone: taxiDestinationZone(plan.destination, plan.arrivalAirport, plan.taxiZone) };
 }
@@ -60,9 +61,9 @@ export function buildJourney(input: PlanInput, result: Result, sailing: Sailing,
     departure: sailing.harbour_arrival_at, arrival: sailing.airport_arrival_at, price: null,
     points: harbour ? [harbour, input.departureAirport] : [],
   }, {
-    id: "flight", mode: "flight", title: "Your flight", from: input.departureAirport.name, to: input.arrivalAirport.name,
-    status: "Passenger-entered · not booked here",
-    detail: `Confirm the route and times with your airline. Check-in allowance and ${result.safety_minutes}-minute safety margin are planning assumptions. ${input.flightArrival ? "Arrival time entered by you; not verified." : "Arrival time is still needed to arrange your onward pickup."}`,
+    id: "flight", mode: "flight", title: input.selectedFlight ? `${input.selectedFlight.airline} ${input.selectedFlight.flight_number}` : "Your flight", from: input.departureAirport.name, to: input.arrivalAirport.name,
+    status: input.selectedFlight ? "Selected reference · book with Maldivian" : "Passenger-entered · not booked here",
+    detail: `${input.selectedFlight ? "Selected from a checked airline website snapshot. Not live availability. " : ""}Confirm the route and times with your airline. Check-in allowance and ${result.safety_minutes}-minute safety margin are planning assumptions. ${input.flightArrival ? "Arrival time entered by you; not verified." : "Arrival time is still needed to arrange your onward pickup."}`,
     departure: result.flight_at, arrival: input.flightArrival || null, price: null,
     points: [input.departureAirport, input.arrivalAirport],
   }];

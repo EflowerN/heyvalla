@@ -138,3 +138,16 @@ python scripts/import-reef-lagoon-outlines.py --reef /path/to/Reef.shp --lagoon 
 ```
 
 The script derives coordinate systems from the provided projection files and fails before replacing the output if records are missing, coordinates fall outside Maldives bounds, or converted polygons are invalid. Source counts and any repairs are printed and retained in snapshot metadata. Update the source register when refreshing. The client loads island and reef/lagoon files independently; a failed layer displays a warning while other available geometry and journey overlays remain usable. No marine-navigation claims are made by these visual layers.
+
+
+## Checked flight selection and Maldivian checkout
+
+`GET /api/v1/flights` (proxied by Next.js `/api/flights`) accepts canonical airport IDs, a Maldives-local date and `fare_profile=maldivian_adult|other`. `FlightCatalogue` reads the attributed JSON snapshot and returns exact-day options plus nearby future departures ranked by absolute day distance within 14 days. Missing coverage, older references and live inventory are separate states; no scheduled flights or prices are invented. Multi-passenger prices are not inferred by multiplication. The present sample covers only three TMF–MLE departures for one Maldivian adult; other travellers use the airline search.
+
+Selecting a flight sets departure date/time and arrival date/time in the planner. The passenger then searches ferry connections using those values. Manual edits that mismatch airport/time drop the airline reference. The reference price remains separate from transport subtotals. The actual flight can be too early for every demo ferry; the selection must not override connection safety checks.
+
+Saving a ferry journey submits only `journey_details.flight_offer_id`, not client fares. Laravel resolves the canonical reference and validates airports and both timestamps inside the booking transaction. Saved itineraries retain the flight number, fare basis, reference price and check time, while the flight status remains `external_not_booked` and its charged price remains unknown. Address-only edits preserve a matching reference; arrival/airport changes remove it. Existing manual journeys and booking idempotency are preserved.
+
+The checkout button opens `https://maldivian.aero/` in a new tab. Route/date instructions are displayed beside it; no stable supported prefill contract was established, so no session URL or guessed search endpoint is reused. No passenger data is sent by HeyValla. A live provider integration, quote repricing, booking confirmation callback and real ticket issuance are future work requiring approved access; opening airline checkout is never treated as booking confirmation.
+
+Refresh `backend/resources/data/maldivian-flights.json` only from visible official flight detail results (or a future approved API), preserving source URLs, observation time, local offsets, currency, passenger category, tax basis and stable IDs. Do not recycle an ID for a different flight. Update `docs/data-sources.md` and validate the search/persistence tests. The app has no automatic fare updater in this version.

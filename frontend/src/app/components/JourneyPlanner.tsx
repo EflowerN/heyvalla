@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { journeyDetailsInput, buildJourney, canBookForParty, taxiDestinationZone, validatePlan, type Directory, type FareEstimate, type Place, type PlanInput } from "@/lib/journey-plan";
+import FlightSearch from "./FlightSearch";
+import FlightReference from "./FlightReference";
+import { matchingFlight, type FlightOption } from "@/lib/flights";
 import JourneyStep from "./JourneyStep";
 import ModeIcon from "./ModeIcon";
 import { transportColors } from "@/lib/transport-colors";
@@ -30,6 +33,7 @@ export default function JourneyPlanner() {
   const [departureAirportId, setDepartureAirportId] = useState("VRNT");
   const [arrivalAirportId, setArrivalAirportId] = useState("VRMM");
   const [date, setDate] = useState("");
+  const [selectedFlight, setSelectedFlight] = useState<FlightOption | null>(null);
   const [time, setTime] = useState("14:00");
   const [arrivalDate, setArrivalDate] = useState("");
   const [arrivalTime, setArrivalTime] = useState("");
@@ -53,6 +57,8 @@ export default function JourneyPlanner() {
   const origin = directory.islands.find(place => place.id === originId) ?? null;
   const destinations = useMemo(() => [...directory.islands, ...directory.airports], [directory]);
   const destination = destinations.find(place => place.id === destinationId) ?? null;
+  const activeFlight = matchingFlight(selectedFlight, departureAirportId, destination?.iata ? destination.id : arrivalAirportId,
+    `${date}T${time}:00+05:00`, arrivalDate && arrivalTime ? `${arrivalDate}T${arrivalTime}:00+05:00` : "");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -97,7 +103,7 @@ export default function JourneyPlanner() {
     const arrivalAirport = destination?.iata ? destination : directory.airports.find(place => place.id === arrivalAirportId);
     if (!origin || !destination || !departureAirport || !arrivalAirport) { setError("Select a matching start and destination, and both flight airports."); return; }
     if (!!arrivalDate !== !!arrivalTime) { setError("Enter both arrival date and time, or leave both blank."); return; }
-    const input: PlanInput = { origin, destination, departureAirport, arrivalAirport, flightArrival: arrivalDate && arrivalTime ? `${arrivalDate}T${arrivalTime}:00+05:00` : "", address: address.trim(), passengers, taxiZone };
+    const input: PlanInput = { origin, destination, departureAirport, arrivalAirport, flightArrival: arrivalDate && arrivalTime ? `${arrivalDate}T${arrivalTime}:00+05:00` : "", address: address.trim(), passengers, taxiZone, selectedFlight: activeFlight };
     const validation = validatePlan(input, `${date}T${time}:00+05:00`);
     if (validation) { setError(validation); return; }
     void fetchConnections(new URLSearchParams({ island: origin.id, airport: departureAirport.id, flight_date: date, flight_time: time, check_in_minutes: checkIn }), input);
@@ -105,7 +111,13 @@ export default function JourneyPlanner() {
   // A booking may finish after the passenger changes the search. Its old callback
   // must not restore the previous journey over the new input/results.
   function refresh() { if (result && plan && activePlan.current === plan) void fetchConnections(new URLSearchParams(Object.entries(result.search).map(([key, value]) => [key, String(value)])), plan, true); }
+  function chooseFlight(offer: FlightOption) {
+    invalidate(); setSelectedFlight(offer); setDepartureAirportId(offer.from); setArrivalAirportId(offer.to);
+    setDate(offer.departure_at.slice(0, 10)); setTime(offer.departure_at.slice(11, 16));
+    setArrivalDate(offer.arrival_at.slice(0, 10)); setArrivalTime(offer.arrival_at.slice(11, 16));
+  }
   function demo() {
+    setSelectedFlight(null);
     invalidate(); setOriginId("ld0205"); setOriginText("Vilufushi"); setDestinationId("ld0591"); setDestinationText("Hulhumalé"); setDepartureAirportId("VRNT"); setArrivalAirportId("VRMM");
     const tomorrow = new Date(Date.now() + 86400000 + 5 * 3600000).toISOString().slice(0, 10);
     setDate(tomorrow); setTime("14:00"); setArrivalDate(""); setArrivalTime(""); setPassengers(1); setAddress(""); setCheckIn("60"); setTaxiZone("hulhumale-phase-1");
@@ -121,7 +133,7 @@ export default function JourneyPlanner() {
     <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">From your island to your doorstep</p>
     <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Your whole journey, in one place.</h1>
     <p className="mt-4 max-w-3xl leading-7 text-ocean/75">Connect your ferry, airport transfer, flight and onward ride. Start with two places, then add your flight details.</p>
-    <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights are entered by you; onward taxis are estimates, not reservations. No real tickets or payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
+    <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights can use checked Maldivian website references or your own details; airline checkout happens on Maldivian. Onward taxis are estimates. HeyValla does not issue real tickets or collect payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
     <form id="search" onSubmit={search} onChange={invalidate} className="tile scroll-mt-4 p-5 sm:p-7">
       <div className="grid gap-6 md:grid-cols-2">
         <LocationSearch id="journey-origin" label="Where are you?" places={directory.islands} value={originText} selected={origin} onChange={value => { invalidate(); setOriginText(value); setOriginId(""); }} onSelect={pickOrigin} disabled={!directory.islands.length} />
@@ -135,7 +147,7 @@ export default function JourneyPlanner() {
       </div>
       <details className="mt-5 rounded-2xl bg-sand p-4">
         <summary className="cursor-pointer font-medium">Flight details · {directory.airports.find(place => place.id === departureAirportId)?.iata ?? "…"} → {destination?.iata ?? directory.airports.find(place => place.id === arrivalAirportId)?.iata ?? "…"} · address & arrival time</summary>
-        <p className="mt-2 text-xs leading-5 text-ocean/65">These are your intended flight details, not a flight search. All times are Maldives time (UTC+5). Leave arrival blank if unknown.</p>
+        <p className="mt-2 text-xs leading-5 text-ocean/65">Choose the flight airports here, then search the checked flight options below. Manual edits to airports or times remove the selected airline reference. All times are Maldives time (UTC+5). Leave arrival blank if unknown.</p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <label className="text-sm">Flight from<select value={departureAirportId} onChange={event => setDepartureAirportId(event.target.value)} className={field}>{directory.airports.map(place => <option value={place.id} key={place.id}>{place.name} ({place.iata})</option>)}</select></label>
           <label className="text-sm">Flight to<select value={destination?.iata ? destination.id : arrivalAirportId} disabled={!!destination?.iata} onChange={event => setArrivalAirportId(event.target.value)} className={field}>{directory.airports.map(place => <option value={place.id} key={place.id}>{place.name} ({place.iata})</option>)}</select></label>
@@ -146,6 +158,7 @@ export default function JourneyPlanner() {
           {!destination?.iata && <label className="text-sm sm:col-span-2">Home, hotel or address note (optional)<input value={address} onChange={event => setAddress(event.target.value)} maxLength={160} placeholder="e.g. My home, Orchid Magu" className={field} /><span className="mt-1 block text-xs text-ocean/65">Saved privately in My itineraries when you book or request the ferry. No address lookup; the map uses the island location.</span></label>}
         </div>
       </details>
+      <FlightSearch key={`${departureAirportId}:${destination?.iata ? destination.id : arrivalAirportId}:${date}`} from={departureAirportId} to={destination?.iata ? destination.id : arrivalAirportId} date={date} passengers={passengers} selected={activeFlight} onSelect={chooseFlight} onClear={() => { invalidate(); setSelectedFlight(null); }} />
       <div className="mt-5 flex flex-wrap items-center gap-4"><button disabled={loading || !directory.islands.length || !origin || !destination} className="rounded-xl bg-lagoon px-6 py-3 font-semibold text-white disabled:opacity-50">{loading ? "Finding connections…" : "Find my journey"}</button><button type="button" onClick={demo} className="text-sm font-medium text-lagoon underline">Fill Thaa → Hulhumalé demo</button><span className="text-xs text-ocean/65">Demo flight time is illustrative; confirm your actual flight.</span></div>
     </form>
     {error && <p role="alert" className="mt-5 rounded-xl bg-rose-50 p-5 text-rose-900">{error}</p>}
@@ -165,9 +178,10 @@ export default function JourneyPlanner() {
                 <span className="mt-1 block font-semibold">{leg.title}</span><span className="mt-2 block text-sm">{leg.from} → {leg.to}</span>
                 <span className="mt-2 block text-xs leading-6">{leg.departure ? localTime(leg.departure) : "Pickup time not arranged"}{leg.arrival ? ` → ${localTime(leg.arrival)}` : ""}</span>
                 {leg.mode === "flight" && !leg.arrival && <span className="block text-xs leading-6">Flight arrival time still needed</span>}
-                <span className="mt-2 block text-xs font-medium">{leg.status}</span><span className="mt-2 inline-block rounded-full bg-sand px-3 py-1 text-sm font-semibold">{leg.price === null ? "Price not available" : `${money(leg.price)}${leg.mode === "taxi" ? " / vehicle · reference" : " for your party"}`}</span>
+                <span className="mt-2 block text-xs font-medium">{leg.status}</span><span className="mt-2 inline-block rounded-full bg-sand px-3 py-1 text-sm font-semibold">{leg.price === null ? (leg.mode === "flight" && plan?.selectedFlight ? "Confirm final fare with Maldivian" : "Price not available") : `${money(leg.price)}${leg.mode === "taxi" ? " / vehicle · reference" : " for your party"}`}</span>
                 {selectedLeg === leg.id && <span className="mt-3 block text-xs leading-6 text-ocean/75">{leg.detail}</span>}
               </button>
+              {leg.mode === "flight" && plan?.selectedFlight && <div className="mt-3"><FlightReference offer={plan.selectedFlight} /></div>}
               {leg.id === "airport-taxi" && <p className="my-3 rounded-2xl bg-coral/10 p-3 text-xs leading-6">Check-in target: {localTime(result.check_in_deadline_at)}.<br />{sailing.connection_buffer_minutes >= 0 ? `${sailing.connection_buffer_minutes} minutes before check-in` : `${Math.abs(sailing.connection_buffer_minutes)} minutes late for check-in`}. Target safety margin: {result.safety_minutes} minutes. Planning estimate only.</p>}
             </JourneyStep>)}</ol>
             {hasOnwardGap && <p role="status" className="mb-4 rounded-lg bg-coral/20 p-3 text-sm">The final connection is missing. This is an incomplete journey, not a through-bookable route.</p>}
@@ -187,7 +201,7 @@ export default function JourneyPlanner() {
       {!bookable ? <p role="status" className="rounded-lg bg-coral/20 p-4">This ferry cannot be booked for the selected party and flight. Choose another ferry or change your search.</p> : sailing.source === "provider" ? <SeatRequestForm key={sailing.id} journeyDetails={journeyDetailsInput(plan)} initialSeats={plan.passengers} sailing={{ id: sailing.provider_sailing_id!, version: sailing.version!, fare_minor: sailing.fare_minor ?? null, remaining_seats: sailing.available_seats }} flightContext={result.search} onSaved={refresh} /> : <button type="button" onClick={() => setChoice({ sailing_id: sailing.id, service: sailing.service, available_seats: sailing.available_seats, search: result.search, initial_seats: plan.passengers, journey_details: journeyDetailsInput(plan) })} className="rounded-xl bg-lagoon px-5 py-3 font-semibold text-white">Book demo ferry & save full journey</button>}
       <div className="mt-5"><BookingDesk choice={choice} onClose={() => setChoice(null)} onBooked={refresh} /></div>
     </div>}
-    <footer className="mt-8 text-xs leading-6 text-ocean/65">Data already in HeyValla: OneMap/CAA locations, fictional and provider-entered ferry schedules, organizer-provided Avas Ride matrix. No live airline feed, geocoding or road routing. <Link href="/journeys" className="text-lagoon underline">View saved booking itineraries</Link>.</footer>
+    <footer className="mt-8 text-xs leading-6 text-ocean/65">Data already in HeyValla: OneMap/CAA locations, fictional and provider-entered ferry schedules, organizer-provided Avas Ride matrix. Checked Maldivian fare references are available; there is no live airline feed, geocoding or road routing. <Link href="/journeys" className="text-lagoon underline">View saved booking itineraries</Link>.</footer>
     <Footer residential={directory.islands.filter(place => place.category === "residential").length} resorts={directory.islands.filter(place => place.category === "resort").length} airports={directory.airports.length} />
     <MobileNav resultCount={result ? result.sailings.filter(item => canBookForParty(item, plan?.passengers ?? 1)).length : null} />
   </main>;

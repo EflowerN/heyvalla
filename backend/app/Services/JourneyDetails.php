@@ -10,10 +10,11 @@ class JourneyDetails
     public static function rules(bool $required = false): array
     {
         return [
-            'journey_details' => [...($required ? [] : ['sometimes']), 'required', 'array:arrival_airport_id,destination_id,flight_arrival_at,address,taxi_zone'],
+            'journey_details' => [...($required ? [] : ['sometimes']), 'required', 'array:arrival_airport_id,destination_id,flight_arrival_at,address,taxi_zone,flight_offer_id'],
             'journey_details.arrival_airport_id' => ['required_with:journey_details', 'string', Rule::in(array_column(config('locations.airports'), 'id'))],
             'journey_details.destination_id' => ['required_with:journey_details', 'string', Rule::in(array_column([...config('locations.islands'), ...config('locations.airports')], 'id'))],
             'journey_details.flight_arrival_at' => ['nullable', 'date_format:Y-m-d\TH:i:sP'],
+            'journey_details.flight_offer_id' => ['nullable', 'string', 'max:100'],
             'journey_details.address' => ['nullable', 'string', 'max:160'],
             'journey_details.taxi_zone' => ['nullable', Rule::in(['male', 'hulhumale-phase-1', 'hulhumale-phase-2'])],
         ];
@@ -27,6 +28,7 @@ class JourneyDetails
 
         return hash('sha256', json_encode([
             'arrival_airport_id' => $input['arrival_airport_id'],
+            ...(! empty($input['flight_offer_id']) ? ['flight_offer_id' => $input['flight_offer_id']] : []),
             'destination_id' => $input['destination_id'],
             'flight_arrival_at' => empty($input['flight_arrival_at']) ? null : CarbonImmutable::parse($input['flight_arrival_at'])->utc()->toIso8601String(),
             'address' => trim($input['address'] ?? ''),
@@ -44,6 +46,7 @@ class JourneyDetails
         abort_if($originId && $destination['id'] === $originId, 422, 'Choose a final destination different from your starting island.');
         $arrival = empty($input['flight_arrival_at']) ? null : CarbonImmutable::parse($input['flight_arrival_at']);
         abort_if($arrival && $arrival->lessThanOrEqualTo(CarbonImmutable::parse($flight['flight_at'])), 422, 'Flight arrival must be after departure; check the arrival date.');
+        $selectedFlight = empty($input['flight_offer_id']) ? null : app(FlightCatalogue::class)->selection($input['flight_offer_id'], $flight, $airport['id'], $arrival?->toIso8601String());
         $zone = null;
         if ($airport['id'] === 'VRMM' && $destination['id'] === 'ld0442') {
             $zone = 'male';
@@ -71,6 +74,7 @@ class JourneyDetails
             'destination' => array_intersect_key($destination, array_flip(['id', 'name', 'iata', 'atoll', 'category'])),
             'flight_arrival_at' => $arrival?->setTimezone('Indian/Maldives')->toIso8601String(),
             'address' => $address, 'taxi_zone' => $zone, 'onward_transfer' => $onward,
+            'selected_flight' => $selectedFlight,
             'source' => 'passenger_input', 'saved_at' => now()->toIso8601String(),
         ];
     }

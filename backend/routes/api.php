@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DemoBookingController;
 use App\Http\Controllers\DemoTaxiController;
+use App\Http\Controllers\FlightSearchController;
 use App\Http\Controllers\JourneyController;
 use App\Http\Controllers\ProviderAccountController;
 use App\Http\Controllers\ProviderBookingController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ProviderPublishingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('throttle:60,1')->group(function (): void {
+    Route::get('/v1/flights', [FlightSearchController::class, 'index']);
     Route::post('/v1/demo-taxis', [DemoTaxiController::class, 'store']);
     Route::get('/v1/journeys', [JourneyController::class, 'index']);
     Route::post('/v1/journeys', [JourneyController::class, 'flight']);

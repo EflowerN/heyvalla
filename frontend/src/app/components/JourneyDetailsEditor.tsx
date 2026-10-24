@@ -1,5 +1,6 @@
 "use client";
 
+import type { FlightOption } from "@/lib/flights";
 import { useState, type FormEvent } from "react";
 import type { Directory } from "@/lib/journey-plan";
 import { taxiDestinationZone } from "@/lib/journey-plan";
@@ -7,6 +8,7 @@ import { seatApi } from "./ProviderSeatRequests";
 import LocationSearch from "./LocationSearch";
 
 export type SavedJourneyDetails = {
+  selected_flight?: FlightOption | null;
   arrival_airport: { id: string; name: string; iata: string };
   destination: { id: string; name: string; atoll?: string; iata?: string };
   flight_arrival_at: string | null; address: string; taxi_zone: string | null; saved_at: string;
@@ -51,6 +53,7 @@ export default function JourneyDetailsEditor({ reference, version, details, onSa
     setBusy(true);
     try {
       await seatApi("/api/journeys", { reference, details_version: editVersion, journey_details: {
+        ...(details?.selected_flight && details.selected_flight.to === airport && Date.parse(details.selected_flight.arrival_at) === Date.parse(`${arrivalDate}T${arrivalTime}:00+05:00`) ? { flight_offer_id: details.selected_flight.id } : {}),
         arrival_airport_id: airport, destination_id: selected.id, address: address.trim() || null,
         flight_arrival_at: arrivalDate && arrivalTime ? `${arrivalDate}T${arrivalTime}:00+05:00` : null,
         taxi_zone: taxiDestinationZone(selected, arrivalAirport, zone),
@@ -61,7 +64,7 @@ export default function JourneyDetailsEditor({ reference, version, details, onSa
   }
   return <section className="mt-5 rounded-xl border border-ocean/15 p-4" aria-label="Edit saved journey details">
     {!open ? <button type="button" className="font-semibold text-lagoon underline" onClick={() => void edit()}>{details ? "Edit flight arrival, destination & address" : "Add flight destination & address"}</button> : <form onSubmit={save}>
-      <h3 className="font-semibold">Flight arrival and final destination</h3><p className="my-3 text-sm leading-6">Saved privately with your itinerary. This does not change your ferry booking, departure flight target or airport taxi. It does not book a flight or onward taxi. All times use Maldives time.</p>
+      <h3 className="font-semibold">Flight arrival and final destination</h3><p className="my-3 text-sm leading-6">Saved privately with your itinerary. This does not change your ferry booking, departure flight target or airport taxi. It does not book a flight or onward taxi. Changing the arrival airport or time removes the saved airline flight reference. All times use Maldives time.</p>
       <fieldset disabled={busy} className="grid gap-4 sm:grid-cols-2">
         <label className="text-sm">Flight arrival airport<select value={airport} onChange={event => setAirport(event.target.value)} className={field} required><option value="">Choose airport</option>{directory?.airports.filter(place => place.id !== "VRNT").map(place => <option key={place.id} value={place.id}>{place.name} ({place.iata})</option>)}</select></label>
         <LocationSearch id={`destination-${reference}`} label="Final destination" places={places} value={query} selected={selected} onChange={value => { setQuery(value); setDestination(""); }} onSelect={place => { setDestination(place.id); setQuery(place.name); if (place.iata) setAirport(place.id); }} disabled={!directory || busy} />

@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { matchingFlight } from '../src/lib/flights.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { journeyDetailsInput, buildJourney, canBookForParty, matchesLocation, taxiDestinationZone, validatePlan } from '../src/lib/journey-plan.ts';
@@ -65,4 +66,19 @@ test('search matches accents, atolls, airport codes and categories', () => {
   assert.equal(matchesLocation(island('ld0205'), 'thaa vilu'), true);
   assert.equal(matchesLocation(airport('VRMM'), 'mle'), true);
   assert.equal(matchesLocation(island('ld0205'), 'resort'), false);
+});
+
+test('editing airports or flight times drops a mismatched airline selection', () => {
+  const offer = { id: 'source-flight', from: 'VRNT', to: 'VRMM', departure_at: '2099-01-01T14:00:00+05:00', arrival_at: '2099-01-01T14:50:00+05:00', airline: 'Maldivian', flight_number: 'Q2 183', fare_minor: 146400 };
+  assert.equal(matchingFlight(offer, 'VRNT', 'VRMM', offer.departure_at, offer.arrival_at), offer);
+  assert.equal(matchingFlight(offer, 'VRNT', 'VRMM', '2099-01-01T14:01:00+05:00', offer.arrival_at), null);
+  assert.equal(matchingFlight(offer, 'VRNT', 'VRMG', offer.departure_at, offer.arrival_at), null);
+  assert.equal(matchingFlight(offer, 'VRNT', 'VRMM', offer.departure_at, ''), null);
+  const selected = { ...input, selectedFlight: offer, flightArrival: offer.arrival_at };
+  assert.equal(journeyDetailsInput(selected).flight_offer_id, 'source-flight');
+  assert.equal('fare_minor' in journeyDetailsInput(selected), false);
+  const leg = buildJourney(selected, result, sailing, directory, fare)[2];
+  assert.equal(leg.title, 'Maldivian Q2 183');
+  assert.equal(leg.price, null);
+  assert.match(leg.status, /book with Maldivian/);
 });
