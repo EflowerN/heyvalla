@@ -95,7 +95,7 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
   const airportCount = directory ? directory.airports.length : 0;
   const toggle = (on: boolean) => `wipe tap inline-flex items-center gap-2 rounded-full border bg-white px-3.5 py-1.5 text-sm font-medium transition-colors ${on ? "border-lagoon text-ocean" : "border-ocean/20 text-ocean/60"}`;
 
-  return <section className="mb-6 overflow-hidden rounded-2xl border border-ocean/15 bg-white shadow-sm" aria-label="Interactive Maldives transport map">
+  return <section className="mb-6 tile overflow-hidden" aria-label="Interactive Maldives transport map">
     <div className="p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div><h2 className="text-xl font-semibold">Explore the connections</h2>

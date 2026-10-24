@@ -6,12 +6,6 @@ import {
 } from "../ferry";
 
 // Status (left edge and buffer meter) is separate from transport-mode colour (timeline legs).
-const accent: Record<Classification, string> = {
-  recommended: "border-l-lagoon",
-  tight: "border-l-coral",
-  too_late: "border-l-rose-600",
-  cancelled: "border-l-ocean/30",
-};
 const meterFill: Record<Classification, string> = {
   recommended: "bg-lagoon",
   tight: "bg-coral",
@@ -102,7 +96,7 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
 
         <div className="space-y-4">
           {result.sailings.map(sailing => (
-            <article key={sailing.id} className={`card border-l-4 p-5 ${accent[sailing.classification]} ${sailing.classification === "cancelled" ? "bg-coconut/70" : ""}`}>
+            <article key={sailing.id} className={`tile p-5 ${sailing.classification === "cancelled" ? "opacity-80" : ""}`}>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <h3 className="flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold">{sailing.service}<span className="whitespace-nowrap rounded-full bg-sea px-2 py-1 text-xs font-normal text-white">Sea · Demo ferry</span></h3>
                 <span className={`pill ${pillStyles[sailing.classification]}`}><span aria-hidden="true">{symbols[sailing.classification]}</span>{labels[sailing.classification]}</span>

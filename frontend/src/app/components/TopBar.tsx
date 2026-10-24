@@ -10,12 +10,12 @@ const items = [
   { href: "/sailings", label: "Sailings" },
   { href: "/greater-male-taxi", label: "Taxi fares" },
   { href: "/buses", label: "RTL buses" },
-  { href: "/operator", label: "Operator" },
+  { href: "/providers", label: "Providers" },
 ];
 
 export default function TopBar() {
   const pathname = usePathname();
-  const activeIndex = Math.max(0, items.findIndex(item => item.href === "/" ? pathname === "/" : (pathname.startsWith(item.href) || (item.href === "/operator" && pathname.startsWith("/providers")))));
+  const activeIndex = Math.max(0, items.findIndex(item => item.href === "/" ? pathname === "/" : (pathname.startsWith(item.href))));
   const nav = useRef<HTMLElement>(null);
   const links = useRef<(HTMLAnchorElement | null)[]>([]);
   const [box, setBox] = useState<{ left: number; width: number } | null>(null);

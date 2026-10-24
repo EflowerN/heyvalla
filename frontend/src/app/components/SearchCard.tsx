@@ -31,8 +31,8 @@ export default function SearchCard({ islands, airports, island, airport, islandF
   const toCode = selectedAirport?.iata ?? "…";
 
   return (
-    <form onSubmit={onSubmit} className="rounded-2xl border border-ocean/15 bg-white p-6 shadow-sm">
-      <div className="-mx-6 -mt-6 mb-6 rounded-t-2xl bg-lagoon/10 px-6 py-5">
+    <form onSubmit={onSubmit} className="tile p-6">
+      <div className="-mx-6 -mt-6 mb-6 rounded-t-3xl bg-lagoon/10 px-6 py-5">
         <h2 className="text-xl font-semibold">Plan your connection</h2>
         <p className="sr-only" aria-live="polite">Selected: {fromName} → {toName}</p>
         <div aria-hidden="true" className="mt-4 flex items-center gap-3">
