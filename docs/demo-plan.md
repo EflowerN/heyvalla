@@ -67,3 +67,19 @@ Capacity races; role and operator ownership; cancelled/full sailings; delayed co
 ## Open decisions
 
 Confirm pilot islands, current route coverage, schedule availability/reuse, transfer assumptions, safety margin, flight input fields, and eventual operator workflow. Do not invent official RTL times or infer booking capability from published schedules.
+
+## Submission rehearsal: complete booking demo
+
+1. Planner → **Fill Thaa → Hulhumalé demo**. This supplies tomorrow’s fictional 14:00–14:50 flight. Search; choose a suitable ferry; review and book with sample passenger details.
+2. Open **My itineraries**, find that journey and choose **Book remaining journey services · Demo**. Select taxi or bus, review prices and confirm with no payment. The reference and simulated leg states persist after refresh. Bus R4 is the Phase 1 example; its timetable remains an explicitly dated reference, not live service assurance.
+3. Alternatively select a checked Maldivian flight and use its in-app demo booking button. Taxi fares and RTL buses also have independent demo checkout. Standalone service reservations appear in My itineraries but are not automatically combined with a separate ferry journey.
+4. **Boat owners** → sign in with an existing demo provider. Enable request-to-book on a vessel, publish a sailing and approve a passenger request. Under a published sailing open **Cargo, last call & location sharing**, post a loading window or fully-loaded message and publish. Refresh Sailings or the passenger activity timeline to show the ping. Optional sample coordinates demonstrate owner consent; no live tracking is claimed.
+5. Explain what follows the demo: approved airline/seaplane inventory and ticketing, Avas Ride dispatch, RTL ticketing and owner-authorized FollowMe-style vessel tracking. Current demo does not issue real tickets, dispatch vehicles, take money or send external notifications.
+
+Use `php artisan migrate --force` and the existing `php artisan heyvalla:demo --days=7` command before rehearsal. This preserves existing seed records; do not use `--reset` unless intentionally replacing seeded providers.
+
+### Flightless travel
+
+Planner → **Ferries & launches · no flight** → **Fill Kinbidhoo → Gan demo** → **Find sea journeys**. Select the 10:00–10:05 Kinbidhoo–Veymandoo ferry and 10:30–12:00 Veymandoo–Laamu Gan connection, review the 25-minute wait, then book both demo legs together. The date field is **Travel date**; no flight input is required. The receipt is saved in My itineraries. A direct Vilufushi–Malé launch example is also provided. All four repeating fixture sailings and their prices are fictional; the user's example supplied the two-leg timing.
+
+Published owner sailings are also searched, with owner booking controls, remaining capacity and departed state respected. These require individual seat requests and approval; a connection involving providers is not an automatically confirmed through-ticket. The current search supports direct or one-change trips departing on the same date, with 15–240 minutes between legs and a shared-island-harbour assumption.

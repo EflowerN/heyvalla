@@ -103,9 +103,33 @@ class ProviderPublishingController extends Controller
         }, 5);
     }
 
+    public function operations(Request $request): JsonResponse
+    {
+        $account = ProviderAccountController::account($request);
+        $input = $request->validate(['id' => ['required', 'integer'], 'version' => ['required', 'integer'], 'cargo_status' => ['required', 'in:not_accepting,loading,fully_loaded,last_call,departed'], 'loading_opens' => ['nullable', 'date_format:Y-m-d\TH:i'], 'loading_closes' => ['nullable', 'date_format:Y-m-d\TH:i', 'after:loading_opens'], 'note' => ['required', 'string', 'max:500'], 'share_location' => ['required', 'boolean'], 'latitude' => ['required_if:share_location,true', 'nullable', 'numeric', 'between:-90,90'], 'longitude' => ['required_if:share_location,true', 'nullable', 'numeric', 'between:-180,180']]);
+
+        return DB::transaction(function () use ($input, $account): JsonResponse {
+            $sailing = DB::table('provider_sailings')->where('provider_account_id', $account->id)->where('id', $input['id'])->lockForUpdate()->first();
+            abort_unless($sailing, 404);
+            abort_unless($sailing->version === (int) $input['version'] && $sailing->status === 'published', 409, 'Refresh and choose the latest published sailing.');
+            abort_unless((bool) ($input['loading_opens'] ?? null) === (bool) ($input['loading_closes'] ?? null), 422, 'Enter both cargo loading times or leave both blank.');
+            $opens = empty($input['loading_opens']) ? null : CarbonImmutable::createFromFormat('!Y-m-d\TH:i', $input['loading_opens'], 'Indian/Maldives');
+            $closes = empty($input['loading_closes']) ? null : CarbonImmutable::createFromFormat('!Y-m-d\TH:i', $input['loading_closes'], 'Indian/Maldives');
+            abort_if($closes && $closes->greaterThan(CarbonImmutable::parse($sailing->departure_at, 'UTC')), 422, 'Cargo loading must close by scheduled departure.');
+            $operations = ['cargo_status' => $input['cargo_status'], 'loading_opens' => $opens?->toIso8601String(), 'loading_closes' => $closes?->toIso8601String(), 'note' => $input['note'], 'location' => $input['share_location'] ? ['latitude' => (float) $input['latitude'], 'longitude' => (float) $input['longitude'], 'source' => 'owner_reported_demo', 'updated_at' => now()->toIso8601String()] : null, 'updated_at' => now()->toIso8601String()];
+            DB::table('provider_sailings')->where('id', $sailing->id)->update(['operations' => json_encode($operations), 'version' => $sailing->version + 1, 'updated_at' => now()]);
+            $bookings = DB::table('provider_seat_requests')->where('provider_sailing_id', $sailing->id)->whereIn('status', ['requested', 'confirmed'])->lockForUpdate()->get();
+            foreach ($bookings as $booking) {
+                DB::table('provider_seat_requests')->where('id', $booking->id)->update(['events' => json_encode(ProviderLifecycle::appendEvent($booking, $input['cargo_status'], 'provider', $input['note'])), 'version' => $booking->version + 1, 'updated_at' => now()]);
+            }
+
+            return response()->json(['operations' => $operations, 'notified' => $bookings->count(), 'message' => 'Saved. In-app updates added for booked/requesting passengers; no SMS or external push sent.']);
+        }, 5);
+    }
+
     public function catalogue(): JsonResponse
     {
-        $sailings = DB::table('provider_sailings as s')->join('provider_accounts as p', 'p.id', '=', 's.provider_account_id')->join('provider_vessels as v', 'v.id', '=', 's.provider_vessel_id')->where('s.status', 'published')->where('s.departure_at', '>', now())->orderBy('s.departure_at')->limit(200)->get(['s.id', 's.origin_id', 's.destination_id', 's.version', 's.seat_capacity', 's.confirmed_seats', 'v.booking_mode', 's.origin', 's.destination', 's.departure_at', 's.arrival_at', 's.fare_minor', 'p.organization_name', 'p.description', 'p.coverage', 'v.name as vessel_name', 'v.passenger_capacity'])->map(fn (object $sailing): array => [...(array) $sailing, 'departure_at' => CarbonImmutable::parse($sailing->departure_at, 'UTC')->toIso8601String(), 'arrival_at' => CarbonImmutable::parse($sailing->arrival_at, 'UTC')->toIso8601String(), 'currency' => 'MVR', 'verification' => 'unverified', 'demo' => true, 'remaining_seats' => $sailing->seat_capacity - $sailing->confirmed_seats, 'booking_available' => $sailing->booking_mode === 'request_to_book' && $sailing->fare_minor !== null && $sailing->confirmed_seats < $sailing->seat_capacity, 'location_sharing' => 'off']);
+        $sailings = DB::table('provider_sailings as s')->join('provider_accounts as p', 'p.id', '=', 's.provider_account_id')->join('provider_vessels as v', 'v.id', '=', 's.provider_vessel_id')->where('s.status', 'published')->where('s.departure_at', '>', now())->orderBy('s.departure_at')->limit(200)->get(['s.operations', 's.id', 's.origin_id', 's.destination_id', 's.version', 's.seat_capacity', 's.confirmed_seats', 'v.booking_mode', 's.origin', 's.destination', 's.departure_at', 's.arrival_at', 's.fare_minor', 'p.organization_name', 'p.description', 'p.coverage', 'v.name as vessel_name', 'v.passenger_capacity'])->map(fn (object $sailing): array => [...(array) $sailing, 'departure_at' => CarbonImmutable::parse($sailing->departure_at, 'UTC')->toIso8601String(), 'arrival_at' => CarbonImmutable::parse($sailing->arrival_at, 'UTC')->toIso8601String(), 'currency' => 'MVR', 'verification' => 'unverified', 'demo' => true, 'remaining_seats' => $sailing->seat_capacity - $sailing->confirmed_seats, 'booking_available' => (json_decode($sailing->operations ?? 'null', true)['cargo_status'] ?? null) !== 'departed' && $sailing->booking_mode === 'request_to_book' && $sailing->fare_minor !== null && $sailing->confirmed_seats < $sailing->seat_capacity, 'operations' => $sailing->operations ? json_decode($sailing->operations, true) : null, 'location_sharing' => ! empty(json_decode($sailing->operations ?? 'null', true)['location']) ? 'owner_reported' : 'off']);
 
         return response()->json(['sailings' => $sailings])->header('Cache-Control', 'no-store');
     }

@@ -80,5 +80,5 @@ test('editing airports or flight times drops a mismatched airline selection', ()
   const leg = buildJourney(selected, result, sailing, directory, fare)[2];
   assert.equal(leg.title, 'Maldivian Q2 183');
   assert.equal(leg.price, null);
-  assert.match(leg.status, /book with Maldivian/);
+  assert.match(leg.status, /demo booking available/);
 });

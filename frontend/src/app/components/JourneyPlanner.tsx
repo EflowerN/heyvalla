@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { journeyDetailsInput, buildJourney, canBookForParty, taxiDestinationZone, validatePlan, type Directory, type FareEstimate, type Place, type PlanInput } from "@/lib/journey-plan";
+import SeaJourneyPlanner from "./SeaJourneyPlanner";
+import IntegrationRoadmap from "./IntegrationRoadmap";
 import FlightSearch from "./FlightSearch";
 import FlightReference from "./FlightReference";
 import { matchingFlight, type FlightOption } from "@/lib/flights";
@@ -23,6 +25,7 @@ const field = "mt-2 block w-full rounded-xl border border-ocean/15 bg-white p-3 
 const money = (minor: number) => `${(minor / 100).toFixed(2)} MVR`;
 
 export default function JourneyPlanner() {
+  const [travelMode,setTravelMode] = useState<"flight"|"sea">("flight");
   const [directory, setDirectory] = useState<Directory>(emptyDirectory);
   const [directoryError, setDirectoryError] = useState("");
   const [retry, setRetry] = useState(0);
@@ -120,7 +123,7 @@ export default function JourneyPlanner() {
     setSelectedFlight(null);
     invalidate(); setOriginId("ld0205"); setOriginText("Vilufushi"); setDestinationId("ld0591"); setDestinationText("Hulhumalé"); setDepartureAirportId("VRNT"); setArrivalAirportId("VRMM");
     const tomorrow = new Date(Date.now() + 86400000 + 5 * 3600000).toISOString().slice(0, 10);
-    setDate(tomorrow); setTime("14:00"); setArrivalDate(""); setArrivalTime(""); setPassengers(1); setAddress(""); setCheckIn("60"); setTaxiZone("hulhumale-phase-1");
+    setDate(tomorrow); setTime("14:00"); setArrivalDate(tomorrow); setArrivalTime("14:50"); setPassengers(1); setAddress(""); setCheckIn("60"); setTaxiZone("hulhumale-phase-1");
   }
   const sailing = result?.sailings.find(item => item.id === sailingId) ?? null;
   const legs = useMemo(() => plan && result && sailing ? buildJourney(plan, result, sailing, directory, fare) : [], [plan, result, sailing, directory, fare]);
@@ -129,11 +132,14 @@ export default function JourneyPlanner() {
   const subtotal = knownPrices.reduce((sum, leg) => sum + (leg.price ?? 0), 0);
   const hasOnwardGap = legs.some(leg => leg.id === "destination" && !leg.points.length);
 
+  const modeSwitch = <div className="mb-6 flex flex-wrap gap-3" aria-label="Journey type">{([['flight','Journey with a flight'],['sea','Ferries & launches · no flight']] as const).map(([mode,label])=><button key={mode} type="button" aria-pressed={travelMode===mode} onClick={()=>{invalidate();setTravelMode(mode);}} className={`rounded-full px-5 py-3 font-semibold ${travelMode===mode?"bg-lagoon text-white":"bg-white border border-lagoon/30 text-lagoon"}`}>{label}</button>)}</div>;
+  if(travelMode==='sea')return <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8">{modeSwitch}<SeaJourneyPlanner directory={directory} directoryError={directoryError}/></main>;
   return <main className="mx-auto max-w-6xl px-5 pb-28 pt-8 sm:px-8 md:pb-16">
+    {modeSwitch}
     <p className="text-sm font-semibold uppercase tracking-widest text-lagoon">From your island to your doorstep</p>
     <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">Your whole journey, in one place.</h1>
     <p className="mt-4 max-w-3xl leading-7 text-ocean/75">Connect your ferry, airport transfer, flight and onward ride. Start with two places, then add your flight details.</p>
-    <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights can use checked Maldivian website references or your own details; airline checkout happens on Maldivian. Onward taxis are estimates. HeyValla does not issue real tickets or collect payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
+    <aside className="my-6 rounded-2xl bg-coral/10 p-4 text-sm leading-6">Demo planning only. Ferry search currently connects to Thimarafushi. Flights can use checked Maldivian website references or your own details; book flights, taxis and buses through our in-app demo checkout. Onward taxis are estimates. HeyValla does not issue real tickets or collect payments. <Link className="font-medium text-lagoon underline" href="/ferry-planner">Only need a ferry to the airport?</Link></aside>
     <form id="search" onSubmit={search} onChange={invalidate} className="tile scroll-mt-4 p-5 sm:p-7">
       <div className="grid gap-6 md:grid-cols-2">
         <LocationSearch id="journey-origin" label="Where are you?" places={directory.islands} value={originText} selected={origin} onChange={value => { invalidate(); setOriginText(value); setOriginId(""); }} onSelect={pickOrigin} disabled={!directory.islands.length} />
@@ -196,11 +202,12 @@ export default function JourneyPlanner() {
     </div>
     {review && result && sailing && plan && <div ref={reviewPanel} className="tile mt-8 scroll-mt-5 p-5 sm:p-7">
       <h2 className="text-2xl font-semibold">Review your connections</h2><p className="mt-3 leading-7">{plan.origin.name} → Thimarafushi → {plan.arrivalAirport.name} → {plan.destination.name}</p>
-      <p className="my-4 text-sm leading-7">Each service needs its own confirmation. Booking below saves the ferry, flight details, final destination and address to <Link href="/journeys" className="text-lagoon underline">My itineraries</Link>, where you can request the Thimarafushi taxi. You can review and edit the onward details there. They are private to your browser session and are not sent to ferry providers. Saving the plan does not book the flight or onward taxi.</p>
-      <ul className="mb-5 list-inside list-disc space-y-2 text-sm"><li>Flight route, time and ticket: confirm with your airline.</li><li>Onward ride: arrange externally; pickup time and driver are unconfirmed.</li><li>Airport transfer: demo allowance only; request a taxi after booking.</li>{plan.passengers > 4 && <li className="text-rose-800">Your party exceeds the single demo taxi’s four-person limit. Additional transport is required.</li>}{hasOnwardGap && <li className="text-rose-800">No service currently connects the arrival airport to your final island in this planner.</li>}</ul>
+      <p className="my-4 text-sm leading-7">Each service needs its own confirmation. Booking below saves the ferry, flight details, final destination and address to <Link href="/journeys" className="text-lagoon underline">My itineraries</Link>, where you can book the flight, Thimarafushi transfer and onward taxi or bus in one demo checkout. You can review and edit the onward details there. They are private to your browser session and are not sent to ferry providers. After saving, open My itineraries and choose Book remaining journey services.</p>
+      <ul className="mb-5 list-inside list-disc space-y-2 text-sm"><li>Flight: select a checked reference or use a fictional demo fare for your entered flight.</li><li>Onward ride: choose a taxi or an RTL bus in the demo checkout.</li><li>Harbour transfer: an instant simulated taxi is available in the journey checkout.</li>{plan.passengers > 4 && <li className="text-rose-800">Your party exceeds the single demo taxi’s four-person limit. Additional transport is required.</li>}{hasOnwardGap && <li className="text-rose-800">No service currently connects the arrival airport to your final island in this planner.</li>}</ul>
       {!bookable ? <p role="status" className="rounded-lg bg-coral/20 p-4">This ferry cannot be booked for the selected party and flight. Choose another ferry or change your search.</p> : sailing.source === "provider" ? <SeatRequestForm key={sailing.id} journeyDetails={journeyDetailsInput(plan)} initialSeats={plan.passengers} sailing={{ id: sailing.provider_sailing_id!, version: sailing.version!, fare_minor: sailing.fare_minor ?? null, remaining_seats: sailing.available_seats }} flightContext={result.search} onSaved={refresh} /> : <button type="button" onClick={() => setChoice({ sailing_id: sailing.id, service: sailing.service, available_seats: sailing.available_seats, search: result.search, initial_seats: plan.passengers, journey_details: journeyDetailsInput(plan) })} className="rounded-xl bg-lagoon px-5 py-3 font-semibold text-white">Book demo ferry & save full journey</button>}
       <div className="mt-5"><BookingDesk choice={choice} onClose={() => setChoice(null)} onBooked={refresh} /></div>
     </div>}
+    <IntegrationRoadmap/>
     <footer className="mt-8 text-xs leading-6 text-ocean/65">Data already in HeyValla: OneMap/CAA locations, fictional and provider-entered ferry schedules, organizer-provided Avas Ride matrix. Checked Maldivian fare references are available; there is no live airline feed, geocoding or road routing. <Link href="/journeys" className="text-lagoon underline">View saved booking itineraries</Link>.</footer>
     <Footer residential={directory.islands.filter(place => place.category === "residential").length} resorts={directory.islands.filter(place => place.category === "resort").length} airports={directory.airports.length} />
     <MobileNav resultCount={result ? result.sailings.filter(item => canBookForParty(item, plan?.passengers ?? 1)).length : null} />

@@ -67,7 +67,7 @@ class ProviderBookingController extends Controller
                 return response()->json(['booking' => self::present($existing)]);
             }
             $vessel = DB::table('provider_vessels')->where('id', $sailing->provider_vessel_id)->lockForUpdate()->first();
-            abort_unless($sailing->status === 'published' && CarbonImmutable::parse($sailing->departure_at, 'UTC')->isFuture() && $vessel->booking_mode === 'request_to_book', 409, 'This sailing is not accepting new requests.');
+            abort_unless($sailing->status === 'published' && (json_decode($sailing->operations ?? 'null', true)['cargo_status'] ?? null) !== 'departed' && CarbonImmutable::parse($sailing->departure_at, 'UTC')->isFuture() && $vessel->booking_mode === 'request_to_book', 409, 'This sailing is not accepting new requests.');
             abort_unless($sailing->version === $input['sailing_version'] && $sailing->fare_minor !== null && $sailing->fare_minor === $input['fare_minor'], 409, 'Fare or sailing changed. Refresh and review before requesting.');
             abort_unless($sailing->seat_capacity - $sailing->confirmed_seats >= $input['seats'], 409, 'Not enough unconfirmed seats remain. Refresh for availability.');
             $provider = DB::table('provider_accounts')->find($sailing->provider_account_id);
@@ -131,7 +131,7 @@ class ProviderBookingController extends Controller
                 abort_unless(CarbonImmutable::parse($sailing->departure_at, 'UTC')->isFuture(), 409, 'Departure has passed. Refresh for the current status.');
             }
             if ($input['action'] === 'confirmed') {
-                abort_unless($sailing->status === 'published', 409, 'Publish the sailing before confirming requests.');
+                abort_unless($sailing->status === 'published' && (json_decode($sailing->operations ?? 'null', true)['cargo_status'] ?? null) !== 'departed', 409, 'Publish the sailing before confirming requests.');
                 $changed = DB::table('provider_sailings')->where('id', $sailing->id)->whereRaw('confirmed_seats + ? <= seat_capacity', [$booking->seats])->increment('confirmed_seats', $booking->seats);
                 abort_unless($changed === 1, 409, 'Insufficient seats. Another request may have been confirmed.');
             } elseif ($booking->status === 'confirmed' && $input['action'] === 'cancelled') {

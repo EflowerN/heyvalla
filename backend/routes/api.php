@@ -1,15 +1,21 @@
 <?php
 
 use App\Http\Controllers\DemoBookingController;
+use App\Http\Controllers\DemoCheckoutController;
 use App\Http\Controllers\DemoTaxiController;
 use App\Http\Controllers\FlightSearchController;
 use App\Http\Controllers\JourneyController;
 use App\Http\Controllers\ProviderAccountController;
 use App\Http\Controllers\ProviderBookingController;
 use App\Http\Controllers\ProviderPublishingController;
+use App\Http\Controllers\SeaJourneyController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('throttle:60,1')->group(function (): void {
+    Route::get('/v1/demo-checkout', [DemoCheckoutController::class, 'index']);
+    Route::post('/v1/demo-checkout', [DemoCheckoutController::class, 'store']);
+    Route::post('/v1/demo-checkout/cancel', [DemoCheckoutController::class, 'cancel']);
+    Route::get('/v1/sea-journeys', [SeaJourneyController::class, 'index']);
     Route::get('/v1/flights', [FlightSearchController::class, 'index']);
     Route::post('/v1/demo-taxis', [DemoTaxiController::class, 'store']);
     Route::get('/v1/journeys', [JourneyController::class, 'index']);
@@ -31,6 +37,7 @@ Route::prefix('v1/providers')->middleware('throttle:60,1')->group(function (): v
     Route::post('/account', [ProviderAccountController::class, 'update']);
     Route::delete('/account', [ProviderAccountController::class, 'logout']);
     Route::get('/publishing', [ProviderPublishingController::class, 'index']);
+    Route::post('/operations', [ProviderPublishingController::class, 'operations']);
     Route::post('/vessels', [ProviderPublishingController::class, 'vessel']);
     Route::post('/sailings', [ProviderPublishingController::class, 'sailing']);
     Route::post('/publish', [ProviderPublishingController::class, 'publish']);

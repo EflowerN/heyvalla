@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { sameOrigin } from "@/lib/operator-session";
-const methods: Record<string, string[]> = { register: ["POST"], login: ["POST"], account: ["GET", "POST", "DELETE"], requests: ["GET", "POST"], publishing: ["GET"], vessels: ["POST"], sailings: ["POST"], publish: ["POST"], catalogue: ["GET"] };
+const methods: Record<string, string[]> = { operations: ["POST"], register: ["POST"], login: ["POST"], account: ["GET", "POST", "DELETE"], requests: ["GET", "POST"], publishing: ["GET"], vessels: ["POST"], sailings: ["POST"], publish: ["POST"], catalogue: ["GET"] };
 async function proxy(request: Request, context: RouteContext<"/api/providers/[action]">) {
   const { action } = await context.params;
   if (!methods[action]?.includes(request.method)) return Response.json({ message: "Not found." }, { status: 404 });

@@ -91,6 +91,23 @@ class ProviderPublishingTest extends TestCase
         $this->withToken($token)->postJson('/api/v1/providers/publish', ['id' => $sailing['id'], 'version' => 1, 'status' => 'published'])->assertUnprocessable();
     }
 
+    public function test_owner_updates_require_ownership_version_and_explicit_position_sharing(): void
+    {
+        $token = $this->register();
+        $vessel = $this->vessel($token);
+        $sailing = $this->sailing($token, $vessel['id']);
+        $this->withToken($token)->postJson('/api/v1/providers/publish', ['id' => $sailing['id'], 'version' => 1, 'status' => 'published'])->assertOk();
+        $update = ['id' => $sailing['id'], 'version' => 2, 'cargo_status' => 'fully_loaded', 'note' => 'Demo cargo fully loaded', 'share_location' => true, 'latitude' => 2.2, 'longitude' => 73.1];
+        $other = $this->register('other@example.test');
+        $this->withToken($other)->postJson('/api/v1/providers/operations', $update)->assertNotFound();
+        $this->withToken($token)->postJson('/api/v1/providers/operations', $update)->assertOk();
+        $this->getJson('/api/v1/providers/catalogue')->assertJsonPath('sailings.0.operations.cargo_status', 'fully_loaded')->assertJsonPath('sailings.0.location_sharing', 'owner_reported');
+        $this->postJson('/api/v1/providers/operations', $update)->assertConflict();
+        $this->postJson('/api/v1/providers/operations', [...$update, 'version' => 3, 'share_location' => false])->assertOk();
+        $this->getJson('/api/v1/providers/catalogue')->assertJsonPath('sailings.0.operations.location', null)->assertJsonPath('sailings.0.location_sharing', 'off');
+        $this->postJson('/api/v1/providers/operations', [...$update, 'version' => 4, 'latitude' => 91])->assertUnprocessable();
+    }
+
     public function test_private_endpoints_require_a_provider_session(): void
     {
         $this->getJson('/api/v1/providers/publishing')->assertUnauthorized();

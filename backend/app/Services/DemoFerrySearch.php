@@ -60,6 +60,9 @@ class DemoFerrySearch
         if ($airport['id'] === 'VRNT') {
             $providers = DB::table('provider_sailings as s')->join('provider_accounts as p', 'p.id', '=', 's.provider_account_id')->join('provider_vessels as v', 'v.id', '=', 's.provider_vessel_id')->where('s.status', 'published')->where('s.origin_id', $input['island'])->where('s.destination_id', TravelJourneys::HARBOUR_ISLAND)->where('s.departure_at', '>', now())->whereBetween('s.arrival_at', [$flight->startOfDay()->utc(), $flight->endOfDay()->utc()])->get(['s.*', 'p.organization_name', 'v.booking_mode', 'v.name as vessel_name']);
             foreach ($providers as $sailing) {
+                if ((json_decode($sailing->operations ?? 'null', true)['cargo_status'] ?? null) === 'departed') {
+                    continue;
+                }
                 $departure = CarbonImmutable::parse($sailing->departure_at, 'UTC')->setTimezone($timezone);
                 $arrival = CarbonImmutable::parse($sailing->arrival_at, 'UTC')->setTimezone($timezone);
                 $airportArrival = $arrival->addMinutes($transfer);

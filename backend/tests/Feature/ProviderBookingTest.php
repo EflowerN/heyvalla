@@ -26,6 +26,21 @@ class ProviderBookingTest extends TestCase
         return ['sailing_id' => $sailing['id'], 'sailing_version' => $sailing['version'], 'fare_minor' => 5000, 'seats' => $seats, 'passenger_name' => 'Demo Passenger', 'terms_accepted' => true, 'idempotency_key' => (string) Str::uuid()];
     }
 
+    public function test_loading_ping_reaches_passenger_without_changing_booking_status_or_capacity(): void
+    {
+        [$token,$vessel,$sailing] = $this->fixture();
+        $guest = (string) Str::uuid();
+        $this->withHeader('X-Demo-Guest', $guest)->postJson('/api/v1/provider-bookings', $this->payload($sailing))->assertCreated();
+        $version = DB::table('provider_sailings')->where('id', $sailing['id'])->value('version');
+        $this->withToken($token)->postJson('/api/v1/providers/operations', ['id' => $sailing['id'], 'version' => $version, 'cargo_status' => 'fully_loaded', 'note' => 'Loading complete. Please board.', 'share_location' => false])->assertOk()->assertJsonPath('notified', 1);
+        $this->withHeader('X-Demo-Guest', $guest)->getJson('/api/v1/provider-bookings')->assertJsonPath('bookings.0.status', 'requested')->assertJsonPath('bookings.0.events.1.status', 'fully_loaded');
+        $this->assertDatabaseHas('provider_sailings', ['id' => $sailing['id'], 'confirmed_seats' => 0]);
+        $this->getJson('/api/v1/journeys')->assertJsonPath('journeys.0.events.1.reason', 'Loading complete. Please board.');
+        $this->withToken($token)->postJson('/api/v1/providers/operations', ['id' => $sailing['id'], 'version' => $version + 1, 'cargo_status' => 'departed', 'note' => 'Departed early in demo', 'share_location' => false])->assertOk();
+        $this->getJson('/api/v1/providers/catalogue')->assertJsonPath('sailings.0.booking_available', false);
+        $this->postJson('/api/v1/provider-bookings', [...$this->payload($sailing), 'sailing_version' => $version + 2])->assertConflict();
+    }
+
     public function test_request_confirmation_capacity_and_cancellation_are_retry_safe(): void
     {
         [$token, $vessel, $sailing] = $this->fixture();
