@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FerrySearchController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,6 @@ Route::get('/api/health', function (): JsonResponse {
         'service_timezone' => 'Indian/Maldives',
     ]);
 })->name('api.health');
+
+Route::get('/api/v1/islands', [FerrySearchController::class, 'islands'])->name('api.islands');
+Route::get('/api/v1/ferry-search', [FerrySearchController::class, 'search'])->name('api.ferry-search');
