@@ -1,4 +1,6 @@
 "use client";
+
+import { useT } from "./I18nProvider";
 import { useEffect, useRef, useState } from "react";
 import { flightTime, type FlightOption } from "@/lib/flights";
 import FlightReference from "./FlightReference";
@@ -8,6 +10,7 @@ export default function FlightSearch({ from, to, date, passengers, selected, onS
   from: string; to: string; date: string; passengers: number; selected: FlightOption | null;
   onSelect: (flight: FlightOption) => void; onClear: () => void;
 }) {
+  const t = useT();
   const [profile, setProfile] = useState("maldivian_adult");
   const [result, setResult] = useState<SearchResult | null>(null);
   const [busy, setBusy] = useState(false);
@@ -35,23 +38,23 @@ export default function FlightSearch({ from, to, date, passengers, selected, onS
       <p className="mt-3 font-semibold">{(offer.fare_minor / 100).toFixed(2)} {offer.currency} / adult</p>
       <p className="mt-1 text-xs">{offer.fare_name} · taxes included · Maldives nationality</p>
       <p className="mt-2 text-xs leading-5">{offer.stale ? "Older reference—recheck with airline." : "Checked website fare, not live availability."}{offer.observed_seats !== null ? ` The website showed ${offer.observed_seats} seat(s) at this fare when checked; current seats are unknown.` : ""}</p>
-      <button type="button" onClick={() => onSelect(offer)} className="mt-3 rounded-lg border border-lagoon px-4 py-2 text-sm font-semibold text-lagoon">Use this flight in my journey</button>
+      <button type="button" onClick={() => onSelect(offer)} className="mt-3 rounded-lg border border-lagoon px-4 py-2 text-sm font-semibold text-lagoon">{t("Use this flight in my journey")}</button>
     </li>)}</ul>;
   }
   return <section className="mt-5 rounded-xl border border-flight bg-flight/10 p-4" aria-label="Maldivian flight options">
-    <h2 className="text-lg font-semibold">Choose a flight</h2>
-    <p className="mt-2 text-sm leading-6">Choose a checked Maldivian flight for your date, or a nearby date within 14 days. Selecting it fills the flight times; then use Find my journey to check ferry connections.</p>
-    <p className="mt-2 text-xs leading-5">Limited website snapshot, not a live search. In-app checkout is simulated. Real travel and final availability must be confirmed with Maldivian.</p>
-    {selected && <div className="mt-4"><FlightReference offer={selected} /><button type="button" onClick={onClear} className="mt-2 text-sm text-lagoon underline">Use manual flight details instead</button></div>}
-    <div className="mt-4 flex flex-wrap items-end gap-3"><label className="text-sm">Reference fare category<select value={profile} onChange={event => { request.current?.abort(); setBusy(false); setResult(null); setError(""); setProfile(event.target.value); onClear(); }} className="mt-1 block rounded-lg border border-ocean/25 bg-white p-2"><option value="maldivian_adult">Maldivian adult</option><option value="other">Other traveller / mixed party</option></select></label><button type="button" disabled={busy} onClick={() => void search()} className="rounded-lg bg-lagoon px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{busy ? "Loading checked flights…" : "Find flights & nearby dates"}</button></div>
+    <h2 className="text-lg font-semibold">{t("Choose a flight")}</h2>
+    <p className="mt-2 text-sm leading-6">{t("Choose a checked Maldivian flight for your date, or a nearby date within 14 days. Selecting it fills the flight times; then use Find my journey to check ferry connections.")}</p>
+    <p className="mt-2 text-xs leading-5">{t("Limited website snapshot, not a live search. In-app checkout is simulated. Real travel and final availability must be confirmed with Maldivian.")}</p>
+    {selected && <div className="mt-4"><FlightReference offer={selected} /><button type="button" onClick={onClear} className="mt-2 text-sm text-lagoon underline">{t("Use manual flight details instead")}</button></div>}
+    <div className="mt-4 flex flex-wrap items-end gap-3"><label className="text-sm">{t("Reference fare category")}<select value={profile} onChange={event => { request.current?.abort(); setBusy(false); setResult(null); setError(""); setProfile(event.target.value); onClear(); }} className="mt-1 block rounded-lg border border-ocean/25 bg-white p-2"><option value="maldivian_adult">{t("Maldivian adult")}</option><option value="other">{t("Other traveller / mixed party")}</option></select></label><button type="button" disabled={busy} onClick={() => void search()} className="rounded-lg bg-lagoon px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{busy ? "Loading checked flights…" : "Find flights & nearby dates"}</button></div>
     {passengers > 1 && <p className="mt-3 text-xs leading-5">These fares were checked for one adult. The demo planning total uses a per-person multiplication for your {passengers}-person party; this is an assumed group estimate. The airline must confirm the actual party fare.</p>}
     {error && <p role="alert" className="mt-3 text-sm text-rose-800">{error}</p>}
     {result && <div aria-live="polite" className="mt-4">
       <p className="text-xs leading-5">{result.coverage} Checked {flightTime(result.checked_at)} (UTC+5).</p>
-      <h3 className="mt-4 font-semibold">Your selected date</h3>
-      {result.same_day.length ? options(result.same_day) : <p className="mt-2 text-sm">No checked flight option for this date and fare category. This does not establish that there are no flights.</p>}
-      <h3 className="mt-4 font-semibold">Closest checked dates</h3>
-      {result.nearby.length ? options(result.nearby) : <p className="mt-2 text-sm">No checked alternatives within 14 days. Check Maldivian for its current calendar, or enter a flight you already know.</p>}
+      <h3 className="mt-4 font-semibold">{t("Your selected date")}</h3>
+      {result.same_day.length ? options(result.same_day) : <p className="mt-2 text-sm">{t("No checked flight option for this date and fare category. This does not establish that there are no flights.")}</p>}
+      <h3 className="mt-4 font-semibold">{t("Closest checked dates")}</h3>
+      {result.nearby.length ? options(result.nearby) : <p className="mt-2 text-sm">{t("No checked alternatives within 14 days. Check Maldivian for its current calendar, or enter a flight you already know.")}</p>}
     </div>}
   </section>;
 }

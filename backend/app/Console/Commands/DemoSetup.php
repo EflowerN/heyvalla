@@ -50,7 +50,7 @@ class DemoSetup extends Command
         $this->line('Providers: lagoon@heyvalla.example / coral@heyvalla.example / reef@heyvalla.example');
         $this->line('Local fictional password: heyvalla-demo-2026');
         $this->line('New fixtures start '.$date->toDateString().'. Try Vilufushi → Thimarafushi, flight 12:00, check-in 60 minutes; choose Lagoon 08:00.');
-        $this->line('Approve in /providers, request taxi in /journeys, quote in /operator, then accept in /journeys. Nothing is a real booking.');
+        $this->line('Approve in /providers. In /journeys use Book remaining journey services for flight and taxi/bus demo checkout. Nothing is a real booking.');
 
         return self::SUCCESS;
     }

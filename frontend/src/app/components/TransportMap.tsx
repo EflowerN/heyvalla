@@ -1,9 +1,12 @@
 "use client";
 
+import { useT } from "./I18nProvider";
+
 import { useEffect, useRef, useState } from "react";
 import { transportColors } from "@/lib/transport-colors";
 import { addIslandBasemap } from "@/lib/island-basemap";
 import SlideSwitch from "./SlideSwitch";
+import LiveVessels from "./LiveVessels";
 import type * as Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -11,8 +14,11 @@ type Place = { id: string; name: string; atoll?: string; category?: string; iata
 type Directory = { islands: Place[]; airports: Place[]; routes: { origin_id: string; airport_id: string }[] };
 
 export default function TransportMap({ island, airport, onIslandSelect, onAirportSelect }: { island: string; airport: string; onIslandSelect: (id: string) => void; onAirportSelect: (id: string) => void }) {
+  const t = useT();
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<Leaflet.Map | null>(null);
+  const mapLibrary = useRef<typeof Leaflet | null>(null);
+  const [mapVersion, setMapVersion] = useState(0);
   const [directory, setDirectory] = useState<Directory | null>(null);
   const [error, setError] = useState("");
   const [outlinesUnavailable, setOutlinesUnavailable] = useState(false);
@@ -43,6 +49,8 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
       if (disposed || !container.current) return;
       const instance = L.map(container.current, { scrollWheelZoom: false, minZoom: 5, maxZoom: 18 });
       map.current = instance;
+      mapLibrary.current = L;
+      setMapVersion(value => value + 1);
       setOutlinesUnavailable(false);
       addIslandBasemap(L, instance, controller.signal).catch(() => { if (!disposed) setOutlinesUnavailable(true); });
       const popup = (place: Place, kind: string) => {
@@ -98,32 +106,33 @@ export default function TransportMap({ island, airport, onIslandSelect, onAirpor
   return <section className="mb-6 tile overflow-hidden" aria-label="Interactive Maldives transport map">
     <div className="p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div><h2 className="text-xl font-semibold">Explore the connections</h2>
+        <div><h2 className="text-xl font-semibold">{t("Explore the connections")}</h2>
           <p className="mt-1 text-sm text-ocean/70">{directory ? `${inhabited} inhabited ${inhabited === 1 ? "island" : "islands"} · ${resorts} resort ${resorts === 1 ? "island" : "islands"} · ${airportCount} ${airportCount === 1 ? "airport" : "airports"}` : "Loading locations…"}</p></div>
         <SlideSwitch label="Map view" value={view} onChange={next => { setView(next as "country" | "selection"); setFitVersion(v => v + 1); }} options={[{ value: "country", label: "All Maldives" }, { value: "selection", label: "Selected journey" }]} />
       </div>
       <div role="group" aria-label="Map layers" className="mt-4 flex flex-wrap gap-2">
-        <button type="button" aria-pressed={showIslands} onClick={() => setShowIslands(value => !value)} className={toggle(showIslands)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />Islands</button>
-        <button type="button" aria-pressed={showResorts} onClick={() => setShowResorts(value => !value)} className={toggle(showResorts)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-coral" />Resorts</button>
-        <button type="button" aria-pressed={showAirports} onClick={() => setShowAirports(value => !value)} className={toggle(showAirports)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm bg-flight" />Airports</button>
-        <button type="button" aria-pressed={showRoutes} onClick={() => setShowRoutes(value => !value)} className={toggle(showRoutes)}><span aria-hidden="true" className="h-0.5 w-4 border-t-2 border-dashed border-sea" />Demo routes</button>
+        <button type="button" aria-pressed={showIslands} onClick={() => setShowIslands(value => !value)} className={toggle(showIslands)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />{t("Islands")}</button>
+        <button type="button" aria-pressed={showResorts} onClick={() => setShowResorts(value => !value)} className={toggle(showResorts)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-coral" />{t("Resorts")}</button>
+        <button type="button" aria-pressed={showAirports} onClick={() => setShowAirports(value => !value)} className={toggle(showAirports)}><span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm bg-flight" />{t("Airports")}</button>
+        <button type="button" aria-pressed={showRoutes} onClick={() => setShowRoutes(value => !value)} className={toggle(showRoutes)}><span aria-hidden="true" className="h-0.5 w-4 border-t-2 border-dashed border-sea" />{t("Demo routes")}</button>
       </div>
     </div>
-    {error && <p role="alert" className="px-5 pb-5 text-rose-800">{error} <button type="button" className="underline" onClick={() => setRetry(value => value + 1)}>Retry</button></p>}
+    {error && <p role="alert" className="px-5 pb-5 text-rose-800">{error} <button type="button" className="underline" onClick={() => setRetry(value => value + 1)}>{t("Retry")}</button></p>}
     {!directory && !error && <div role="status" aria-label="Loading map" className="mx-5 mb-5 h-[340px] animate-pulse rounded-xl bg-flight/20 sm:h-[460px] lg:h-[560px]" />}
     <div style={{ backgroundColor: "#E4F2F3" }} ref={container} className={`relative z-0 h-[340px] bg-flight/10 sm:h-[460px] lg:h-[560px] ${directory ? "" : "hidden"}`} aria-label="Pan and zoom map of Maldives islands, airports and illustrative ferry routes" />
-    {outlinesUnavailable && <p role="status" className="px-5 pt-3 text-sm text-ocean">Some island, reef or lagoon outlines could not load. Location markers remain available.</p>}
+    <LiveVessels mapRef={map} leafletRef={mapLibrary} mapVersion={mapVersion} />
+    {outlinesUnavailable && <p role="status" className="px-5 pt-3 text-sm text-ocean">{t("Some island, reef or lagoon outlines could not load. Location markers remain available.")}</p>}
     <div className="p-5">
       <ul aria-label="Map legend" className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-ocean/80">
-        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />Residential island</li>
-        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-coral" />Resort island</li>
-        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-4 w-4 rounded-sm bg-flight text-center text-[10px] leading-4 text-ocean">✈</span>Airport</li>
-        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block w-5 border-t-2 border-dashed border-sea" />Fictional sea connection</li>
-        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-3.5 w-3.5 rounded-full border-2 border-ocean bg-ocean/40" />Selected departure (larger dot, thicker line)</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-lagoon" />{t("Residential island")}</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-coral" />{t("Resort island")}</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block h-4 w-4 rounded-sm bg-flight text-center text-[10px] leading-4 text-ocean">✈</span>{t("Airport")}</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="inline-block w-5 border-t-2 border-dashed border-sea" />{t("Fictional sea connection")}</li>
+        <li className="inline-flex items-center gap-2"><span aria-hidden="true" className="h-3.5 w-3.5 rounded-full border-2 border-ocean bg-ocean/40" />{t("Selected departure (larger dot, thicker line)")}</li>
       </ul>
-      <p className="mt-3 text-xs leading-5 text-ocean/70">Tap a dot to choose your departure island, or a plane to choose the airport. Coordinates: OneMap (Geomatics Department) and Maldives CAA (July 2025).</p>
+      <p className="mt-3 text-xs leading-5 text-ocean/70">{t("Tap a dot to choose your departure island, or a plane to choose the airport. Coordinates: OneMap (Geomatics Department) and Maldives CAA (July 2025).")}</p>
       <details className="mt-2 text-xs leading-5 text-ocean/70">
-        <summary className="inline-block rounded font-medium text-lagoon">About this map</summary>
+        <summary className="inline-block rounded font-medium text-lagoon">{t("About this map")}</summary>
         <p className="mt-2">Resort islands are not verified operating resorts, and labels use geographic island names, not necessarily resort brand names. Dashed lines are fictional ferry connections; they are not navigation paths or live vessel positions. Click any island dot to set your departure island, or an airport marker to set your destination in the form below. Island coordinates: OneMap, Geomatics Department. Airport coordinates: Maldives CAA (July 2025). Island, reef and lagoon outlines are bundled from OneMap. Turquoise shading shows natural geography, not water depths or safe navigation areas. The map does not show roads or administrative atoll borders.</p>
       </details>
     </div>

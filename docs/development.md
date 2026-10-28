@@ -56,7 +56,7 @@ Status flow: requested → quoted → confirmed, or requested/quoted → decline
 
 Passenger: open My demo bookings, request airport taxi, refresh bookings/quotes, and accept a valid operator quote. Operator: visit `/operator`, sign in, refresh the queue, quote a pickup/price or decline. The list shows the latest 100 requests. No payments, emails, actual drivers or physical vehicle scheduling are involved. Operator assignment, cancellations/re-request, fleet availability, audit history, and actual operator accounts are future work.
 
-Local operator setup: configure a matching randomly generated `DEMO_OPERATOR_TOKEN` of at least 32 characters in backend `.env` and frontend `.env.local`; configure a separate `DEMO_OPERATOR_PASSWORD` in frontend `.env.local`. These server-only variables are never returned in browser JSON. This workspace is configured with the local demo password `heyvalla-demo`. Do not use this demonstration password for a deployed service. Restart Next.js when changing env values.
+Historical flow: the shared `/operator` page was removed. Frontend operator token/password settings and signed operator-session code have now been removed as well. The backend’s legacy quote endpoints remain protected and fail closed without a separately configured backend token; they are not part of the current UI rehearsal. Use in-app simulated checkout for the demo.
 
 Next.js uses an HTTP-only signed eight-hour operator session, validates request origins, and forwards the server-only token to Laravel. Login attempts are limited in-process for this local demo; deployment needs durable rate limiting, real operator accounts and scoped permissions. The backend denies operator calls when the token is missing or invalid. Guest credentials cannot access the operator API. Signing out removes the operator session cookie.
 
@@ -120,13 +120,13 @@ Use the [README rehearsal](../README.md#repeatable-local-demonstration) for the 
 
 The frontend and the Laravel API run as two Vercel projects from this repo, with Supabase Postgres as the database. Supabase cannot run PHP itself. Vercel functions cannot keep SQLite writes, so the hosted backend uses `DB_CONNECTION=pgsql`. The suite passes against Postgres 17.
 
-Backend (Vercel, root directory `backend`): `backend/vercel.json` routes every request through `api/index.php` on the community `vercel-php@0.8.0` runtime (PHP 8.4). It sets production defaults and writes the framework caches to `/tmp`. Cache and rate limits use the database store, so throttles hold across instances. Set `APP_KEY`, `DEMO_OPERATOR_TOKEN` (at least 32 characters) and the Supabase session pooler details: `DB_HOST`, `DB_PORT=5432`, `DB_DATABASE=postgres`, `DB_USERNAME` (`postgres.<project-ref>`) and `DB_PASSWORD`. Don't use the transaction pooler (port 6543), because PDO's prepared statements fail through it.
+Backend (Vercel, root directory `backend`): `backend/vercel.json` routes every request through `api/index.php` on the community `vercel-php@0.8.0` runtime (PHP 8.4). It sets production defaults and writes the framework caches to `/tmp`. Cache and rate limits use the database store, so throttles hold across instances. Set `APP_KEY` and the Supabase session pooler details: `DB_HOST`, `DB_PORT=5432`, `DB_DATABASE=postgres`, `DB_USERNAME` (`postgres.<project-ref>`) and `DB_PASSWORD`. Don't use the transaction pooler (port 6543), because PDO's prepared statements fail through it.
 
 Migrations do not run on deploy. Run them from a workstation with the same `DB_*` values: `php artisan migrate --force`. Then run `php artisan heyvalla:demo` to load the fictional providers. Their password, `heyvalla-demo-2026`, is published, so anyone can sign in as them. Use that seed only for the datathon demo. `HEYVALLA_ALLOW_DEMO_SEED=true` permits the seed outside local/testing, and the Docker image (`backend/Dockerfile`, for container hosts with a `/data` volume) runs it on boot.
 
 The serverless backend has no per-minute scheduler. Pending provider requests still expire whenever journeys are read (`ProviderLifecycle::expirePending`).
 
-Frontend (Vercel, root directory `frontend`): set `LARAVEL_API_URL` to the backend's Vercel URL without a trailing slash, the same `DEMO_OPERATOR_TOKEN`, and a new `DEMO_OPERATOR_PASSWORD` (not the local `heyvalla-demo`). Redeploy after changing environment variables. The operator login attempt limit is in-process, so it does not hold across serverless instances.
+Frontend (Vercel, root directory `frontend`): set `LARAVEL_API_URL` to the backend's Vercel URL without a trailing slash. Operator token/password settings are no longer used by the frontend. Redeploy after changing environment variables. Provider sign-in limits and transport session limits run in Laravel and need a shared cache in a deployment.
 
 
 ## Refreshing natural reef and lagoon outlines
@@ -154,7 +154,7 @@ Refresh `backend/resources/data/maldivian-flights.json` only from visible offici
 
 ## Submission demo: in-app service checkout (24 October 2026)
 
-This supersedes the external-only demonstration flow above. Real airline checkout remains available as a secondary link, while `/api/demo-checkout` simulates flight, Greater Malé taxi, bus and linked-journey service confirmations. No supplier calls, real payments, tickets or real inventory changes occur. Seaplanes and FollowMe-compatible tracking remain planned integrations, not implemented connectors.
+This supersedes the external-only demonstration flow above. Real airline checkout remains available as a secondary link, while `/api/demo-checkout` simulates flight, Greater Malé taxi, bus and linked-journey service confirmations. No supplier calls, real payments, tickets or real inventory changes occur. Seaplanes remain planned. A later FollowMe public tracking adapter is now prepared, pending a key and verified response mapping; see the README setup section.
 
 Run `php artisan migrate --force` before serving this version. The new `demo_service_bookings` table retains guest-owned snapshots, a unique context, server-computed quote hashes and `DEMO-` references. PostgreSQL RLS is enabled. Confirm retries return the same reservation; changed options require cancellation and review. Journey detail changes or ferry cancellation mark linked receipts `needs_review`. Existing ferry confirmation is required for a combined checkout. Price calculation is server-side. Public and passenger screens retain the distinction between simulated and real confirmation.
 
@@ -163,3 +163,32 @@ Demo-only assumptions: a manual flight costs MVR 1,464 per passenger; selected f
 Boat owners can again use `/providers`. Authenticated owners of published sailings can post loading windows, cargo full / last-call / departure messages, and explicitly opt into an owner-reported sample position. Position sharing off removes public coordinates. Updates require the current version, append passenger request events and preserve seat inventory. Passengers see updates in Sailings and in their request/journey timeline; these are in-app updates, not external push/SMS. Cargo booking and payment are not implemented. Submitted coordinates are manual reports, not a live FollowMe feed.
 
 Integration sequence: introduce approved provider adapters for search → reprice → reserve → pay → confirm → cancel, with provider reference storage, webhook verification, retries and reconciliation. Connect Maldivian/other airlines and seaplane operators, Avas Ride dispatch, RTL ticketing, then an authorized vessel-location feed (FollowMe or compatible source) with owner consent and stale-position handling. API availability, commercial agreements and credentials must be established with each provider; no public API contract or partnership is assumed.
+
+
+## Audit follow-up (28 October 2026)
+
+The local API now defaults to `http://127.0.0.1:18765` to avoid the other application on port 8000. All Next.js proxies share that default. `/api/backend-health` validates `application=Dhathuru App`, `service_id=dhathuru-api`, `status=ok` and `service_timezone=Indian/Maldives`; another application returning 200 is rejected.
+
+Booking validation reuses both the request date rules and the future-flight callback. Past dates and elapsed times on the current Maldives date produce a `flight_date` validation error before sailing eligibility. Native date inputs also use a Maldives-local minimum date. The passenger form is shown inline after search and uses explicit field errors, so empty submissions do not unmount it or call the booking API.
+
+API throttling uses guest UUID/provider-token hashes rather than sharing one proxy-IP bucket. Unauthenticated requests without a valid guest ID use an IP fallback; provider sign-in also has a per-email limit. Next.js issues HttpOnly guest cookies on catalogue/search reads and preserves rate-limit status and retry headers. Client-chosen UUIDs are not an anti-abuse identity; production still needs appropriate edge controls and deployment load validation.
+
+New tests cover wrong backend identity, future-date rules in search and booking, independent rate limits, inline validation, and catalogue filters. `npm run test:e2e` uses separate Next.js/SQLite output and checks desktop/mobile planner, saved journeys, taxi/bus checkout and provider updates. See the README for commands. Development output is `.next-dev`, production `.next`, browser-test `.next-e2e`.
+
+Unused frontend operator settings and the local Vercel OIDC value were removed from `.env.local`; no secret value was printed or committed. Removing a local value does not revoke an external credential. Check the Vercel account and revoke/rotate any token that was actually shared; external rotation and the real deployment have not been verified here.
+
+
+## Provider audit follow-up
+
+Local/example environments now use `APP_DEBUG=false`; the hosted Vercel configuration already enforced this. API exception responses remove exception class, file, line and trace fields even when debug is accidentally enabled. Unexpected server errors use a generic message while validation fields, HTTP status and retry headers remain available. Diagnostics remain in server logs.
+
+Cargo/last-call messages still lock the sailing and affected requests and append timeline events. They no longer increment the seat-request version because seat count, fare and approval state did not change. Approval reads the latest events under the same locks, preserving notices. Sailing versions still advance and departed/cancelled sailings still reject confirmation.
+
+Demo-service cancellation is transactional and guest-scoped. A repeated cancellation intentionally returns HTTP 200 for safe retries, with `already_cancelled=true` and an explicit message; it does not update timestamps again. The passenger UI displays this cancellation result. Cross-guest requests remain 404.
+
+No existing seeded provider, cancelled sailing or passenger record was reset in this follow-up. A cancelled sailing preserves its audit history and cannot simply be republished; create a replacement for a future trip or explicitly reset only the marked demo fixtures when that is intended. The normal preview uses port 3000 and the API uses port 18765, as documented in the current README.
+
+
+### FollowMe adapter preparation — 28 October 2026
+
+`GET /api/v1/live-vessels` normalizes the public v5 feed through `FollowMeVessels`; the Next.js `/api/live-vessels` route proxies it. `LiveVessels` adds the same separate tracking layer to both map components. Missing credentials return `not_configured` without contacting FollowMe. No real feed has been imported or tested yet; field paths are configurable pending an authorized response. Source references, the official logo and limits are registered in `docs/data-sources.md`. Booking inventory and owner-entered demo positions remain separate.

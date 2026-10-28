@@ -2,6 +2,19 @@
 
 return [
 
+    'followme' => [
+        'key' => env('FOLLOWME_API_KEY'),
+        // Confirm these paths against the first authorized v5 response before enabling.
+        'data_path' => env('FOLLOWME_DATA_PATH', ''),
+        'fields' => [
+            'id' => env('FOLLOWME_ID_FIELD', 'id'),
+            'name' => env('FOLLOWME_NAME_FIELD', 'name'),
+            'latitude' => env('FOLLOWME_LATITUDE_FIELD', 'latitude'),
+            'longitude' => env('FOLLOWME_LONGITUDE_FIELD', 'longitude'),
+            'reported_at' => env('FOLLOWME_REPORTED_AT_FIELD', 'updated_at'),
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Third Party Services

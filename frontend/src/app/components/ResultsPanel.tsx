@@ -1,3 +1,4 @@
+import { useT } from "./I18nProvider";
 import { SeatRequestForm } from "./ProviderSeatRequests";
 import type { BookingChoice } from "./BookingDesk";
 import {
@@ -63,6 +64,7 @@ function BufferMeter({ sailing, safety }: { sailing: Sailing; safety: number }) 
 }
 
 export default function ResultsPanel({ result, error, loading, onBook }: { result: Result | null; error: string; loading: boolean; onBook: (choice: BookingChoice) => void }) {
+  const t = useT();
   const meetsTarget = result ? result.sailings.filter(s => s.bookable).length : 0;
 
   return (
@@ -71,7 +73,7 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
 
       {!result && !error && (
         <div className="rounded-2xl border border-dashed border-ocean/25 p-8 text-center sm:p-10">
-          <h2 className="text-xl font-semibold">Your journey starts here</h2>
+          <h2 className="text-xl font-semibold">{t("Your journey starts here")}</h2>
           <p className="mx-auto mt-3 max-w-md leading-7 text-ocean/70">
             Choose a flight date and search to compare demo ferries. Try Vilufushi (Thaa) to Thimarafushi with a 14:00 flight to see suitable, tight, late, and cancelled options.
           </p>
@@ -82,7 +84,7 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
         <div className="mb-5">
           <h2 className="text-2xl font-semibold tracking-tight">{result.origin} → {result.destination} ({result.destination_code})</h2>
           <p className="mt-2 text-sm leading-6 text-ocean/80">
-            <span className="rounded-full bg-flight px-2 py-1 text-xs font-semibold text-ocean">Flight</span> {localTime(result.flight_at)} · Check-in target: {localTime(result.check_in_deadline_at)}<br />
+            <span className="rounded-full bg-flight px-2 py-1 text-xs font-semibold text-ocean">{t("Flight")}</span> {localTime(result.flight_at)} · Check-in target: {localTime(result.check_in_deadline_at)}<br />
             {result.schedule_coverage
               ? `${meetsTarget} ferry ${meetsTarget === 1 ? "connection meets" : "connections meet"} the target and ${meetsTarget === 1 ? "is" : "are"} accepting demo bookings with the ${result.safety_minutes}-minute safety margin.`
               : "Schedule coverage is not available for this route yet."}
@@ -91,21 +93,21 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
 
         {!result.sailings.length && <p className="card p-6">{result.coverage_message ?? "No demo sailings arrive on this flight date. Try another island or date."}</p>}
         {!!result.sailings.length && !meetsTarget && (
-          <p className="mb-5 rounded-2xl bg-coral/10 p-4 text-ocean">No bookable ferry meets the recommended arrival target. Consider travelling earlier or arranging another service; this demo does not provide a confirmed alternative.</p>
+          <p className="mb-5 rounded-2xl bg-coral/10 p-4 text-ocean">{t("No bookable ferry meets the recommended arrival target. Consider travelling earlier or arranging another service; this demo does not provide a confirmed alternative.")}</p>
         )}
 
         <div className="space-y-4">
           {result.sailings.map(sailing => (
             <article key={sailing.id} className={`tile p-5 ${sailing.classification === "cancelled" ? "opacity-80" : ""}`}>
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold">{sailing.service}<span className="whitespace-nowrap rounded-full bg-sea px-2 py-1 text-xs font-normal text-white">Sea · Demo ferry</span></h3>
+                <h3 className="flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold">{sailing.service}<span className="whitespace-nowrap rounded-full bg-sea px-2 py-1 text-xs font-normal text-white">{t("Sea · Demo ferry")}</span></h3>
                 <span className={`pill ${pillStyles[sailing.classification]}`}><span aria-hidden="true">{symbols[sailing.classification]}</span>{labels[sailing.classification]}</span>
               </div>
 
               <p className="mt-3 inline-block rounded-full bg-sand px-3 py-1 text-sm font-semibold">{((sailing.fare_minor ?? 15000) / 100).toFixed(2)} MVR per seat · {sailing.fare_minor == null ? "Assumed demo estimate" : "Provider fare"}</p><Timeline sailing={sailing} result={result} />
 
               {sailing.classification === "cancelled"
-                ? <p className="border-t border-ocean/10 pt-4 text-sm text-ocean/80">This simulated sailing is cancelled and cannot be used.</p>
+                ? <p className="border-t border-ocean/10 pt-4 text-sm text-ocean/80">{t("This simulated sailing is cancelled and cannot be used.")}</p>
                 : <BufferMeter sailing={sailing} safety={result.safety_minutes} />}
 
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -123,12 +125,12 @@ export default function ResultsPanel({ result, error, loading, onBook }: { resul
                 <p className="mt-3 text-sm">{sailing.operator} · {sailing.fare_minor == null ? "150.00 MVR per seat · assumed demo estimate" : `${(sailing.fare_minor / 100).toFixed(2)} MVR per seat`} · Unverified demo provider</p>
                 {sailing.bookable
                   ? <SeatRequestForm sailing={{ id: sailing.provider_sailing_id!, version: sailing.version!, fare_minor: sailing.fare_minor ?? null, remaining_seats: sailing.available_seats }} flightContext={result.search} onSaved={() => {}} />
-                  : <p className="mt-2 text-sm">Not accepting requests for this flight connection.</p>}
+                  : <p className="mt-2 text-sm">{t("Not accepting requests for this flight connection.")}</p>}
               </>}
             </article>
           ))}
         </div>
-        <p className="mt-5 text-xs leading-6 text-ocean/70">Planning estimates only, not guaranteed connections. Search includes sailings arriving on the flight date, including departures the previous evening. Earlier-day arrival options are outside this demo search.</p>
+        <p className="mt-5 text-xs leading-6 text-ocean/70">{t("Planning estimates only, not guaranteed connections. Search includes sailings arriving on the flight date, including departures the previous evening. Earlier-day arrival options are outside this demo search.")}</p>
       </>}
     </section>
   );

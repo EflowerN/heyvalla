@@ -24,12 +24,12 @@ class DemoBookingController extends Controller
     public function store(Request $request, DemoBookings $bookings): JsonResponse
     {
         $guest = $this->guest($request);
-        $input = $request->validate(array_merge((new FerrySearchRequest)->rules(), [
+        $input = Validator::make($request->all(), array_merge((new FerrySearchRequest)->rules(), [
             'sailing_id' => ['required', 'string', 'max:50'], 'request_id' => ['required', 'uuid'],
             'passenger_name' => ['required', 'string', 'max:100'], 'email' => ['required', 'email', 'max:255'],
             'seats' => ['required', 'integer', 'min:1', 'max:6'],
             ...JourneyDetails::rules(),
-        ]));
+        ]))->after(FerrySearchRequest::validateFutureFlight(...))->validate();
 
         return response()->json(['booking' => $bookings->create($input, $guest)], 201)->header('Cache-Control', 'no-store');
     }

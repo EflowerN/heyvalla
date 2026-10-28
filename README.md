@@ -69,7 +69,7 @@ php artisan key:generate
 touch database/database.sqlite
 php artisan migrate --no-interaction
 php artisan heyvalla:demo --days=7
-php artisan serve --host=127.0.0.1 --port=8000
+php artisan serve --host=127.0.0.1 --port=18765
 ```
 
 In a second terminal, from the repository root:
@@ -81,14 +81,14 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [Dhathuru App locally](http://localhost:3000). The frontend's server-only `LARAVEL_API_URL` defaults to `http://127.0.0.1:8000`. If Laravel uses another port, update that value in `frontend/.env.local` and restart Next.js.
+Open [Dhathuru App locally](http://localhost:3000). The frontend's server-only `LARAVEL_API_URL` defaults to `http://127.0.0.1:18765`. If Laravel uses another port, update that value in `frontend/.env.local` and restart Next.js.
 
 Health checks:
 
-- [Laravel health](http://127.0.0.1:8000/api/health)
-- [Frontend-to-backend connection](http://localhost:3000/api/backend-health)
+- [Laravel health](http://127.0.0.1:18765/api/health)
+- [Frontend-to-backend connection](http://localhost:3000/api/backend-health): checks the Dhathuru application name, service identifier and Maldives timezone, and rejects a different application even if it returns HTTP 200.
 
-No map API key is required: geographic outlines are bundled with the app. Backend npm installation is unnecessary for the product UI, which runs in Next.js. Environment files, database contents, dependencies and build outputs must remain outside version control.
+No map API key is required: geographic outlines are bundled with the app. Backend npm installation is unnecessary for the product UI, which runs in Next.js. Environment files, database contents, dependencies and build outputs must remain outside version control. Keep `APP_DEBUG=false` on any shared/hosted demo. API errors retain useful messages and validation fields but strip exception classes, server paths and traces even if debug is accidentally enabled.
 
 When updating an existing checkout, install dependencies from the lockfiles and run `php artisan migrate --no-interaction` before starting the app. Keep the existing `APP_KEY`.
 
@@ -109,7 +109,7 @@ These are shared demonstration credentials, not private accounts. Use sample pas
 ### Journey with a flight
 
 1. Open **Planner** and choose **Fill Thaa → Hulhumalé demo**. This fills tomorrow's fictional flight details.
-2. Search and select a suitable built-in demo ferry. Review the connection and book with sample passenger details. A provider sailing instead requires its owner's approval.
+2. Search and select a suitable built-in demo ferry. The **Passenger details & booking** form appears inline below the results. Enter sample passenger details and confirm; empty or invalid fields remain visible with inline errors. A provider sailing instead requires its owner's approval.
 3. Open **My itineraries** and select **Book remaining journey services · Demo** for the confirmed ferry journey.
 4. Choose the available taxi/bus options, review the simulated flight and transfer prices, and confirm with no payment.
 5. Refresh to show the saved destination, address note, service states and receipt. Existing ferry/operator charges and additional demo-service totals remain separate.
@@ -152,6 +152,7 @@ Current limits:
 - Flightless search supports direct or one-change journeys whose departures fall on the selected Maldives date, with 15–240 minutes between boats. Transfers assume the same island harbour; boarding points and transfer feasibility need operator verification.
 - Flight-fit transfer assumptions are scoped to the Thimarafushi pilot. The app does not calculate arbitrary nationwide taxi–ferry–flight connections.
 - Map route lines are illustrative connections between reference points, not navigable sea tracks or road directions. Address notes are not geocoded.
+- Cancellation retries are safe: repeated demo-service cancellation returns `already_cancelled=true` without changing the record again. Cargo and last-call notices append timeline events without invalidating pending approval versions; changes to booking status still use version checks.
 - Guest access is tied to this browser's cookie. Clearing it loses access; passenger account recovery is not implemented.
 - Standalone demo service receipts are not automatically attached to an existing ferry journey. Fictional sea checkout does not hold real seats; owner requests require approval and capacity checks.
 - Cargo notices and manual position sharing are implemented; cargo reservations, private-charter quoting, automatic disruption recovery and external notifications remain future work.
@@ -164,8 +165,9 @@ From the repository root, run frontend checks:
 ```sh
 cd frontend
 npm run lint
-node --test tests/*.test.mjs
+npm test
 npm run build
+npm run typecheck
 ```
 
 Run backend tests in another terminal from the repository root:
@@ -175,13 +177,31 @@ cd backend
 php artisan test
 ```
 
+For repeatable desktop and mobile browser checks:
+
+```sh
+cd frontend
+npx playwright install chromium
+npm run test:e2e
+```
+
+The browser suite starts an isolated Laravel API on `127.0.0.1:18766` and Next.js on `127.0.0.1:3101`, with its own disposable SQLite database under `frontend/.e2e/`. It never resets your normal demo database. Test servers stop after the run; ports must be free. It covers planner → inline passenger validation → booking → saved itinerary → bus checkout, airport taxi bookings, provider approval/last-call updates, titles and mobile navigation. Traces/screenshots are saved under ignored `frontend/test-results/` on failure.
+
+Next.js development uses `.next-dev`, production builds use `.next`, and browser tests use `.next-e2e`; a build can run without overwriting a running dev server’s output.
+
 Tests cover connection timing, input validation, guest/provider ownership, capacity and lifecycle guards, retry handling, quotes, and saved journeys. Local tests do not establish real-provider availability or production concurrency guarantees.
+
+Sailings can be filtered by travel date, provider, route and island/vessel text, and are grouped by Maldives-local departure day. Departed sailings are removed from the current list as time advances. The main navigation wraps on small screens, and each route has its own page title.
+
+The transport API limits each guest capability or provider session to 60 requests per minute. Separate guests behind the same Next.js proxy receive separate limits; anonymous requests fall back to the source IP. Provider sign-in also has a per-email limit. Proxies retain `429` and `Retry-After`. Use a shared cache store in deployments. These limits are tested locally, including through Next.js; real deployment/load behaviour still needs verification. Client-issued guest capabilities are not an abuse-resistant identity or a replacement for edge protection.
+
+Only `LARAVEL_API_URL` is needed in the frontend environment. The removed `/operator` UI no longer has frontend token/password settings. Keep local environment files private; Vercel OIDC credentials belong to deployment tooling, not `.env.local`.
 
 ## Deployment and next steps
 
 The repository includes a two-project Vercel configuration: Next.js for the frontend and Laravel through a community PHP runtime for the API, with PostgreSQL/Supabase configuration. See [development notes](docs/development.md#hosted-demo-deployment) for environment and migration details. Supabase hosts the database, not the PHP application; database migrations are a separate deployment step. Shared public demo accounts are unsuitable for production.
 
-Planned integrations include Maldivian and other airlines, seaplane operators, Avas Ride dispatch, RTL ticketing, and an owner-authorized FollowMe-style vessel-location feed. These require approved provider access and agreements. The intended flow is search → reprice → reserve → pay → confirm → cancel, with provider references, verified callbacks and reconciliation.
+Planned integrations include Maldivian and other airlines, seaplane operators, Avas Ride dispatch, RTL ticketing, and owner-authorized private vessel tracking. The public FollowMe v5 connector is prepared (see below); it awaits a key and verification of its response-field mapping. These require approved provider access and agreements. The intended flow is search → reprice → reserve → pay → confirm → cancel, with provider references, verified callbacks and reconciliation.
 
 For project context:
 
@@ -193,3 +213,18 @@ For project context:
 - [Development notes](docs/development.md) and [design system](docs/design-system.md)
 
 Some planning documents describe earlier phases; this README summarizes the current demo and distinguishes the implemented experience from the roadmap.
+
+
+### FollowMe boat positions (prepared; API key required)
+
+The journey and ferry-planner maps include a separate boat layer, name search and focusable vessel list. The connector uses only FollowMe's public vessel endpoint; it does not expose account/private vessels, infer seats or create bookings.
+
+**Owner-linked positions on sailings.** In `/providers`, an owner can enter the FollowMe vessel ID of a boat that is public on FollowMe and confirm they operate it and authorise showing its position. The ID must appear in the public feed (if the feed is unavailable the link is saved but remains unverified), and each FollowMe vessel can belong to one owner. Published sailings show that boat's latest reported position, labelled owner-linked and unverified, only from three hours before departure; the FollowMe ID is never published, and a feed outage never hides a sailing or invents a position. FollowMe's logo and a data-source link appear wherever its data is shown. Owner-entered manual positions remain separate. Run `php artisan migrate` to add the `followme_id` column.
+
+1. Obtain an approved key from [FollowMe](https://followme.mv/api/v5/) and set `FOLLOWME_API_KEY` in the **backend** environment. Never put it in a `NEXT_PUBLIC_` variable.
+2. Confirm the JSON envelope and field paths against the first authorized response, then set `FOLLOWME_DATA_PATH` and the `FOLLOWME_*_FIELD` values from `backend/.env.example`. The defaults are provisional adapter paths, not a verified v5 schema. Report timestamps must be Unix seconds/milliseconds or ISO 8601 with a timezone; ambiguous local times are shown as unknown.
+3. Clear cached configuration if applicable (`php artisan config:clear`) and restart Laravel. Check `/api/v1/live-vessels` and the map. No key currently exists in this project, so live connectivity has not been verified; automated fixtures are synthetic.
+
+The backend shares one atomic 65-second upstream request gate across visitors, including failures. Use a persistent shared cache supporting atomic `add` (the local database cache does); separate deployments/other consumers of the same key also need coordinated limiting. Public clients cannot override the URL or request private account data. No upstream body, credential or URL is returned on errors. Review outbound-request tracing because FollowMe places the key in its URL.
+
+Positions older than ten minutes, with unknown timestamps, or retained after a failed refresh are visibly labelled. Saved positions expire after an hour. Feed retrieval time is separate from position-report time. Missing coordinates are omitted, not plotted at a default location. The planner works without the feed. FollowMe attribution and its official logo appear on each map displaying the layer. See [source and usage notes](docs/data-sources.md); check FollowMe's terms before any paid public release.

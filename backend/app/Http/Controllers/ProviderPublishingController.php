@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FollowMeVessels;
 use App\Services\ProviderLifecycle;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class ProviderPublishingController extends Controller
 {
@@ -19,11 +21,25 @@ class ProviderPublishingController extends Controller
         return response()->json(['vessels' => DB::table('provider_vessels')->where('provider_account_id', $account->id)->get(), 'sailings' => DB::table('provider_sailings')->where('provider_account_id', $account->id)->orderBy('departure_at')->get()])->header('Cache-Control', 'no-store');
     }
 
-    public function vessel(Request $request): JsonResponse
+    public function vessel(Request $request, FollowMeVessels $followMe): JsonResponse
     {
         $account = ProviderAccountController::account($request);
-        $input = $request->validate(['id' => ['nullable', 'integer'], 'version' => ['required_with:id', 'integer'], 'name' => ['required', 'string', 'max:100'], 'passenger_capacity' => ['required', 'integer', 'min:1', 'max:500'], 'booking_mode' => ['required', 'in:off,request_to_book'], 'cargo_enquiries' => ['required', 'boolean']]);
+        $input = $request->validate(['id' => ['nullable', 'integer'], 'version' => ['required_with:id', 'integer'], 'followme_id' => ['nullable', 'string', 'max:100', 'regex:/^[A-Za-z0-9_-]+$/', Rule::unique('provider_vessels', 'followme_id')->ignore($request->input('id'))], 'followme_authorized' => ['nullable', 'boolean'], 'name' => ['required', 'string', 'max:100'], 'passenger_capacity' => ['required', 'integer', 'min:1', 'max:500'], 'booking_mode' => ['required', 'in:off,request_to_book'], 'cargo_enquiries' => ['required', 'boolean']]);
         $values = ['name' => $input['name'], 'passenger_capacity' => $input['passenger_capacity'], 'booking_mode' => $input['booking_mode'], 'cargo_enquiries' => $input['cargo_enquiries'], 'updated_at' => now()];
+        $followMeId = trim((string) ($input['followme_id'] ?? ''));
+        if ($followMeId !== '' && empty($input['followme_authorized'])) {
+            throw ValidationException::withMessages(['followme_authorized' => 'Confirm that you operate this vessel and authorise showing its position.']);
+        }
+        $existing = ! empty($input['id']) ? DB::table('provider_vessels')->where('provider_account_id', $account->id)->find($input['id']) : null;
+        if ($followMeId === '') {
+            $values += ['followme_id' => null, 'followme_linked_at' => null];
+        } elseif ($existing?->followme_id === $followMeId) {
+            $values += ['followme_id' => $followMeId];
+        } else {
+            // Only boats the owner has made public on FollowMe can be linked; if the feed is down we cannot check, so the link stays labelled unverified.
+            abort_if($followMe->isListed($followMeId) === false, 422, 'That vessel is not in the public FollowMe list. Make the boat public on FollowMe first.');
+            $values += ['followme_id' => $followMeId, 'followme_linked_at' => now()];
+        }
         if (! empty($input['id'])) {
             $vessel = DB::table('provider_vessels')->where('provider_account_id', $account->id)->find($input['id']);
             abort_unless($vessel, 404);
@@ -120,16 +136,28 @@ class ProviderPublishingController extends Controller
             DB::table('provider_sailings')->where('id', $sailing->id)->update(['operations' => json_encode($operations), 'version' => $sailing->version + 1, 'updated_at' => now()]);
             $bookings = DB::table('provider_seat_requests')->where('provider_sailing_id', $sailing->id)->whereIn('status', ['requested', 'confirmed'])->lockForUpdate()->get();
             foreach ($bookings as $booking) {
-                DB::table('provider_seat_requests')->where('id', $booking->id)->update(['events' => json_encode(ProviderLifecycle::appendEvent($booking, $input['cargo_status'], 'provider', $input['note'])), 'version' => $booking->version + 1, 'updated_at' => now()]);
+                DB::table('provider_seat_requests')->where('id', $booking->id)->update(['events' => json_encode(ProviderLifecycle::appendEvent($booking, $input['cargo_status'], 'provider', $input['note'])), 'updated_at' => now()]);
             }
 
             return response()->json(['operations' => $operations, 'notified' => $bookings->count(), 'message' => 'Saved. In-app updates added for booked/requesting passengers; no SMS or external push sent.']);
         }, 5);
     }
 
-    public function catalogue(): JsonResponse
+    public function catalogue(FollowMeVessels $followMe): JsonResponse
     {
-        $sailings = DB::table('provider_sailings as s')->join('provider_accounts as p', 'p.id', '=', 's.provider_account_id')->join('provider_vessels as v', 'v.id', '=', 's.provider_vessel_id')->where('s.status', 'published')->where('s.departure_at', '>', now())->orderBy('s.departure_at')->limit(200)->get(['s.operations', 's.id', 's.origin_id', 's.destination_id', 's.version', 's.seat_capacity', 's.confirmed_seats', 'v.booking_mode', 's.origin', 's.destination', 's.departure_at', 's.arrival_at', 's.fare_minor', 'p.organization_name', 'p.description', 'p.coverage', 'v.name as vessel_name', 'v.passenger_capacity'])->map(fn (object $sailing): array => [...(array) $sailing, 'departure_at' => CarbonImmutable::parse($sailing->departure_at, 'UTC')->toIso8601String(), 'arrival_at' => CarbonImmutable::parse($sailing->arrival_at, 'UTC')->toIso8601String(), 'currency' => 'MVR', 'verification' => 'unverified', 'demo' => true, 'remaining_seats' => $sailing->seat_capacity - $sailing->confirmed_seats, 'booking_available' => (json_decode($sailing->operations ?? 'null', true)['cargo_status'] ?? null) !== 'departed' && $sailing->booking_mode === 'request_to_book' && $sailing->fare_minor !== null && $sailing->confirmed_seats < $sailing->seat_capacity, 'operations' => $sailing->operations ? json_decode($sailing->operations, true) : null, 'location_sharing' => ! empty(json_decode($sailing->operations ?? 'null', true)['location']) ? 'owner_reported' : 'off']);
+        $sailings = DB::table('provider_sailings as s')->join('provider_accounts as p', 'p.id', '=', 's.provider_account_id')->join('provider_vessels as v', 'v.id', '=', 's.provider_vessel_id')->where('s.status', 'published')->where('s.departure_at', '>', now())->orderBy('s.departure_at')->limit(200)->get(['s.operations', 's.id', 's.origin_id', 's.destination_id', 's.version', 's.seat_capacity', 's.confirmed_seats', 'v.booking_mode', 's.origin', 's.destination', 's.departure_at', 's.arrival_at', 's.fare_minor', 'p.organization_name', 'p.description', 'p.coverage', 'v.name as vessel_name', 'v.passenger_capacity', 'v.followme_id'])->map(fn (object $sailing): array => [...(array) $sailing, 'departure_at' => CarbonImmutable::parse($sailing->departure_at, 'UTC')->toIso8601String(), 'arrival_at' => CarbonImmutable::parse($sailing->arrival_at, 'UTC')->toIso8601String(), 'currency' => 'MVR', 'verification' => 'unverified', 'demo' => true, 'remaining_seats' => $sailing->seat_capacity - $sailing->confirmed_seats, 'booking_available' => (json_decode($sailing->operations ?? 'null', true)['cargo_status'] ?? null) !== 'departed' && $sailing->booking_mode === 'request_to_book' && $sailing->fare_minor !== null && $sailing->confirmed_seats < $sailing->seat_capacity, 'operations' => $sailing->operations ? json_decode($sailing->operations, true) : null, 'location_sharing' => ! empty(json_decode($sailing->operations ?? 'null', true)['location']) ? 'owner_reported' : 'off']);
+
+        // Position is only shown from three hours before departure, and the FollowMe id itself is never published.
+        $tracked = $sailings->filter(fn (array $s): bool => $s['followme_id'] !== null && CarbonImmutable::parse($s['departure_at'])->lessThanOrEqualTo(now()->addHours(3)))->pluck('followme_id')->unique()->values()->all();
+        $feed = $followMe->positionsFor($tracked);
+        $sailings = $sailings->map(function (array $s) use ($feed): array {
+            $linked = $s['followme_id'] !== null;
+            $inWindow = $linked && CarbonImmutable::parse($s['departure_at'])->lessThanOrEqualTo(now()->addHours(3));
+            $position = $inWindow ? ($feed['positions'][$s['followme_id']] ?? null) : null;
+            unset($s['followme_id']);
+
+            return [...$s, 'vessel_tracking' => ! $linked ? null : ['source' => 'FollowMe', 'source_url' => 'https://followme.mv/', 'linked_by' => 'owner', 'verified' => false, 'status' => $inWindow ? $feed['status'] : 'not_yet', 'message' => $inWindow ? ($position ? $feed['message'] : 'No recent FollowMe position for this boat yet.') : 'Boat position appears about three hours before departure.', 'position' => $position]];
+        });
 
         return response()->json(['sailings' => $sailings])->header('Cache-Control', 'no-store');
     }

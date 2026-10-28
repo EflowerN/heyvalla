@@ -22,7 +22,7 @@ export default function LocationSearch({ id, label, places, value, selected, onC
         if (event.key === "ArrowDown" || event.key === "ArrowUp") { event.preventDefault(); setOpen(true); setActive(index => Math.max(0, Math.min(visible.length - 1, index + (event.key === "ArrowDown" ? 1 : -1)))); }
         if (event.key === "Enter" && open) { event.preventDefault(); if (visible[active]) pick(visible[active]); }
       }} className="mt-2 w-full rounded-2xl border border-ocean/15 bg-white p-4 shadow-sm text-base outline-offset-2 focus:outline-lagoon" />
-    <p className="mt-2 text-xs text-ocean/65">{selected ? `${selected.iata ? `Airport · ${selected.iata}` : `${selected.atoll} · ${selected.category === "resort" ? "Resort island" : "Inhabited island"}`} · Selected` : "Type a location, then select a match."}</p>
+    <p className="mt-2 text-xs text-ocean/65">{selected ? `${selected.name} · ${selected.iata ? `Airport · ${selected.iata}` : `${selected.atoll} · ${selected.category === "resort" ? "Resort island" : "Inhabited island"}`} · Selected` : "Type a location, then select a match."}</p>
     {open && <div className="absolute z-[1100] mt-2 w-full overflow-hidden rounded-2xl border border-ocean/10 bg-white shadow-xl">
       <ul id={`${id}-options`} role="listbox" aria-label={`${label} matches`} className="max-h-64 overflow-y-auto">
         {visible.map((place, index) => <li key={place.id} id={`${id}-${index}`} role="option" aria-selected={active === index} onMouseDown={event => event.preventDefault()} onClick={() => pick(place)} className={`cursor-pointer px-4 py-3 text-sm hover:bg-lagoon/10 ${active === index ? "bg-lagoon/10" : ""}`}>

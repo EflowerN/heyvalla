@@ -11,8 +11,12 @@
   --color-land: #F59E0B;
   --color-taxi: #000000;
   --color-bus: #15803D;
+  --color-mist: #F3F7F7;
 }
-body { background: var(--color-sand); color: var(--color-ocean); font-family: Arial, Helvetica, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background: var(--color-mist); color: var(--color-ocean); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Arial, Helvetica, sans-serif; -webkit-tap-highlight-color: transparent; }
+/* Dhivehi (Thaana): system fonts ship with macOS/iOS (Thaana Sangam MN), Windows (MV Boli) and Android (Noto Sans Thaana). */
+html[lang="dv"] body { font-family: "Faruma", "MV Boli", "Thaana Sangam MN", "Noto Sans Thaana", "Noto Sans", sans-serif; line-height: 1.7; }
+html[lang="dv"] .tracking-tight, html[lang="dv"] .tracking-widest, html[lang="dv"] .uppercase { letter-spacing: 0; text-transform: none; }
 input, select, textarea { accent-color: var(--color-lagoon); }
 :where(button, a, input, select, textarea):focus-visible { outline: 2px solid var(--color-lagoon); outline-offset: 3px; }
 button:not(:disabled), summary { cursor: pointer; }
@@ -58,3 +62,48 @@ article:nth-of-type(n+6) { animation-delay: 0.3s; }
 
 /* Keep nearby island and airport labels readable on narrow maps. */
 .island-map-label { max-width: 220px; white-space: normal; color: #12343B; border-color: #FFFFFF; }
+
+/* Comfortable hit areas; inline source links retain normal text flow. */
+button, summary, input:not([type="checkbox"]):not([type="radio"]), select, textarea { min-height: 44px; }
+summary { padding-block: 10px; }
+label:has(> input[type="checkbox"]) { min-height: 44px; padding-block: 8px; }
+main > a, section > a, article > a, main div > a { display: inline-flex; align-items: center; min-height: 44px; }
+.leaflet-control-zoom a { min-width: 44px; min-height: 44px; line-height: 44px; }
+
+/* Prototype design: gradient hero, floating planner card, softer surfaces */
+.hero { position: relative; overflow: hidden; isolation: isolate; border-radius: 2rem; color: #fff; background: linear-gradient(165deg, #07434f 0%, #087f8c 58%, #3ec6c0 125%); }
+.hero::before { content: ""; position: absolute; z-index: -1; right: -40px; top: -20px; width: 190px; height: 190px; border-radius: 9999px; background: radial-gradient(circle, #ffd98a 0%, #ffb26b 55%, transparent 70%); opacity: 0.85; animation: sun 7s ease-in-out infinite; }
+html[dir="rtl"] .hero::before { right: auto; left: -40px; }
+.hero-waves { position: absolute; inset-inline: 0; bottom: -1px; height: 64px; width: 200%; z-index: -1; animation: wave 12s linear infinite; }
+.hero-waves.slow { bottom: -8px; opacity: 0.5; animation-duration: 18s; animation-direction: reverse; }
+@keyframes wave { to { transform: translateX(-50%); } }
+@keyframes sun { 50% { transform: translateY(10px) scale(1.05); } }
+.float-card { position: relative; z-index: 2; margin-top: -3.5rem; }
+@layer components {
+  .tile { box-shadow: 0 12px 32px -14px rgb(13 43 51 / 0.28); border: 0; }
+  .card { border: 0; box-shadow: 0 6px 20px -12px rgb(13 43 51 / 0.22); border-radius: 1.25rem; }
+}
+/* Primary actions get the prototype gradient and a slow shine */
+button.bg-lagoon:not(:disabled), a.bg-lagoon:not([aria-hidden]) { background-image: linear-gradient(135deg, #087f8c, #13a2ad); box-shadow: 0 10px 22px -10px rgb(8 127 140 / 0.8); }
+:where(.rounded-full, .rounded-xl, .rounded-2xl).bg-white.border { border-color: rgb(13 43 51 / 0.1); }
+html[dir="rtl"] input[type="number"], html[dir="rtl"] input[type="date"], html[dir="rtl"] input[type="time"], html[dir="rtl"] input[type="email"] { direction: ltr; text-align: start; }
+html[dir="rtl"] .leaflet-container { direction: ltr; }
+
+/* Prototype form fields: soft fill that lifts to white with a teal ring on focus */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), select, textarea { background-color: #f1f6f6; border: 1.5px solid transparent; border-radius: 0.875rem; }
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):focus, select:focus, textarea:focus { background-color: #fff; border-color: var(--color-lagoon); box-shadow: 0 0 0 4px rgb(8 127 140 / 0.12); outline: none; }
+input::placeholder, textarea::placeholder { color: rgb(18 52 59 / 0.45); }
+/* Fare card (taxi) and seat meters (sailings), as in the prototype */
+.fare-card { background: linear-gradient(150deg, #0a4f5c, #087f8c); color: #fff; box-shadow: 0 16px 36px -16px rgb(8 127 140 / 0.7); }
+.fare-card :where(p, h2, span, a) { color: inherit; }
+.fare-card button { color: #fff; }
+.seat-bar { height: 7px; border-radius: 9999px; background: #e6eeee; overflow: hidden; }
+.seat-bar > i { display: block; height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #087f8c, #3ec6c0); transform-origin: left; animation: grow 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s backwards; }
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.stat { background: #fff; border-radius: 1.1rem; padding: 0.9rem 1rem; box-shadow: 0 6px 20px -12px rgb(13 43 51 / 0.22); }
+.stat b { display: block; font-size: 1.75rem; line-height: 1.1; letter-spacing: -0.03em; }
+.stat span { font-size: 0.78rem; font-weight: 600; color: rgb(18 52 59 / 0.65); }
+/* Pill chips, banners and article cards pick up the softer prototype surfaces */
+article.tile { transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s; }
+@media (hover: hover) { article.tile:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -16px rgb(13 43 51 / 0.32); } }
+aside.bg-coral\/10 { background: #fff2d6; border-radius: 1rem; }

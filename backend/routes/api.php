@@ -5,13 +5,15 @@ use App\Http\Controllers\DemoCheckoutController;
 use App\Http\Controllers\DemoTaxiController;
 use App\Http\Controllers\FlightSearchController;
 use App\Http\Controllers\JourneyController;
+use App\Http\Controllers\LiveVesselController;
 use App\Http\Controllers\ProviderAccountController;
 use App\Http\Controllers\ProviderBookingController;
 use App\Http\Controllers\ProviderPublishingController;
 use App\Http\Controllers\SeaJourneyController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('throttle:60,1')->group(function (): void {
+Route::middleware('throttle:transport')->group(function (): void {
+    Route::get('/v1/live-vessels', LiveVesselController::class);
     Route::get('/v1/demo-checkout', [DemoCheckoutController::class, 'index']);
     Route::post('/v1/demo-checkout', [DemoCheckoutController::class, 'store']);
     Route::post('/v1/demo-checkout/cancel', [DemoCheckoutController::class, 'cancel']);
@@ -30,7 +32,7 @@ Route::middleware('throttle:60,1')->group(function (): void {
     Route::post('/v1/demo-bookings', [DemoBookingController::class, 'store']);
 });
 
-Route::prefix('v1/providers')->middleware('throttle:60,1')->group(function (): void {
+Route::prefix('v1/providers')->middleware('throttle:transport')->group(function (): void {
     Route::post('/register', [ProviderAccountController::class, 'register'])->middleware('throttle:provider-auth');
     Route::post('/login', [ProviderAccountController::class, 'login'])->middleware('throttle:provider-auth');
     Route::get('/account', [ProviderAccountController::class, 'show']);
@@ -46,7 +48,7 @@ Route::prefix('v1/providers')->middleware('throttle:60,1')->group(function (): v
     Route::get('/catalogue', [ProviderPublishingController::class, 'catalogue']);
 });
 
-Route::prefix('v1/provider-bookings')->middleware('throttle:60,1')->group(function (): void {
+Route::prefix('v1/provider-bookings')->middleware('throttle:transport')->group(function (): void {
     Route::get('/', [ProviderBookingController::class, 'index']);
     Route::post('/', [ProviderBookingController::class, 'store']);
     Route::post('/cancel', [ProviderBookingController::class, 'cancel']);

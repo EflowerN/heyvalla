@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "./I18nProvider";
+
 import type { FlightOption } from "@/lib/flights";
 import { useState, type FormEvent } from "react";
 import type { Directory } from "@/lib/journey-plan";
@@ -18,6 +20,7 @@ const field = "mt-2 block w-full rounded-lg border border-ocean/25 bg-white p-3"
 export default function JourneyDetailsEditor({ reference, version, details, onSaved }: {
   reference: string; version: number; details: SavedJourneyDetails | null; onSaved: () => void | Promise<void>;
 }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [directory, setDirectory] = useState<Directory | null>(null);
   const [airport, setAirport] = useState("VRMM");
@@ -64,16 +67,16 @@ export default function JourneyDetailsEditor({ reference, version, details, onSa
   }
   return <section className="mt-5 rounded-xl border border-ocean/15 p-4" aria-label="Edit saved journey details">
     {!open ? <button type="button" className="font-semibold text-lagoon underline" onClick={() => void edit()}>{details ? "Edit flight arrival, destination & address" : "Add flight destination & address"}</button> : <form onSubmit={save}>
-      <h3 className="font-semibold">Flight arrival and final destination</h3><p className="my-3 text-sm leading-6">Saved privately with your itinerary. This does not change your ferry booking, departure flight target or airport taxi. It does not book a flight or onward taxi. Changing the arrival airport or time removes the saved airline flight reference. All times use Maldives time.</p>
+      <h3 className="font-semibold">{t("Flight arrival and final destination")}</h3><p className="my-3 text-sm leading-6">{t("Saved privately with your itinerary. This does not change your ferry booking, departure flight target or airport taxi. It does not book a flight or onward taxi. Changing the arrival airport or time removes the saved airline flight reference. All times use Maldives time.")}</p>
       <fieldset disabled={busy} className="grid gap-4 sm:grid-cols-2">
-        <label className="text-sm">Flight arrival airport<select value={airport} onChange={event => setAirport(event.target.value)} className={field} required><option value="">Choose airport</option>{directory?.airports.filter(place => place.id !== "VRNT").map(place => <option key={place.id} value={place.id}>{place.name} ({place.iata})</option>)}</select></label>
+        <label className="text-sm">{t("Flight arrival airport")}<select value={airport} onChange={event => setAirport(event.target.value)} className={field} required><option value="">{t("Choose airport")}</option>{directory?.airports.filter(place => place.id !== "VRNT").map(place => <option key={place.id} value={place.id}>{place.name} ({place.iata})</option>)}</select></label>
         <LocationSearch id={`destination-${reference}`} label="Final destination" places={places} value={query} selected={selected} onChange={value => { setQuery(value); setDestination(""); }} onSelect={place => { setDestination(place.id); setQuery(place.name); if (place.iata) setAirport(place.id); }} disabled={!directory || busy} />
-        <label className="text-sm">Flight arrival date (optional)<input type="date" value={arrivalDate} onChange={event => setArrivalDate(event.target.value)} className={field} /></label>
-        <label className="text-sm">Flight arrival time (optional)<input type="time" value={arrivalTime} onChange={event => setArrivalTime(event.target.value)} className={field} /></label>
-        {airport === "VRMM" && destination === "ld0591" && <label className="text-sm">Hulhumalé drop-off zone<select value={zone} onChange={event => setZone(event.target.value)} className={field}><option value="hulhumale-phase-1">Phase 1</option><option value="hulhumale-phase-2">Phase 2</option></select></label>}
-        <label className="text-sm sm:col-span-2">Home, hotel or address note<input value={address} onChange={event => setAddress(event.target.value)} maxLength={160} className={field} /><span className="mt-1 block text-xs text-ocean/65">You can clear this field to remove the address. No address lookup or exact road routing.</span></label>
+        <label className="text-sm">{t("Flight arrival date (optional)")}<input type="date" value={arrivalDate} onChange={event => setArrivalDate(event.target.value)} className={field} /></label>
+        <label className="text-sm">{t("Flight arrival time (optional)")}<input type="time" value={arrivalTime} onChange={event => setArrivalTime(event.target.value)} className={field} /></label>
+        {airport === "VRMM" && destination === "ld0591" && <label className="text-sm">{t("Hulhumalé drop-off zone")}<select value={zone} onChange={event => setZone(event.target.value)} className={field}><option value="hulhumale-phase-1">{t("Phase 1")}</option><option value="hulhumale-phase-2">{t("Phase 2")}</option></select></label>}
+        <label className="text-sm sm:col-span-2">{t("Home, hotel or address note")}<input value={address} onChange={event => setAddress(event.target.value)} maxLength={160} className={field} /><span className="mt-1 block text-xs text-ocean/65">{t("You can clear this field to remove the address. No address lookup or exact road routing.")}</span></label>
       </fieldset>
-      <div className="mt-4 flex flex-wrap gap-4"><button disabled={busy || !directory || !selected} className="rounded-lg bg-lagoon px-4 py-2 text-white disabled:opacity-50">{busy ? "Please wait…" : "Save journey details"}</button><button type="button" disabled={busy} onClick={() => setOpen(false)} className="text-lagoon underline">Close without saving</button></div>
+      <div className="mt-4 flex flex-wrap gap-4"><button disabled={busy || !directory || !selected} className="rounded-lg bg-lagoon px-4 py-2 text-white disabled:opacity-50">{busy ? "Please wait…" : "Save journey details"}</button><button type="button" disabled={busy} onClick={() => setOpen(false)} className="text-lagoon underline">{t("Close without saving")}</button></div>
       {error && <p role="alert" className="mt-3 text-sm text-rose-800">{error}</p>}
     </form>}
     {message && <p role="status" className="mt-3 text-sm">{message}</p>}

@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "./I18nProvider";
+
 import { useEffect, useRef, useState } from "react";
 import type * as Leaflet from "leaflet";
 import { transportColors } from "@/lib/transport-colors";
@@ -7,12 +9,14 @@ import type { Directory, JourneyLeg, Place } from "@/lib/journey-plan";
 import "leaflet/dist/leaflet.css";
 import { addIslandBasemap } from "@/lib/island-basemap";
 import TransportIcon from "./TransportIcon";
+import LiveVessels from "./LiveVessels";
 import { transportKind, transportColor, transportForeground, transportLabels, transportSvg, type TransportKind } from "@/lib/transport-icons";
 
 export default function JourneyMap({ directory, origin, destination, legs, selectedLeg, onLegSelect, onOriginSelect, onDestinationSelect }: {
   directory: Directory; origin: Place | null; destination: Place | null; legs: JourneyLeg[]; selectedLeg: string;
   onLegSelect: (id: string) => void; onOriginSelect: (place: Place) => void; onDestinationSelect: (place: Place) => void;
 }) {
+  const t = useT();
   const element = useRef<HTMLDivElement>(null);
   const instance = useRef<Leaflet.Map | null>(null);
   const leaflet = useRef<typeof Leaflet | null>(null);
@@ -99,12 +103,13 @@ export default function JourneyMap({ directory, origin, destination, legs, selec
   }, [ready, legs, selectedLeg, origin, destination, fit]);
 
   return <section id="map" className="tile flex h-full scroll-mt-4 flex-col overflow-hidden" aria-label="Whole journey map">
-    <header className="flex flex-wrap items-center justify-between gap-3 p-5"><div><h2 className="text-xl font-semibold">The whole route</h2><p className="mt-1 text-xs text-ocean/65">Select a leg to focus the map.</p></div><button type="button" onClick={() => { onLegSelect(""); setFit(value => value + 1); }} className="rounded-full border border-lagoon/30 px-4 py-2 text-sm text-lagoon">Fit whole journey</button></header>
-    <div className="flex flex-wrap items-center gap-3 px-5 pb-4 text-sm"><label className="flex items-center gap-2"><input type="checkbox" checked={showPlaces} onChange={event => setShowPlaces(event.target.checked)} />Show island & airport markers</label>{showPlaces && <label>Click a marker to set <select value={pick} onChange={event => setPick(event.target.value as "origin" | "destination")} className="rounded-lg border p-2"><option value="origin">starting island</option><option value="destination">destination</option></select></label>}</div>
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 pb-4 text-xs text-ocean/75" aria-label="Island marker legend"><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-lagoon" />Inhabited island</span><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-coral" />Resort island</span><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-flight" />Airport</span><span className="flex items-center gap-2"><span className="h-2.5 w-4 rounded border border-[#51A8AA] bg-[#80C9BE]/50" />Natural reefs & lagoons</span><span>Hover for names · zoom in for island detail</span></div>
-    {error && <p role="alert" className="p-4 text-rose-800">{error} <button className="underline" onClick={() => { setError(""); setReady(false); setRetry(value => value + 1); }}>Retry map</button></p>}
+    <header className="flex flex-wrap items-center justify-between gap-3 p-5"><div><h2 className="text-xl font-semibold">{t("The whole route")}</h2><p className="mt-1 text-xs text-ocean/65">{t("Select a leg to focus the map.")}</p></div><button type="button" onClick={() => { onLegSelect(""); setFit(value => value + 1); }} className="rounded-full border border-lagoon/30 px-4 py-2 text-sm text-lagoon">{t("Fit whole journey")}</button></header>
+    <div className="flex flex-wrap items-center gap-3 px-5 pb-4 text-sm"><label className="flex items-center gap-2"><input type="checkbox" checked={showPlaces} onChange={event => setShowPlaces(event.target.checked)} />{t("Show island & airport markers")}</label>{showPlaces && <label>{t("Click a marker to set")} <select value={pick} onChange={event => setPick(event.target.value as "origin" | "destination")} className="rounded-lg border p-2"><option value="origin">{t("starting island")}</option><option value="destination">{t("destination")}</option></select></label>}</div>
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 pb-4 text-xs text-ocean/75" aria-label="Island marker legend"><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-lagoon" />{t("Inhabited island")}</span><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-coral" />{t("Resort island")}</span><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-flight" />{t("Airport")}</span><span className="flex items-center gap-2"><span className="h-2.5 w-4 rounded border border-[#51A8AA] bg-[#80C9BE]/50" />{t("Natural reefs & lagoons")}</span><span>{t("Hover for names · zoom in for island detail")}</span></div>
+    {error && <p role="alert" className="p-4 text-rose-800">{error} <button className="underline" onClick={() => { setError(""); setReady(false); setRetry(value => value + 1); }}>{t("Retry map")}</button></p>}
     <div ref={element} className="relative z-0 min-h-[360px] flex-1 sm:min-h-[420px]" style={{ backgroundColor: "#E4F2F3" }} aria-label="Map with illustrative ferry, flight and taxi connections" />
-    {outlineError && <p role="status" className="px-5 pt-4 text-sm">Some island, reef or lagoon outlines could not load. Island markers and route lines are still available.</p>}
-    <div className="space-y-3 p-5 text-xs leading-5 text-ocean/70"><ul className="flex flex-wrap gap-4" aria-label="Transport legend">{(["ferry", "launch", "flight", "taxi", "bus"] satisfies TransportKind[]).map(kind => <li key={kind} className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-full" style={{ backgroundColor: transportColor(kind), color: transportForeground(kind) }}><TransportIcon kind={kind} className="h-4 w-4" /></span>{transportLabels[kind]}</li>)}</ul><p>Only the legs in your itinerary are drawn; a legend icon does not mean that service is available. Illustrative straight connections, not navigation paths or live tracking. Harbour and destination markers use island reference points. An address note does not geocode your home. Island, reef and lagoon outlines: OneMap; airports: Maldives CAA (July 2025). Reef and lagoon shading shows natural geography, not safe sailing areas or water depths. Island outlines include uninhabited islands; selectable markers follow the island directory.</p></div>
+    <LiveVessels mapRef={instance} leafletRef={leaflet} mapVersion={ready ? retry + 1 : 0} />
+    {outlineError && <p role="status" className="px-5 pt-4 text-sm">{t("Some island, reef or lagoon outlines could not load. Island markers and route lines are still available.")}</p>}
+    <div className="space-y-3 p-5 text-xs leading-5 text-ocean/70"><ul className="flex flex-wrap gap-4" aria-label="Transport legend">{(["ferry", "launch", "flight", "taxi", "bus"] satisfies TransportKind[]).map(kind => <li key={kind} className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-full" style={{ backgroundColor: transportColor(kind), color: transportForeground(kind) }}><TransportIcon kind={kind} className="h-4 w-4" /></span>{transportLabels[kind]}</li>)}</ul><p>Only the legs in your itinerary are drawn; a legend icon does not mean that service is available. Route lines are illustrative straight connections, not navigation paths. FollowMe boat icons, when connected, are a separate tracking layer. Harbour and destination markers use island reference points. An address note does not geocode your home. Island, reef and lagoon outlines: OneMap; airports: Maldives CAA (July 2025). Reef and lagoon shading shows natural geography, not safe sailing areas or water depths. Island outlines include uninhabited islands; selectable markers follow the island directory.</p></div>
   </section>;
 }
