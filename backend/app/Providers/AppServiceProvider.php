@@ -28,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
             Limit::perMinute(20)->by('provider-auth-client:'.self::clientKey($request)),
             Limit::perMinute(5)->by('provider-auth-email:'.hash('sha256', strtolower(trim((string) $request->input('email'))))),
         ]);
+        RateLimiter::for('traveller-auth', fn (Request $request): array => [
+            Limit::perMinute(20)->by('traveller-auth-client:'.$request->ip()),
+            Limit::perMinute(5)->by('traveller-auth-email:'.hash('sha256', strtolower(trim((string) $request->input('email'))))),
+        ]);
     }
 
     private static function clientKey(Request $request): string

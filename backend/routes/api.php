@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAccountController;
 use App\Http\Controllers\DemoBookingController;
 use App\Http\Controllers\DemoCheckoutController;
 use App\Http\Controllers\DemoTaxiController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ProviderAccountController;
 use App\Http\Controllers\ProviderBookingController;
 use App\Http\Controllers\ProviderPublishingController;
 use App\Http\Controllers\SeaJourneyController;
+use App\Http\Controllers\TravellerAccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('throttle:transport')->group(function (): void {
@@ -52,4 +54,17 @@ Route::prefix('v1/provider-bookings')->middleware('throttle:transport')->group(f
     Route::get('/', [ProviderBookingController::class, 'index']);
     Route::post('/', [ProviderBookingController::class, 'store']);
     Route::post('/cancel', [ProviderBookingController::class, 'cancel']);
+});
+
+Route::prefix('v1/travellers')->middleware('throttle:60,1')->group(function (): void {
+    Route::post('/register', [TravellerAccountController::class, 'register'])->middleware('throttle:traveller-auth');
+    Route::post('/login', [TravellerAccountController::class, 'login'])->middleware('throttle:traveller-auth');
+    Route::get('/me', [TravellerAccountController::class, 'show']);
+    Route::post('/logout', [TravellerAccountController::class, 'logout']);
+});
+
+Route::prefix('v1/admin')->middleware('throttle:60,1')->group(function (): void {
+    Route::get('/users', [AdminAccountController::class, 'index']);
+    Route::post('/users/{id}', [AdminAccountController::class, 'update'])->whereNumber('id');
+    Route::get('/audit', [AdminAccountController::class, 'audit']);
 });

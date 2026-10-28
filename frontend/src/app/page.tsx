@@ -1,5 +1,6 @@
-import JourneyPlanner from "./components/JourneyPlanner";
+import LandingHero from "./components/LandingHero";
+import LandingSections from "./components/LandingSections";
 
 export default function Home() {
-  return <JourneyPlanner />;
+  return <main><LandingHero /><LandingSections /></main>;
 }

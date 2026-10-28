@@ -29,7 +29,12 @@ The directory covers more places than the available schedules. Selecting an isla
 
 | Page | Purpose |
 | --- | --- |
-| `/` | Consolidated planner, including flightless travel |
+| `/` | Landing page with the trip search (from/to, date, time, leave after / arrive by, preferences) |
+| `/plan` | Consolidated planner, including flightless travel; the landing search opens here with its preferences applied |
+| `/login`, `/signup` | Accounts for travellers, boat owners, vehicle owners and businesses. Owners and businesses wait for admin approval |
+| `/account` | Account status and the tools for your account type |
+| `/admin` | Admins only: approve, suspend and re-type accounts, with an audit trail |
+| `/help`, `/legal/terms`, `/legal/privacy` | FAQ and draft plain-language terms and privacy (need legal review before launch) |
 | `/journeys` | Saved journeys and demo service reservations |
 | `/sailings` | Published boat services, seat requests and provider updates |
 | `/providers` | Boat-owner sign-in, vessels, sailings and passenger requests |
@@ -153,7 +158,7 @@ Current limits:
 - Flight-fit transfer assumptions are scoped to the Thimarafushi pilot. The app does not calculate arbitrary nationwide taxi–ferry–flight connections.
 - Map route lines are illustrative connections between reference points, not navigable sea tracks or road directions. Address notes are not geocoded.
 - Cancellation retries are safe: repeated demo-service cancellation returns `already_cancelled=true` without changing the record again. Cargo and last-call notices append timeline events without invalidating pending approval versions; changes to booking status still use version checks.
-- Guest access is tied to this browser's cookie. Clearing it loses access; passenger account recovery is not implemented.
+- Guest access is tied to this browser's cookie. A traveller account (email and password, 10+ characters) keeps that guest identity so trips can be recovered on another device; trips booked anonymously before signing in to an existing account are not merged. Email verification and password reset are not implemented.
 - Standalone demo service receipts are not automatically attached to an existing ferry journey. Fictional sea checkout does not hold real seats; owner requests require approval and capacity checks.
 - Cargo notices and manual position sharing are implemented; cargo reservations, private-charter quoting, automatic disruption recovery and external notifications remain future work.
 - The previous shared `/operator` taxi dashboard is absent from the current UI. Some underlying taxi request/quote logic remains; the current presentation flow uses in-app simulated checkout.
@@ -228,3 +233,13 @@ The journey and ferry-planner maps include a separate boat layer, name search an
 The backend shares one atomic 65-second upstream request gate across visitors, including failures. Use a persistent shared cache supporting atomic `add` (the local database cache does); separate deployments/other consumers of the same key also need coordinated limiting. Public clients cannot override the URL or request private account data. No upstream body, credential or URL is returned on errors. Review outbound-request tracing because FollowMe places the key in its URL.
 
 Positions older than ten minutes, with unknown timestamps, or retained after a failed refresh are visibly labelled. Saved positions expire after an hour. Feed retrieval time is separate from position-report time. Missing coordinates are omitted, not plotted at a default location. The planner works without the feed. FollowMe attribution and its official logo appear on each map displaying the layer. See [source and usage notes](docs/data-sources.md); check FollowMe's terms before any paid public release.
+
+### Accounts, account types and admins
+
+Accounts have one of four types: **traveller** (active at once), **boat owner**, **vehicle owner** and **business** (all three start *pending* until an admin approves them). Admin is a separate flag, so staff can also test as a traveller.
+
+- **Admins are created from the command line only**, never through the website: sign up normally, then run `php artisan accounts:make-admin you@example.com` (add `--revoke` to remove). On the hosted demo run it locally against the production database, or set `is_admin = true` for that row in Postgres. The last active admin cannot be removed and nobody can suspend or demote themselves.
+- Sessions are bearer tokens stored hashed in `traveller_sessions`: seven days for everyone, twelve hours for admins. Suspending an account signs it out everywhere. The browser holds the token in an httpOnly cookie; the guest cookie still identifies trips.
+- Approved boat owners use the existing `/providers` tools with their account session. A boat profile is created on first use and never adopts an existing profile with the same email (there is no email verification yet). Set `PROVIDER_SELF_REGISTRATION=false` in production (already in `backend/vercel.json`) so the old instant owner sign-up is closed.
+- Vehicle owner and business accounts can be approved but have no tools yet; the account page says so.
+- Not built: email verification, password reset, and two-factor sign-in for admins.

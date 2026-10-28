@@ -4,7 +4,7 @@ const tomorrow = () => new Date(Date.now() + 29 * 3600_000).toISOString().slice(
 const demo = { email: 'demo@example.test', name: 'Audit Browser Demo' };
 
 async function plan(page: Page) {
-  await page.goto('/');
+  await page.goto('/plan');
   await page.getByRole('button', { name: 'Fill Thaa → Hulhumalé demo', exact: true }).click();
   await page.getByRole('button', { name: 'Find my journey', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Passenger details & booking' })).toBeVisible();
@@ -105,15 +105,18 @@ test('provider approval and cargo last-call update appear in the passenger itine
 });
 
 test('page titles, backend identity, wrapped navigation and location labels work on each screen', async ({ page }) => {
-  const pages = [['/', 'Journey planner'], ['/journeys', 'My itineraries'], ['/sailings', 'Sailings'], ['/providers', 'Boat owners'], ['/greater-male-taxi', 'Taxi booking & fares'], ['/buses', 'RTL buses'], ['/ferry-planner', 'Ferry connection planner']];
+  const pages = [['/plan', 'Plan a trip'], ['/journeys', 'My itineraries'], ['/sailings', 'Sailings'], ['/providers', 'Boat owners'], ['/greater-male-taxi', 'Taxi booking & fares'], ['/buses', 'RTL buses'], ['/ferry-planner', 'Ferry connection planner']];
   for (const [path, title] of pages) {
     await page.goto(path);
     await expect(page).toHaveTitle(`${title} | Dhathuru App`);
-    const nav = page.getByRole('navigation', { name: 'Sections' });
-    await expect(nav.getByRole('link', { name: 'Boat owners', exact: true })).toBeInViewport();
+    const nav = page.getByRole('navigation', { name: 'Sections' }).first();
+    await expect(nav.getByRole('link', { name: 'Plan a trip', exact: true })).toBeInViewport();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
   await page.goto('/');
+  await expect(page).toHaveTitle('Dhathuru: island to island, door to door');
+  await expect(page.getByRole('heading', { level: 1, name: 'Island to island, door to door.' }).first()).toBeVisible();
+  await page.goto('/plan');
   await expect(page.getByText('Vilufushi · Thaa · Inhabited island · Selected', { exact: true })).toBeVisible();
   const health = await page.request.get('/api/backend-health');
   expect(health.status()).toBe(200);

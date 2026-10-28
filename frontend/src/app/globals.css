@@ -13,7 +13,7 @@
   --color-bus: #15803D;
   --color-mist: #F3F7F7;
 }
-body { background: var(--color-mist); color: var(--color-ocean); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Arial, Helvetica, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background: var(--color-mist); color: var(--color-ocean); font-family: var(--font-body), -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Arial, Helvetica, sans-serif; -webkit-tap-highlight-color: transparent; }
 /* Dhivehi (Thaana): system fonts ship with macOS/iOS (Thaana Sangam MN), Windows (MV Boli) and Android (Noto Sans Thaana). */
 html[lang="dv"] body { font-family: "Faruma", "MV Boli", "Thaana Sangam MN", "Noto Sans Thaana", "Noto Sans", sans-serif; line-height: 1.7; }
 html[lang="dv"] .tracking-tight, html[lang="dv"] .tracking-widest, html[lang="dv"] .uppercase { letter-spacing: 0; text-transform: none; }
@@ -107,3 +107,12 @@ input::placeholder, textarea::placeholder { color: rgb(18 52 59 / 0.45); }
 article.tile { transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s; }
 @media (hover: hover) { article.tile:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -16px rgb(13 43 51 / 0.32); } }
 aside.bg-coral\/10 { background: #fff2d6; border-radius: 1rem; }
+
+/* Desktop typography follows the web design (serif headings); phones keep the app look. */
+.font-display { font-family: var(--font-display), "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+@media (min-width: 768px) { h1, h2 { font-family: var(--font-display), "Iowan Old Style", "Palatino Linotype", Georgia, serif; font-weight: 500; letter-spacing: -0.01em; } }
+html[lang="dv"] .font-display, html[lang="dv"] h1, html[lang="dv"] h2 { font-family: "Faruma", "MV Boli", "Thaana Sangam MN", "Noto Sans Thaana", sans-serif; letter-spacing: 0; }
+
+/* Desktop hero sea: slow, quiet shimmer. */
+.sea-shimmer { background: repeating-linear-gradient(172deg, transparent 0 18px, rgb(255 255 255 / 0.09) 18px 20px, transparent 20px 44px); animation: shimmer 14s linear infinite; }
+@keyframes shimmer { to { background-position: 160px 0; } }

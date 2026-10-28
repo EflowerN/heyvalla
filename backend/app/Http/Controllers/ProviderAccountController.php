@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\TravellerSessions;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,11 +16,33 @@ class ProviderAccountController extends Controller
         $token = $request->bearerToken();
         abort_unless(is_string($token) && strlen($token) === 64, 401, 'Provider sign-in required.');
         $session = DB::table('provider_sessions')->where('token_hash', hash('sha256', $token))->where('expires_at', '>', now())->first();
-        abort_unless($session, 401, 'Session expired. Please sign in again.');
-        $account = DB::table('provider_accounts')->find($session->provider_account_id);
-        abort_unless($account, 401);
+        if ($session) {
+            $account = DB::table('provider_accounts')->find($session->provider_account_id);
+            abort_unless($account, 401);
 
-        return $account;
+            return $account;
+        }
+
+        // Boat owners who signed up through "Create account" use that session, once an admin has approved them.
+        $traveller = TravellerSessions::resolve($request);
+        abort_unless($traveller, 401, 'Session expired. Please sign in again.');
+        abort_unless($traveller->type === 'vessel_owner', 403, 'Boat owner tools are for boat owner accounts.');
+        abort_unless($traveller->status === 'active', 403, 'Your boat owner account is waiting for approval by our team.');
+
+        return self::linkedProfile($traveller);
+    }
+
+    private static function linkedProfile(object $traveller): object
+    {
+        $existing = DB::table('provider_accounts')->where('traveller_id', $traveller->id)->first();
+        if ($existing) {
+            return $existing;
+        }
+        // Never adopt a profile that already exists under this email: without email verification that would let anyone claim it.
+        abort_if(DB::table('provider_accounts')->where('email', $traveller->email)->exists(), 409, 'A boat owner profile already exists for this email. Ask an admin to link it.');
+        $id = DB::table('provider_accounts')->insertGetId(['owner_name' => $traveller->name ?: Str::before($traveller->email, '@'), 'email' => $traveller->email, 'password' => Hash::make(Str::random(40)), 'organization_name' => $traveller->organization_name ?: 'Unnamed organisation', 'traveller_id' => $traveller->id, 'created_at' => now(), 'updated_at' => now()]);
+
+        return DB::table('provider_accounts')->find($id);
     }
 
     public static function present(object $account): array
@@ -29,6 +52,7 @@ class ProviderAccountController extends Controller
 
     public function register(Request $request): JsonResponse
     {
+        abort_unless(config('accounts.provider_self_registration'), 403, 'Boat owners now sign up through Create account and are approved by our team.');
         $request->merge(['email' => strtolower(trim((string) $request->input('email')))]);
         $input = $request->validate(['owner_name' => ['required', 'string', 'max:100'], 'organization_name' => ['required', 'string', 'max:100'], 'email' => ['required', 'email', 'max:255', 'unique:provider_accounts,email'], 'password' => ['required', 'string', 'min:12', 'max:128', 'confirmed']]);
         $account = DB::transaction(function () use ($input): object {

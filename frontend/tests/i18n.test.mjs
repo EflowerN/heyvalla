@@ -34,15 +34,29 @@ test('Dhivehi values contain Thaana and never the untranslated English source', 
   }
 });
 
-test('active navigation follows the current path, including nested and planner routes', () => {
-  assert.equal(activeNavIndex('/'), 0);
+test('active navigation follows the current path; the home page highlights nothing', () => {
+  assert.equal(activeNavIndex('/'), -1);
+  assert.equal(activeNavIndex('/plan'), 0);
   assert.equal(activeNavIndex('/ferry-planner'), 0);
   assert.equal(activeNavIndex('/journeys'), 1);
   assert.equal(activeNavIndex('/sailings'), 2);
   assert.equal(activeNavIndex('/greater-male-taxi'), 3);
   assert.equal(activeNavIndex('/buses'), 4);
   assert.equal(activeNavIndex('/providers'), 5);
-  assert.equal(activeNavIndex('/unknown'), 0);
+  assert.equal(activeNavIndex('/help'), -1);
+  assert.equal(activeNavIndex('/plannerx'), -1);
+});
+
+test('landing, help and preference copy all have Dhivehi translations', async () => {
+  const copy = await import('../src/lib/site-copy.ts');
+  const prefs = await import('../src/lib/trip-preferences.ts');
+  const strings = [
+    ...copy.steps.flatMap(step => [step.title, step.body]), ...copy.bullets, ...copy.exampleLegs.map(leg => leg.label), ...copy.modes.map(mode => mode[1]),
+    ...copy.honest.flatMap(item => [item.title, item.body]), ...copy.faq.flat(),
+    ...prefs.MODES.map(mode => mode.label), ...Object.values(prefs.CAUTION).flatMap(level => [level.label, level.hint]),
+  ];
+  const missing = strings.filter(text => translate('dv', text) === text);
+  assert.deepEqual(missing, []);
 });
 
 test('every static t("…") and <T k="…"> in the UI has a Dhivehi translation', async () => {

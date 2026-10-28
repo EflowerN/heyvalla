@@ -7,7 +7,9 @@ async function proxy(request: Request, context: RouteContext<"/api/providers/[ac
   if (!methods[action]?.includes(request.method)) return Response.json({ message: "Not found." }, { status: 404 });
   if (request.method !== "GET" && !sameOrigin(request)) return Response.json({ message: "Please submit from Dhathuru App." }, { status: 403 });
   const jar = await cookies();
-  const token = jar.get("heyvalla_provider")?.value;
+  // Approved boat owners who signed up through "Create account" use that session when they have no separate owner login.
+  const traveller = jar.get("dhathuru_session")?.value;
+  const token = jar.get("heyvalla_provider")?.value ?? (traveller && /^[A-Za-z0-9]{64}$/.test(traveller) ? traveller : undefined);
   if (!["register", "login", "catalogue"].includes(action) && !token) return Response.json({ message: "Provider sign-in required." }, { status: 401 });
   try {
     const response = await fetch(`${backendUrl}/api/v1/providers/${action}`, { method: request.method, headers: { ...await guestHeaders(), "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) }, body: request.method === "POST" ? JSON.stringify(await request.json()) : undefined, cache: "no-store", signal: AbortSignal.timeout(15000) });

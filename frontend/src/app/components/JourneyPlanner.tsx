@@ -20,6 +20,8 @@ import BookingDesk, { type BookingChoice } from "./BookingDesk";
 import { SeatRequestForm } from "./ProviderSeatRequests";
 import LocationSearch from "./LocationSearch";
 import Hero from "./Hero";
+import { useSearchParams } from "next/navigation";
+import { parseTripParams } from "@/lib/trip-preferences";
 import { useT, T } from "./I18nProvider";
 import Footer from "./Footer";
 
@@ -32,7 +34,9 @@ const NOTICE = "Demo planning only. Ferry search currently connects to Thimarafu
 
 export default function JourneyPlanner() {
   const t = useT();
-  const [travelMode,setTravelMode] = useState<"flight"|"sea"|"taxi">("flight");
+  const searchParams = useSearchParams();
+  const trip = useMemo(() => parseTripParams(searchParams), [searchParams]);
+  const [travelMode,setTravelMode] = useState<"flight"|"sea"|"taxi">(trip ? "sea" : "flight");
   const [directory, setDirectory] = useState<Directory>(emptyDirectory);
   const [directoryError, setDirectoryError] = useState("");
   const [retry, setRetry] = useState(0);
@@ -141,7 +145,7 @@ export default function JourneyPlanner() {
 
   const modeSwitch = <div className="mb-6"><SlideSwitch label={t("Journey type")} variant="journey" value={travelMode} options={[{ value: "flight", label: t("With a flight") }, { value: "sea", label: t("Ferries & launches") }, { value: "taxi", label: t("Taxi") }]} onChange={mode => { invalidate(); setTravelMode(mode as "flight" | "sea" | "taxi"); }} /></div>;
   if (travelMode === "taxi") return <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8">{modeSwitch}<GreaterMaleTaxiPlanner embedded initialTo={destinationId === "ld0591" ? taxiZone : "male"} /></main>;
-  if(travelMode==='sea')return <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8">{modeSwitch}<SeaJourneyPlanner directory={directory} directoryError={directoryError}/></main>;
+  if(travelMode==='sea')return <main className="mx-auto max-w-6xl px-5 py-8 sm:px-8">{modeSwitch}<SeaJourneyPlanner directory={directory} directoryError={directoryError} trip={trip}/></main>;
   return <main className="mx-auto max-w-6xl px-5 pb-28 pt-8 sm:px-8 md:pb-16">
     {modeSwitch}
     <Hero eyebrow={t("From your island to your doorstep")} title={t("Your whole journey, in one place.")} body={t("Connect your ferry, airport transfer, flight and onward ride. Start with two places, then add your flight details.")}>

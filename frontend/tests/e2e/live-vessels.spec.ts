@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('unconfigured tracking is explicit on both maps and does not prevent journey planning', async ({ page }, testInfo) => {
-  for (const path of ['/', '/ferry-planner']) {
+  for (const path of ['/plan', '/ferry-planner']) {
     await page.goto(path);
     const tracking = page.getByRole('region', { name: 'FollowMe boat tracking' });
     await expect(tracking).toContainText('A FollowMe API key is required.');
@@ -10,7 +10,7 @@ test('unconfigured tracking is explicit on both maps and does not prevent journe
     await tracking.getByRole('checkbox', { name: 'Show boat positions' }).uncheck();
     await expect(tracking.getByRole('status')).toHaveCount(0);
   }
-  await page.goto('/');
+  await page.goto('/plan');
   await page.getByRole('button', { name: 'Fill Thaa → Hulhumalé demo', exact: true }).click();
   await page.getByRole('button', { name: 'Find my journey', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Passenger details & booking' })).toBeVisible();
@@ -26,7 +26,7 @@ test('synthetic feed renders separate safe boat markers, name filtering, focus a
       { id: '1001', name: 'Old synthetic boat', latitude: 2.2, longitude: 73.13, reported_at: new Date(now - 7200000).toISOString(), freshness: 'stale' },
     ],
   } }));
-  await page.goto('/');
+  await page.goto('/plan');
   const tracking = page.getByRole('region', { name: 'FollowMe boat tracking' });
   await expect(page.locator('[title^="FollowMe boat:"]')).toHaveCount(2);
   await tracking.getByText('2 boat positions · view list', { exact: true }).click();
